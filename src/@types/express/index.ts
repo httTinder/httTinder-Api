@@ -4,7 +4,8 @@ declare global {
   namespace Express {
     interface Request {
       user: {
-        isAdm: boolean;
+        isAdmin: boolean;
+        isActive: boolean;
         id: string;
       };
     }

@@ -2,7 +2,7 @@ import { Exclude } from "class-transformer";
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
 import { userAddresse } from "./user_address";
 import { userAditionalData } from "./user_aditional_data";
-import { userProfile } from "./user_profile";
+import { userProfile } from "./user_profile/index";
 
 @Entity("user")
 export class user {

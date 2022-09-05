@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { AppError } from "../errors/AppError";
-import { decode } from "punycode";
 
 export const verifyAuthMiddleware = async (
   req: Request,

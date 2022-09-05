@@ -1,4 +1,3 @@
-import AppDataSource from "../data-source";
 import { Response, Request, NextFunction } from "express";
 import { AppError } from "../errors/AppError";
 
@@ -12,5 +11,6 @@ export const verifyAdminMiddleware = (
   if (!isAdmin) {
     throw new AppError(403, "user is not administrator");
   }
+
   next();
 };

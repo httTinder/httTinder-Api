@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { userAditionalData } from "..";
+import { userAditionalData } from "../index";
 
 @Entity("user_music_genre")
 export class userMusicGenre {

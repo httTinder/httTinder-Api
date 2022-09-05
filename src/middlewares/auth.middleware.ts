@@ -23,11 +23,11 @@ export const verifyAuthMiddleware = async (
       if (error) {
         throw new AppError(401, "Invalid Token");
       }
-      // req.user = {
-      //   isActive: decoded.isActive,
-      //   id: decoded.id,
-      //   isAdmin: decoded.isAdmin,
-      // };
+      req.user = {
+        isActive: decoded.isActive,
+        id: decoded.id,
+        isAdmin: decoded.isAdmin,
+      };
       next();
     }
   );

@@ -1,3 +1,4 @@
+import { instanceToPlain } from 'class-transformer'
 import { Request, response } from 'express'
 import createUserService from '../../services/user/create_user.service'
 
@@ -11,7 +12,7 @@ const createUserController = async (req: Request, res: Response) => {
 	})
 	return response.status(201).json({
 		message: 'User Created',
-		user: createNewUser,
+		user: instanceToPlain(createNewUser),
 	})
 }
 

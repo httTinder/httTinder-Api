@@ -1,9 +1,19 @@
-import { Router } from 'express'
-import listUsersController from '../controllers/list_user.controller'
-import { adminPermission } from '../middlewares/adminPermission.middleware'
+import activateUserController from '../controllers/user/active_user.controller'
+import createUserController from '../controllers/user/create_user.controller'
+import authEmailMiddleware from '../middlewares/authEmail.middleware'
+import { verifyActiveMiddleware } from '../middlewares/verifyActive.middleware'
 
 const usersRoutes = Router()
 
-usersRoutes.get('', adminPermission, listUsersController)
+usersRoutes.post('', createUserController)
+
+usersRoutes.patch(
+	'/email/:id',
+	authEmailMiddleware,
+	verifyActiveMiddleware,
+	activateUserController
+)
+
+usersRoutes.get('')
 
 export default usersRoutes

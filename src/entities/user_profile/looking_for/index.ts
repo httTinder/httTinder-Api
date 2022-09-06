@@ -17,13 +17,16 @@ export class lookingFor {
 	@Column({ nullable: true })
 	location: string
 
-	@Column({ nullable: true })
+	@Column({ default: false, nullable: true })
 	kids: boolean
 
-	@Column({ nullable: true })
+	@Column({ default: false, nullable: true })
 	smoker: boolean
 
-	@Column({ nullable: true })
+	@Column({ default: false, nullable: true })
+	drinker: boolean
+
+	@Column({ default: false, nullable: true })
 	pets: boolean
 
 	@Column({ nullable: true })

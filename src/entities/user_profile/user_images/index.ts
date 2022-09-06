@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { userProfile } from "../index";
 
 @Entity("user_images")
-export class userImages {
+export class  userImages {
     @PrimaryGeneratedColumn("uuid")
     readonly id: string
 

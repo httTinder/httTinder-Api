@@ -1,3 +1,4 @@
+// entity -> userAddresse
 export interface IAddressRequest {
 	country: string
 	city: string

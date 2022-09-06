@@ -5,6 +5,11 @@ import { verifyAdminMiddleware } from "../middlewares/verifyAdmin.middleware";
 
 const usersRoutes = Router();
 
-usersRoutes.get("/:id", userListController);
+usersRoutes.get(
+  "/:id",
+  verifyAuthMiddleware,
+  verifyAdminMiddleware,
+  userListController
+);
 
 export default usersRoutes;

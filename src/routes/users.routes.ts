@@ -33,5 +33,16 @@ usersRoutes.patch(
 	activateUserController
 )
 
+usersRoutes.patch("/user/address/:id")
+
+usersRoutes.patch("/user/profile/:id")
+
+usersRoutes.patch("/user/lookingfor/:id")
+
+usersRoutes.patch("/user/relationship/:id")
+
+usersRoutes.patch("/user/images/:id")
+
+usersRoutes.patch("/user/additional/:id")
 
 export default usersRoutes

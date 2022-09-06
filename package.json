@@ -9,7 +9,7 @@
     "dev": "ts-node-dev --ignore-watch node_modules src/server.ts",
     "build": "tsc",
     "typeorm": "typeorm-ts-node-commonjs",
-    "test": "NODE_ENV=test jest"
+    "test": "cross-env NODE_ENV=test SECRET_KEY=secret_key jest"
   },
   "devDependencies": {
     "@types/node": "^18.7.15",

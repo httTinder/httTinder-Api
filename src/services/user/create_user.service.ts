@@ -1,8 +1,15 @@
-import { hash } from 'bcryptjs'
 import AppDataSource from '../../data-source'
+
 import { user } from '../../entities'
 import { AppError } from '../../errors/AppError'
+
+import { hash } from 'bcryptjs'
+import jwt from 'jsonwebtoken'
+
 import { IUserRequest } from '../../interfaces/user'
+
+import 'dotenv/config'
+import sendEmail from '../../utils/nodemailer.util'
 
 const createUserService = async ({
 	age,
@@ -36,6 +43,19 @@ const createUserService = async ({
 	})
 
 	await userRepository.save(newUser)
+
+	const token = jwt.sign(
+		{
+			isActive: newUser.isActive,
+		},
+		'chavescreta',
+		{
+			subject: newUser.id,
+			expiresIn: '24h',
+		}
+	)
+
+	sendEmail({ to: email, subject: 'Confirm your email', text: token })
 
 	return newUser
 }

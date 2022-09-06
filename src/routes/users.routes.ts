@@ -8,6 +8,7 @@ import createUserController from '../controllers/user/create_user.controller'
 import authEmailMiddleware from '../middlewares/authEmail.middleware'
 import { verifyActiveMiddleware } from '../middlewares/verifyActive.middleware'
 
+const usersRoutes = Router()
 
 usersRoutes.get(
   "/:id",
@@ -32,6 +33,5 @@ usersRoutes.patch(
 	activateUserController
 )
 
-usersRoutes.get('')
 
 export default usersRoutes

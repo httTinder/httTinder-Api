@@ -31,7 +31,7 @@ const authEmailMiddleware = async (
 			}
 
 			req.user = {
-				isAdmin: decoded.isAdm,
+				isAdm: decoded.isAdm,
 				isActive: decoded.isActive,
 				id: decoded.sub,
 			}

@@ -48,7 +48,7 @@ const createUserService = async ({
 		{
 			isActive: newUser.isActive,
 		},
-		'chavescreta',
+		process.env.SECRET_KEY as string,
 		{
 			subject: newUser.id,
 			expiresIn: '24h',

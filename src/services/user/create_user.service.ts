@@ -34,6 +34,7 @@ const createUserService = async ({
 		name,
 		password: hashedPassword,
 	})
+
 	await userRepository.save(newUser)
 
 	return newUser

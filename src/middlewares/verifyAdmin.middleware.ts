@@ -6,9 +6,9 @@ export const verifyAdminMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-  const { isAdmin } = req.user;
+  const { isAdm } = req.user;
 
-  if (!isAdmin) {
+  if (!isAdm) {
     throw new AppError(403, "user is not administrator");
   }
 

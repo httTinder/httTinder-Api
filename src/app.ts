@@ -3,7 +3,7 @@ import usersRoutes from "./routes/users.routes";
 import "reflect-metadata";
 import "express-async-errors";
 import { errorMiddleware } from "./middlewares/error.middleware";
-import { sessionRoutes } from "./routes/session.routes";
+import sessionRoutes from "./routes/session.routes";
 
 const app = express();
 

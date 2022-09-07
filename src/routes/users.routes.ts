@@ -5,7 +5,6 @@ import { verifyAdminMiddleware } from "../middlewares/verifyAdmin.middleware";
 import { userEditController } from "../controllers/user/userEdit.controller";
 import activateUserController from "../controllers/user/active_user.controller";
 import createUserController from "../controllers/user/create_user.controller";
-import authEmailMiddleware from "../middlewares/authEmail.middleware";
 import { verifyActiveMiddleware } from "../middlewares/verifyActive.middleware";
 import { adminPermission } from "../middlewares/adminPermission.middleware";
 import userDeleteController from "../controllers/user/userDelete.controller";
@@ -16,6 +15,7 @@ import { imageEditController } from "../controllers/user/user_profile/user_image
 import updateUserAddressController from "../controllers/user/user_address/update_user_address.controller";
 import userDeleteAddressController from "../controllers/user/user_address/delete_user_address.controller";
 import { verifyIdMiddleware } from "../middlewares/verifyId.middleware";
+import { updatePetsController } from "../controllers/user/user_profile/looking_for/pets/updatePets.controller";
 
 const usersRoutes = Router();
 
@@ -73,18 +73,32 @@ usersRoutes.patch("/lookingfor/:id");
 
 usersRoutes.patch("/relationship/:id");
 
-
-usersRoutes.patch("/images/:id?", verifyAuthMiddleware, adminPermission, verifyActiveMiddleware, verifyIdMiddleware, upload.array("image", Infinity), imageEditController)
+usersRoutes.patch(
+  "/images/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  upload.array("image", Infinity),
+  imageEditController
+);
 
 usersRoutes.patch("/additional/:id");
 
-usersRoutes.patch("/hobbies/:id")
+usersRoutes.patch("/hobbies/:id");
 
-usersRoutes.patch("/pets/:id")
+usersRoutes.patch(
+  "/pets/:id",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  updatePetsController
+);
 
-usersRoutes.patch("/languages/:id")
+usersRoutes.patch("/languages/:id");
 
-usersRoutes.patch("/music/:id")
+usersRoutes.patch("/music/:id");
 
 usersRoutes.delete(
   "/address/:id?",
@@ -101,16 +115,16 @@ usersRoutes.delete("/lookingfor/:id");
 
 usersRoutes.delete("/relationship/:id");
 
-usersRoutes.delete("/images")
+usersRoutes.delete("/images");
 
 usersRoutes.delete("/additional/:id");
 
-usersRoutes.delete("/hobbies/:id")
+usersRoutes.delete("/hobbies/:id");
 
-usersRoutes.delete("/pets/:id")
+usersRoutes.delete("/pets/:id");
 
-usersRoutes.delete("/languages/:id")
+usersRoutes.delete("/languages/:id");
 
-usersRoutes.delete("/music/:id")
+usersRoutes.delete("/music/:id");
 
-export default usersRoutes
+export default usersRoutes;

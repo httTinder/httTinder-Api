@@ -10,6 +10,7 @@ import { verifyActiveMiddleware } from '../middlewares/verifyActive.middleware'
 import { adminPermission } from "../middlewares/adminPermission.middleware";
 import userDeleteController from "../controllers/user/userDelete.controller";
 import listUsersController from "../controllers/user/list_user.controller";
+import { editUserMiddleWare } from "../middlewares/editUser.middleware";
 
 const usersRoutes = Router()
 
@@ -34,6 +35,7 @@ usersRoutes.patch(
   "/:id?",
   verifyAuthMiddleware,
   adminPermission,
+  editUserMiddleWare,
   userEditController
 );
 

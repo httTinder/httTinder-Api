@@ -8,6 +8,7 @@ import createUserController from '../controllers/user/create_user.controller'
 import authEmailMiddleware from '../middlewares/authEmail.middleware'
 import { verifyActiveMiddleware } from '../middlewares/verifyActive.middleware'
 import { adminPermission } from "../middlewares/adminPermission.middleware";
+import userDeleteController from "../controllers/user/userDelete.controller";
 
 const usersRoutes = Router()
 
@@ -16,6 +17,14 @@ usersRoutes.get(
   verifyAuthMiddleware,
   adminPermission,
   userListController
+);
+
+usersRoutes.delete(
+  "/:id",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  userDeleteController
 );
 
 usersRoutes.patch(

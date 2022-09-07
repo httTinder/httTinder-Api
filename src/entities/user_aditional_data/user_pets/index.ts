@@ -7,7 +7,7 @@ export class userPets {
     readonly id: string
 
     @Column()
-    name: string
+    specie: string
 
     @ManyToOne(() => userAditionalData)
     userAditionalData:userAditionalData

@@ -1,7 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Max, Min } from "class-validator"
 
 @Entity("addresses")
-export class userAddresse {
+export class userAddresses {
     @PrimaryGeneratedColumn("uuid")
     readonly id: string
 
@@ -11,10 +12,12 @@ export class userAddresse {
     @Column()
     city: string
 
-    @Column({nullable: true})
+    @Column()
     state: string
 
     @Column()
+    @Min(10000000)
+    @Max(99999999)
     zipCode: string
 
     @Column()

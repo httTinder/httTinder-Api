@@ -16,37 +16,37 @@ export class userProfile {
 	readonly id: string
 
 	@Column()
-	sexualOrientatio: boolean
+	sexualOrientatio: string
 
 	@Column()
 	gender: string
 
-	@Column({ length: 280 })
+	@Column( )
 	bio: string
 
 	@Column({ type: 'decimal', precision: 2, scale: 2 })
 	height: number
 
+	@Column({length: 28})
+	education: string
+
+	@Column({length: 46})
+	profession: string
+
 	@Column()
 	profileImage: string
 
-	@Column()
-	education: string
-
-	@Column()
-	profession: string
+	@OneToOne(() => typeOfRelationship, { eager: true, nullable: true })
+	@JoinColumn()
+	typeOfRelationship: typeOfRelationship 
 
 	@OneToOne(() => lookingFor, { eager: true, nullable: true })
 	@JoinColumn()
 	lookingFor: lookingFor
 
-	@OneToOne(() => typeOfRelationship, { eager: true, nullable: true })
-	@JoinColumn()
-	typeOfRelationship: typeOfRelationship
-
 	@OneToMany(() => userImages, (images) => images.userProfile, {
 		eager: true,
 		nullable: true,
 	})
-	profileImages: userImages[]
+	images: userImages[]
 }

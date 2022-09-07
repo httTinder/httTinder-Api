@@ -5,12 +5,12 @@ export class typeOfRelationship {
     @PrimaryGeneratedColumn("uuid")
     readonly id: string
 
-    @Column({default:false})
+    @Column({ default: false })
     friendship: boolean
 
-    @Column({default:false})
+    @Column({ default: false })
     casual: boolean
 
-    @Column({default:false})
+    @Column({ default: false })
     serious: boolean
 }

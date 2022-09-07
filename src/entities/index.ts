@@ -8,7 +8,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { userAddresse } from "./user_address";
+import { Min } from "class-validator"
+import { userAddresses } from "./user_address";
 import { userAditionalData } from "./user_aditional_data";
 import { userProfile } from "./user_profile/index";
 
@@ -17,24 +18,25 @@ export class user {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 
-  @Column()
+  @Column({length: 60})
   name: string;
 
   @Column({ unique: true })
   email: string;
 
-  @Column({ length: 280 })
+  @Column()
   @Exclude()
   password: string;
 
   @Column()
+  @Min(18)
   age: number;
 
-  @Column({ default: true })
-  isActive: boolean;
+  @Column({ default: false })
+  isActive?: boolean;
 
   @Column({ default: false })
-  isAdm: boolean;
+  isAdm?: boolean;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -42,9 +44,9 @@ export class user {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToOne(() => userAddresse, { eager: true, nullable: true })
+  @OneToOne(() => userAddresses, { eager: true, nullable: true })
   @JoinColumn()
-  address: userAddresse;
+  address: userAddresses;
 
   @OneToOne(() => userProfile, { eager: true, nullable: true })
   @JoinColumn()

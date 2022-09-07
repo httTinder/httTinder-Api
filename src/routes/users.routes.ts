@@ -72,7 +72,7 @@ usersRoutes.patch(
 usersRoutes.patch("/profile/:id");
 
 usersRoutes.patch(
-  "/lookingfor/:id",
+  "/lookingfor/:id?",
   verifyAuthMiddleware,
   adminPermission,
   verifyActiveMiddleware,
@@ -114,7 +114,7 @@ usersRoutes.delete(
 usersRoutes.delete("/profile/:id");
 
 usersRoutes.delete(
-  "/lookingfor/:id",
+  "/lookingfor/:id?",
   verifyAuthMiddleware,
   adminPermission,
   verifyActiveMiddleware,

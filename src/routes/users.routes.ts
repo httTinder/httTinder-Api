@@ -12,7 +12,7 @@ import userDeleteController from "../controllers/user/userDelete.controller";
 import listUsersController from "../controllers/user/list_user.controller";
 import { editUserMiddleWare } from "../middlewares/editUser.middleware";
 import { upload } from "../utils/cloudinary.utils";
-import { imageEditController } from "../controllers/user/imageEdit.controller";
+import { imageEditController } from "../controllers/user/user_profile/user_images/imageEdit.controller";
 
 const usersRoutes = Router()
 

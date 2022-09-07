@@ -15,25 +15,25 @@ export class userProfile {
 	@PrimaryGeneratedColumn('uuid')
 	readonly id: string
 
-	@Column()
+	@Column({ nullable : true })
 	sexualOrientatio: string
 
-	@Column()
+	@Column({ nullable : true })
 	gender: string
 
-	@Column( )
+	@Column({ nullable : true })
 	bio: string
 
-	@Column({ type: 'decimal', precision: 2, scale: 2 })
+	@Column({ type: 'decimal', precision: 2, scale: 2, nullable : true })
 	height: number
 
-	@Column({length: 28})
+	@Column({length: 28, nullable : true})
 	education: string
 
-	@Column({length: 46})
+	@Column({length: 46, nullable : true})
 	profession: string
 
-	@Column()
+	@Column({ nullable : true })
 	profileImage: string
 
 	@OneToOne(() => typeOfRelationship, { eager: true, nullable: true })

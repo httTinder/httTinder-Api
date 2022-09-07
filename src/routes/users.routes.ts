@@ -11,6 +11,8 @@ import { adminPermission } from "../middlewares/adminPermission.middleware";
 import userDeleteController from "../controllers/user/userDelete.controller";
 import listUsersController from "../controllers/user/list_user.controller";
 import { editUserMiddleWare } from "../middlewares/editUser.middleware";
+import { upload } from "../utils/cloudinary.utils";
+import { imageEditController } from "../controllers/user/imageEdit.controller";
 
 const usersRoutes = Router()
 
@@ -32,7 +34,7 @@ usersRoutes.delete(
 );
 
 usersRoutes.patch(
-  "/:id?",
+  "/se",
   verifyAuthMiddleware,
   adminPermission,
   editUserMiddleWare,
@@ -54,7 +56,7 @@ usersRoutes.patch("/user/lookingfor/:id")
 
 usersRoutes.patch("/user/relationship/:id")
 
-usersRoutes.patch("/user/images/:id")
+usersRoutes.patch("/images", verifyAuthMiddleware, upload.array("image", Infinity), imageEditController) // falta o delete
 
 usersRoutes.patch("/user/additional/:id")
 

@@ -3,7 +3,8 @@ import { userSessionService } from "../../services/userSession/userSession.servi
 
 export const userSessionController = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  const token = userSessionService({ email, password });
 
-  return res.json(token);
+  const token = await userSessionService({ email, password });
+
+  return res.json({accessToken: token});
 };

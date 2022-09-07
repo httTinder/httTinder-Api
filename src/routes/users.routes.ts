@@ -9,12 +9,13 @@ import authEmailMiddleware from '../middlewares/authEmail.middleware'
 import { verifyActiveMiddleware } from '../middlewares/verifyActive.middleware'
 import { adminPermission } from "../middlewares/adminPermission.middleware";
 import userDeleteController from "../controllers/user/userDelete.controller";
+
 const usersRoutes = Router()
 
 usersRoutes.get(
-  "/:id",
+  "/:id?",
   verifyAuthMiddleware,
-  verifyAdminMiddleware,
+  adminPermission,
   userListController
 );
 
@@ -27,18 +28,16 @@ usersRoutes.delete(
 );
 
 usersRoutes.patch(
-  "/:id",
+  "/:id?",
   verifyAuthMiddleware,
-  verifyAdminMiddleware,
+  adminPermission,
   userEditController
 );
 
 usersRoutes.post('', createUserController)
 
 usersRoutes.patch(
-	'/email/:id',
-	authEmailMiddleware,
-	verifyActiveMiddleware,
+	'/email/:tokenEmail',
 	activateUserController
 )
 

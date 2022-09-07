@@ -8,17 +8,17 @@ import { IUserSession } from "../../interfaces/user/userSession";
 const userRepository = AppDataSource.getRepository(user);
 
 export const userSessionService = async ({ email, password }: IUserSession) => {
-  const user = await userRepository.findOne({
+  const findUser = await userRepository.findOne({
     where: {
-      email: email,
+      email,
     },
   });
 
-  if (!user) {
+  if (!findUser) {
     throw new AppError(403, "Email or Password not match");
   }
 
-  const verifyPassword = compareSync(password, user.password);
+  const verifyPassword = compareSync(password, findUser.password);
 
   if (!verifyPassword) {
     throw new AppError(403, "Email or Password not match");
@@ -26,12 +26,12 @@ export const userSessionService = async ({ email, password }: IUserSession) => {
 
   const token = jwt.sign(
     {
-      isAdm: user.isAdm,
-      isActive: user.isActive,
-      id: user.id,
+      isAdm: findUser.isAdm,
+      isActive: findUser.isActive,
+      id: findUser.id,
     },
     process.env.SECRET_KEY as string,
-    { expiresIn: "24h", subject: user.id }
+    { expiresIn: "24h", subject: findUser.id }
   );
 
   return token;

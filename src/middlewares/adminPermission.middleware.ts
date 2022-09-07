@@ -10,7 +10,7 @@ export const adminPermission = (
 
   const userId = req.params.id;
 
-  if (id !== userId && !isAdm) {
+  if (userId !== undefined && (id !== userId && !isAdm)) {
     throw new AppError(403, "missing authorization permissions");
   }
 

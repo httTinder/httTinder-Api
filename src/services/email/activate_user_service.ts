@@ -1,19 +1,37 @@
-import AppDataSource from '../../data-source'
-import { user } from '../../entities'
-import { AppError } from '../../errors/AppError'
+import AppDataSource from "../../data-source";
+import { user } from "../../entities";
+import { AppError } from "../../errors/AppError";
+import jwt from "jsonwebtoken";
 
-const activateUserService = async (id: string) => {
-	const userRepository = AppDataSource.getRepository(user)
+const activateUserService = async (tokenEmail: string) => {
+  let userId = "";
 
-	const findUser = await userRepository.findOneBy({ id })
+  const response = await jwt.verify(
+    tokenEmail as string,
+    process.env.SECRET_KEY as string,
+    (error: any, decoded: any) => {
+      if (error) {
+        throw new AppError(401, "Invalid Token");
+      }
+      userId = decoded.sub;
+    }
+  );
 
-	if (!findUser) {
-		throw new AppError(404, 'User not found')
-	}
+  const userRepository = AppDataSource.getRepository(user);
 
-	userRepository.update(findUser!.id, { isActive: true })
+  const findUser = await userRepository.findOneBy({ id: userId });
 
-	return true
-}
+   if (!findUser) {
+     throw new AppError(404, "User not found");
+   }
 
-export default activateUserService
+   if (findUser.isActive ===  true) {
+    throw new AppError(400, "User already active");
+   }
+
+ userRepository.update(findUser!.id, { isActive: true });
+
+  return true;
+};
+
+export default activateUserService;

@@ -20,7 +20,7 @@ usersRoutes.get(
 );
 
 usersRoutes.delete(
-  "/:id",
+  "/:id?",
   verifyAuthMiddleware,
   adminPermission,
   verifyActiveMiddleware,

@@ -2,7 +2,7 @@ import AppDataSource from "../../data-source";
 import { user } from "../../entities";
 import { AppError } from "../../errors/AppError";
 
-const userDeleteService = async (id: string) => {
+const userDeleteService = async (id: string): Promise<boolean> => {
   const userRepository = AppDataSource.getRepository(user);
 
   const userDelete = await userRepository.findOneBy({ id });
@@ -10,12 +10,10 @@ const userDeleteService = async (id: string) => {
   if (!userDelete) {
     throw new AppError(404, "User not found");
   }
-  if (userDelete.isActive === false) {
-    throw new AppError(400, "User not is active");
-  }
-  userRepository.update(userDelete!.id,{isActive:false})
 
+  await userRepository.update(userDelete!.id,{isActive:false})
 
+  return true
 };
 
 export default userDeleteService

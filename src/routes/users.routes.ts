@@ -68,7 +68,14 @@ usersRoutes.patch(
   updateUserAddressController
 );
 
-usersRoutes.patch("/profile/:id", updateUserProfileController);
+usersRoutes.patch(
+  "/profile/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  updateUserProfileController
+);
 
 usersRoutes.patch("/lookingfor/:id");
 

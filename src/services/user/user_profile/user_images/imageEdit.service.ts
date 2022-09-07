@@ -1,11 +1,11 @@
-import AppDataSource from "../../data-source";
-import { user } from "../../entities";
-import { AppError } from "../../errors/AppError";
-import { IUserEditRequest } from "../../interfaces/user";
+import AppDataSource from "../../../../data-source";
+import { user } from "../../../../entities";
+import { AppError } from "../../../../errors/AppError";
+import { IUserEditRequest } from "../../../../interfaces/user";
 import { compareSync } from "bcryptjs";
-import { userImages } from "../../entities/user_profile/user_images";
-import { userProfile } from "../../entities/user_profile";
-import { cloudinaryResponse } from "../../interfaces/user/user_profile/user_images";
+import { userImages } from "../../../../entities/user_profile/user_images";
+import { userProfile } from "../../../../entities/user_profile";
+import { cloudinaryResponse } from "../../../../interfaces/user/user_profile/user_images";
 import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
 const imageEditService = async (
@@ -22,14 +22,8 @@ const imageEditService = async (
     throw new AppError(404, "user not found");
   }
 
-  //const profileFind = await profileRepository.findOne({ where: {id: userFind.id}})
-
-  // if (!profileFind) {
-  //   const newProfile = userRepository.create();
-  //   await profileRepository.save(newProfile);
-  //   await userRepository.update(userFind!.id, {profileId: newProfile.id})
-  // }
-  let profileId : any = ""
+  let profileId : any = userFind.profile
+  
   if (userFind.profile === null) {
     const newProfile = profileRepository.create();
     

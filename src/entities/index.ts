@@ -8,7 +8,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { Min } from "class-validator"
+import { Min } from "class-validator";
 import { userAddresses } from "./user_address";
 import { userAditionalData } from "./user_aditional_data";
 import { userProfile } from "./user_profile/index";
@@ -18,7 +18,7 @@ export class user {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 
-  @Column({length: 60})
+  @Column({ length: 60 })
   name: string;
 
   @Column({ unique: true })
@@ -44,15 +44,27 @@ export class user {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToOne(() => userAddresses, { eager: true, nullable: true })
+  @OneToOne(() => userAddresses, {
+    eager: true,
+    nullable: true,
+    onDelete: "SET NULL",
+  })
   @JoinColumn()
   address: userAddresses;
 
-  @OneToOne(() => userProfile, { eager: true, nullable: true })
+  @OneToOne(() => userProfile, {
+    eager: true,
+    nullable: true,
+    onDelete: "SET NULL",
+  })
   @JoinColumn()
   profile: userProfile;
 
-  @OneToOne(() => userAditionalData, { eager: true, nullable: true })
+  @OneToOne(() => userAditionalData, {
+    eager: true,
+    nullable: true,
+    onDelete: "SET NULL",
+  })
   @JoinColumn()
   userAditionalData: userAditionalData;
 }

@@ -1,7 +1,7 @@
 import express from "express";
-import usersRoutes from "./routes/users.routes";
 import "reflect-metadata";
 import "express-async-errors";
+import usersRoutes from "./routes/users.routes";
 import { errorMiddleware } from "./middlewares/error.middleware";
 import sessionRoutes from "./routes/session.routes";
 

@@ -14,6 +14,7 @@ import { editUserMiddleWare } from "../middlewares/editUser.middleware";
 import { upload } from "../utils/cloudinary.utils";
 import { imageEditController } from "../controllers/user/user_profile/user_images/imageEdit.controller";
 import updateUserAddressController from "../controllers/user/user_address/update_user_address.controller";
+import userDeleteAddressController from "../controllers/user/user_address/delete_user_address.controller";
 
 const usersRoutes = Router();
 
@@ -73,7 +74,11 @@ usersRoutes.patch(
 
 usersRoutes.patch("/additional/:id");
 
-usersRoutes.delete("/address/:id");
+usersRoutes.delete(
+  "/address/:id",
+  verifyAuthMiddleware,
+  userDeleteAddressController
+);
 
 usersRoutes.delete("/profile/:id");
 

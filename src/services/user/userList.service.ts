@@ -3,13 +3,8 @@ import { user } from "../../entities/index";
 import { Request, Response } from "express";
 import { AppError } from "../../errors/AppError";
 
-const userListService = async (req: Request) => {
-  let id = req.user.id;
-
-  if (req.params.id !== undefined) {
-    id = req.params.id;
-  }
-
+const userListService = async (id: string) => {
+  
   const userRepository = AppDataSource.getRepository(user);
 
   const userFind = await userRepository.findOne({ where: { id } });
@@ -17,7 +12,7 @@ const userListService = async (req: Request) => {
   if (!userFind) {
     throw new AppError(404, "User not found");
   }
-  if (!req.user.isAdm) {
+  if (!userFind.isAdm) {
     return {
       name: userFind.name,
       email: userFind.email,

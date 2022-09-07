@@ -8,6 +8,9 @@ declare global {
         isActive: boolean;
         id: string;
       };
+      idParams: {
+        id: string;
+      };
     }
   }
 }

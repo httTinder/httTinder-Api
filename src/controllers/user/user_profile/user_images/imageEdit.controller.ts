@@ -8,11 +8,7 @@ import fs from "fs";
 import { cloudinaryResponse } from "../../../../interfaces/user/user_profile/user_images";
 
 export const imageEditController = async (req: Request, res: Response) => {
-  let id = req.user.id;
-
-  if (req.params.id !== undefined) {
-    id = req.params.id;
-  }
+  const id = req.idParams.id
 
   const cloudinaryRespo = []
   

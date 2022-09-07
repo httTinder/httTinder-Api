@@ -5,11 +5,8 @@ import updateUserAddressService from "../../../services/user/user_address/update
 
 const updateUserAddressController = async (req: Request, res: Response) => {
   const userData: IUserAdressRequest = req.body;
-  let { id } = req.user;
-
-  if (req.params.id !== undefined) {
-    id = req.params.id;
-  }
+  
+  const id = req.idParams.id
 
   await updateUserAddressService(userData, id);
   return res

@@ -15,6 +15,7 @@ import { upload } from "../utils/cloudinary.utils";
 import { imageEditController } from "../controllers/user/user_profile/user_images/imageEdit.controller";
 import updateUserAddressController from "../controllers/user/user_address/update_user_address.controller";
 import userDeleteAddressController from "../controllers/user/user_address/delete_user_address.controller";
+import { verifyIdMiddleware } from "../middlewares/verifyId.middleware";
 
 const usersRoutes = Router();
 
@@ -29,6 +30,8 @@ usersRoutes.get(
   "/data/:id?",
   verifyAuthMiddleware,
   adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
   userListController
 );
 
@@ -37,6 +40,7 @@ usersRoutes.delete(
   verifyAuthMiddleware,
   adminPermission,
   verifyActiveMiddleware,
+  verifyIdMiddleware,
   userDeleteController
 );
 
@@ -44,6 +48,8 @@ usersRoutes.patch(
   "/data/:id?",
   verifyAuthMiddleware,
   adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
   editUserMiddleWare,
   userEditController
 );
@@ -53,9 +59,11 @@ usersRoutes.post("", createUserController);
 usersRoutes.patch("/email/:tokenEmail", activateUserController);
 
 usersRoutes.patch(
-  "/address/:id",
+  "/address/:id?",
   verifyAuthMiddleware,
   adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
   updateUserAddressController
 );
 
@@ -66,11 +74,10 @@ usersRoutes.patch("/lookingfor/:id");
 usersRoutes.patch("/relationship/:id");
 
 
-usersRoutes.patch("/images", verifyAuthMiddleware, upload.array("image", Infinity), imageEditController)
+usersRoutes.patch("/images/:id?", verifyAuthMiddleware, adminPermission, verifyActiveMiddleware, verifyIdMiddleware, upload.array("image", Infinity), imageEditController)
 
 usersRoutes.patch("/additional/:id");
 
-]
 usersRoutes.patch("/hobbies/:id")
 
 usersRoutes.patch("/pets/:id")
@@ -80,8 +87,11 @@ usersRoutes.patch("/languages/:id")
 usersRoutes.patch("/music/:id")
 
 usersRoutes.delete(
-  "/address/:id",
+  "/address/:id?",
   verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
   userDeleteAddressController
 );
 

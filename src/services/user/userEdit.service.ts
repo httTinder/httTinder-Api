@@ -13,7 +13,7 @@ const userEditService = async (
   const { password, ...rest } = data;
 
   const userFind = await userRepository.findOne({ where: { id } });
-  
+
   if (!userFind) {
     throw new AppError(404, "user not found");
   }
@@ -26,9 +26,9 @@ const userEditService = async (
     throw new AppError(404, "email cannot be changed on this route");
   }
 
-  await userRepository.update(userFind!.id, {name: data.name, age: data.age})
+  await userRepository.update(userFind!.id, { name: data.name, age: data.age });
 
-  return true
+  return true;
 };
 
 export default userEditService;

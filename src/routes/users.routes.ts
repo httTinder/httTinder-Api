@@ -60,6 +60,14 @@ usersRoutes.patch("/images", verifyAuthMiddleware, upload.array("image", Infinit
 
 usersRoutes.patch("/additional/:id")
 
+usersRoutes.patch("/hobbies/:id")
+
+usersRoutes.patch("/pets/:id")
+
+usersRoutes.patch("/languages/:id")
+
+usersRoutes.patch("/music/:id")
+
 usersRoutes.delete("/address/:id")
 
 usersRoutes.delete("/profile/:id")
@@ -71,5 +79,13 @@ usersRoutes.delete("/relationship/:id")
 usersRoutes.delete("/images") // falta o delete
 
 usersRoutes.delete("/additional/:id")
+
+usersRoutes.delete("/hobbies/:id")
+
+usersRoutes.delete("/pets/:id")
+
+usersRoutes.delete("/languages/:id")
+
+usersRoutes.delete("/music/:id")
 
 export default usersRoutes

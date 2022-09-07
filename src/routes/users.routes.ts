@@ -13,7 +13,7 @@ import listUsersController from "../controllers/user/list_user.controller";
 
 const usersRoutes = Router()
 
-usersRoutes.get("", verifyAuthMiddleware, verifyAdminMiddleware, listUsersController)
+usersRoutes.get("/all", verifyAuthMiddleware, verifyAdminMiddleware, listUsersController)
 
 usersRoutes.get(
   "/:id?",

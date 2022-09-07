@@ -24,7 +24,7 @@ export const verifyAuthMiddleware = async (
       }
       req.user = {
         isActive: decoded.isActive,
-        id: decoded.id,
+        id: decoded.sub,
         isAdm: decoded.isAdm,
       };
       next();

@@ -7,29 +7,28 @@ import activateUserController from '../controllers/user/active_user.controller'
 import createUserController from '../controllers/user/create_user.controller'
 import authEmailMiddleware from '../middlewares/authEmail.middleware'
 import { verifyActiveMiddleware } from '../middlewares/verifyActive.middleware'
+import { adminPermission } from "../middlewares/adminPermission.middleware";
 
 const usersRoutes = Router()
 
 usersRoutes.get(
-  "/:id",
+  "/:id?",
   verifyAuthMiddleware,
-  verifyAdminMiddleware,
+  adminPermission,
   userListController
 );
 
 usersRoutes.patch(
-  "/:id",
+  "/:id?",
   verifyAuthMiddleware,
-  verifyAdminMiddleware,
+  adminPermission,
   userEditController
 );
 
 usersRoutes.post('', createUserController)
 
 usersRoutes.patch(
-	'/email/:id',
-	authEmailMiddleware,
-	verifyActiveMiddleware,
+	'/email/:tokenEmail',
 	activateUserController
 )
 

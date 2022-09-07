@@ -88,7 +88,7 @@ usersRoutes.patch("/additional/:id");
 usersRoutes.patch("/hobbies/:id");
 
 usersRoutes.patch(
-  "/pets/:id",
+  "/pets/:id?",
   verifyAuthMiddleware,
   adminPermission,
   verifyActiveMiddleware,
@@ -120,8 +120,6 @@ usersRoutes.delete("/images");
 usersRoutes.delete("/additional/:id");
 
 usersRoutes.delete("/hobbies/:id");
-
-usersRoutes.delete("/pets/:id");
 
 usersRoutes.delete("/languages/:id");
 

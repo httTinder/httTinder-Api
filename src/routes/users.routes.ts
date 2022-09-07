@@ -64,12 +64,8 @@ usersRoutes.patch("/lookingfor/:id");
 
 usersRoutes.patch("/relationship/:id");
 
-usersRoutes.patch(
-  "/images",
-  verifyAuthMiddleware,
-  upload.array("image", Infinity),
-  imageEditController
-); // falta o delete
+
+usersRoutes.patch("/images", verifyAuthMiddleware, upload.array("image", Infinity), imageEditController)
 
 usersRoutes.patch("/additional/:id");
 
@@ -81,7 +77,7 @@ usersRoutes.delete("/lookingfor/:id");
 
 usersRoutes.delete("/relationship/:id");
 
-usersRoutes.delete("/images"); // falta o delete
+usersRoutes.delete("/images")
 
 usersRoutes.delete("/additional/:id");
 

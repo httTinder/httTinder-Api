@@ -19,14 +19,14 @@ const usersRoutes = Router()
 usersRoutes.get("/all", verifyAuthMiddleware, verifyAdminMiddleware, listUsersController)
 
 usersRoutes.get(
-  "/:id?",
+  "/data/:id?",
   verifyAuthMiddleware,
   adminPermission,
   userListController
 );
 
 usersRoutes.delete(
-  "/:id?",
+  "/data/:id?",
   verifyAuthMiddleware,
   adminPermission,
   verifyActiveMiddleware,
@@ -34,7 +34,7 @@ usersRoutes.delete(
 );
 
 usersRoutes.patch(
-  "/se",
+  "/data/:id?",
   verifyAuthMiddleware,
   adminPermission,
   editUserMiddleWare,
@@ -48,16 +48,28 @@ usersRoutes.patch(
 	activateUserController
 )
 
-usersRoutes.patch("/user/address/:id")
+usersRoutes.patch("/address/:id")
 
-usersRoutes.patch("/user/profile/:id")
+usersRoutes.patch("/profile/:id")
 
-usersRoutes.patch("/user/lookingfor/:id")
+usersRoutes.patch("/lookingfor/:id")
 
-usersRoutes.patch("/user/relationship/:id")
+usersRoutes.patch("/relationship/:id")
 
 usersRoutes.patch("/images", verifyAuthMiddleware, upload.array("image", Infinity), imageEditController) // falta o delete
 
-usersRoutes.patch("/user/additional/:id")
+usersRoutes.patch("/additional/:id")
+
+usersRoutes.delete("/address/:id")
+
+usersRoutes.delete("/profile/:id")
+
+usersRoutes.delete("/lookingfor/:id")
+
+usersRoutes.delete("/relationship/:id")
+
+usersRoutes.delete("/images") // falta o delete
+
+usersRoutes.delete("/additional/:id")
 
 export default usersRoutes

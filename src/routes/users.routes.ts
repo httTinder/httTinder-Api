@@ -21,8 +21,11 @@ import { imageDeleteController } from "../controllers/user/user_profile/user_ima
 import { uuidMiddleware } from "../middlewares/user/user_profile/user_images/uuidValidator.middleware";
 import { updateUserProfileController } from "../controllers/user/user_profile/update_user_profile.controller";
 import { deleteLookingForController } from "../controllers/user/user_profile/looking_for/deleteLookingFor.controller";
-import { updateUserPetsController } from "../controllers/user/user_aditional_data/user_pets/updateUserPets.controller";
-import { deleteUserPetsController } from "../controllers/user/user_aditional_data/user_pets/deleteUserPets.controller";
+import { UpdateUserAddDataController } from "../controllers/user/user_aditional_data/UpdateUserAddData.controller";
+import { deleteUserAddDataController } from "../controllers/user/user_aditional_data/deleteUserAddData.controller";
+import deleteRelationShipController from "../controllers/user/user_profile/type_of_relationship/deleteRelationshipController";
+import updateTypeOfRelationShip from "../controllers/user/user_profile/type_of_relationship/updateTypeOfRelationShip";
+import userDeleteProfileController from "../controllers/user/user_profile/delete_user_profile.controller";
 
 const usersRoutes = Router();
 
@@ -92,7 +95,10 @@ usersRoutes.patch(
   updateLookingForController
 );
 
-usersRoutes.patch("/relationship/:id");
+usersRoutes.patch("/relationship/:id?" ,verifyAuthMiddleware,
+adminPermission,
+verifyActiveMiddleware,
+verifyIdMiddleware,updateTypeOfRelationShip);
 
 usersRoutes.patch(
   "/images/:id?",
@@ -105,7 +111,14 @@ usersRoutes.patch(
   imageEditController
 );
 
-usersRoutes.patch("/additional/:id");
+usersRoutes.patch(
+  "/additional/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  UpdateUserAddDataController
+);
 
 usersRoutes.patch("/hobbies/:id");
 
@@ -131,7 +144,14 @@ usersRoutes.delete(
   userDeleteAddressController
 );
 
-usersRoutes.delete("/profile/:id");
+usersRoutes.delete(
+  "/profile/:id",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  userDeleteProfileController
+);
 
 usersRoutes.delete(
   "/lookingfor/:id?",
@@ -142,7 +162,12 @@ usersRoutes.delete(
   deleteLookingForController
 );
 
-usersRoutes.delete("/relationship/:id");
+usersRoutes.delete("/relationship/:id?",
+verifyAuthMiddleware,
+adminPermission,
+verifyActiveMiddleware,
+verifyIdMiddleware,
+deleteRelationShipController);
 
 usersRoutes.delete(
   "/images/:id?",
@@ -154,7 +179,14 @@ usersRoutes.delete(
   imageDeleteController
 );
 
-usersRoutes.delete("/additional/:id");
+usersRoutes.delete(
+  "/additional/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  deleteUserAddDataController
+);
 
 usersRoutes.delete("/hobbies/:id");
 

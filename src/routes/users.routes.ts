@@ -21,6 +21,8 @@ import { imageDeleteController } from "../controllers/user/user_profile/user_ima
 import { uuidMiddleware } from "../middlewares/user/user_profile/user_images/uuidValidator.middleware";
 import { updateUserProfileController } from "../controllers/user/user_profile/update_user_profile.controller";
 import { deleteLookingForController } from "../controllers/user/user_profile/looking_for/deleteLookingFor.controller";
+import { updateUserPetsController } from "../controllers/user/user_aditional_data/user_pets/updateUserPets.controller";
+import { deleteUserPetsController } from "../controllers/user/user_aditional_data/user_pets/deleteUserPets.controller";
 
 const usersRoutes = Router();
 
@@ -107,7 +109,14 @@ usersRoutes.patch("/additional/:id");
 
 usersRoutes.patch("/hobbies/:id");
 
-usersRoutes.patch("/pets/:id");
+usersRoutes.patch(
+  "/pets/:id",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  updateUserPetsController
+);
 
 usersRoutes.patch("/languages/:id");
 
@@ -135,7 +144,6 @@ usersRoutes.delete(
 
 usersRoutes.delete("/relationship/:id");
 
-
 usersRoutes.delete(
   "/images/:id?",
   verifyAuthMiddleware,
@@ -150,7 +158,14 @@ usersRoutes.delete("/additional/:id");
 
 usersRoutes.delete("/hobbies/:id");
 
-usersRoutes.delete("/pets/:id");
+usersRoutes.delete(
+  "/pets/:id",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  deleteUserPetsController
+);
 
 usersRoutes.delete("/languages/:id");
 

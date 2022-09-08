@@ -15,7 +15,8 @@ import { imageEditController } from "../controllers/user/user_profile/user_image
 import updateUserAddressController from "../controllers/user/user_address/update_user_address.controller";
 import userDeleteAddressController from "../controllers/user/user_address/delete_user_address.controller";
 import { verifyIdMiddleware } from "../middlewares/verifyId.middleware";
-import { updatePetsController } from "../controllers/user/user_profile/looking_for/pets/updatePets.controller";
+import { updatePetsController } from "../controllers/user/user_aditional_data/user_pets";
+
 
 const usersRoutes = Router();
 
@@ -89,10 +90,10 @@ usersRoutes.patch("/hobbies/:id");
 
 usersRoutes.patch(
   "/pets/:id?",
-  verifyAuthMiddleware,
-  adminPermission,
-  verifyActiveMiddleware,
-  verifyIdMiddleware,
+  // verifyAuthMiddleware,
+  // adminPermission,
+  // verifyActiveMiddleware,
+  // verifyIdMiddleware,
   updatePetsController
 );
 

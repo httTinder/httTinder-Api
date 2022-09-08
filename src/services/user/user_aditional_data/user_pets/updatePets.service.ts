@@ -8,6 +8,7 @@ export const updatePetsService = async (dataSpecie: string, userId: string) => {
   const userRepository = AppDataSource.getRepository(user);
   const userPetRepository = AppDataSource.getRepository(userPets);
   const userAddDataRepository = AppDataSource.getRepository(userAditionalData);
+g
 
   const findUser = await userRepository.findOne({
     where: {
@@ -21,9 +22,9 @@ export const updatePetsService = async (dataSpecie: string, userId: string) => {
 
   if (!findUser.userAditionalData.pets) {
     userPetRepository.create({ specie: dataSpecie });
-    const specie = await userPetRepository.save({ specie: dataSpecie });
+    const newPet = await userPetRepository.save({ specie: dataSpecie });
 
-    userAddDataRepository.update(findUser.userAditionalData.id, specie);
+    userAddDataRepository.update(findUser.userAditionalData.id, newPet);
 
     return;
   }

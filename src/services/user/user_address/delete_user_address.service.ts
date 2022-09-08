@@ -13,6 +13,7 @@ const userDeleteAddressService = async (id: string) => {
   }
 
   const addressRepository = AppDataSource.getRepository(userAddresses);
+  
   await addressRepository.delete({ id: userFind.address.id });
 
   return;

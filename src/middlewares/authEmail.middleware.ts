@@ -9,35 +9,21 @@ const authEmailMiddleware = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const { id } = req.params
-	let token = req.body
+	const { tokenEmail } = req.params
 
-	if (!token) {
+	if (!tokenEmail) {
 		throw new AppError(401, 'Invalid token')
 	}
 
-	token = token.split(' ')[1]
-
-	if (!id) {
-		throw new AppError(401, 'Invalid user')
-	}
-
 	jwt.verify(
-		token,
+		tokenEmail as string,
 		process.env.SECRET_KEY as string,
 		(error: any, decoded: any) => {
 			if (error) {
-				throw new AppError(401, 'Invalid token')
+				throw new AppError(401, 'Invalid Token')
 			}
-
-			req.user = {
-				isAdm: decoded.isAdm,
-				isActive: decoded.isActive,
+			req.idParams = {
 				id: decoded.sub,
-			}
-
-			if (id !== req.user.id) {
-				throw new AppError(401, 'Invalid token')
 			}
 
 			next()

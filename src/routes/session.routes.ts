@@ -1,8 +1,8 @@
-import { Router } from "express";
-import { userSessionController } from "../controllers/userSession/userSession.controller";
+import { Router } from 'express'
+import { userSessionController } from '../controllers/userSession/userSession.controller'
 
-const sessionRoutes = Router();
+const sessionRoutes = Router()
 
-sessionRoutes.post("", userSessionController);
+sessionRoutes.post('', userSessionController)
 
-export default sessionRoutes;
+export default sessionRoutes

@@ -11,7 +11,7 @@ import {
 import { Min } from "class-validator";
 import { userAddresses } from "./user_address";
 import { userAditionalData } from "./user_aditional_data";
-import { userProfile } from "./user_profile/index";
+import { userProfile } from "./user_profile";
 
 @Entity("user")
 export class user {
@@ -35,7 +35,7 @@ export class user {
   @Column({ default: false })
   isActive?: boolean;
 
-  @Column({ default: false })
+  @Column()
   isAdm?: boolean;
 
   @CreateDateColumn()

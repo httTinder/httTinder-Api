@@ -16,7 +16,7 @@ const createUserService = async ({
   email,
   name,
   password,
-  isAdm
+  isAdm = false
 }: IUserRequest): Promise<user> => {
   if (!age || !email || !name || !password) {
     throw new AppError(400, "Review required fields");

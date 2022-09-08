@@ -94,7 +94,7 @@ usersRoutes.patch(
   updateLookingForController
 );
 
-usersRoutes.patch("/relationship/:id" ,verifyAuthMiddleware,
+usersRoutes.patch("/relationship/:id?" ,verifyAuthMiddleware,
 adminPermission,
 verifyActiveMiddleware,
 verifyIdMiddleware,updateTypeOfRelationShip);

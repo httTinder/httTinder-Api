@@ -121,7 +121,7 @@ usersRoutes.patch(
   UpdateUserAddDataController
 );
 
-usersRoutes.patch("/hobbies/:id");
+usersRoutes.patch("/hobbies/:id?");
 
 usersRoutes.patch("/pets/:id");
 
@@ -182,7 +182,7 @@ usersRoutes.delete(
   deleteUserAddDataController
 );
 
-usersRoutes.delete("/hobbies/:id");
+usersRoutes.delete("/hobbies/:id?");
 
 usersRoutes.delete("/pets/:id");
 

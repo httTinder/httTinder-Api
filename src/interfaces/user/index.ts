@@ -11,4 +11,5 @@ export interface IUserRequest {
 	email: string
 	password?: string
 	age: number
+  isAdm?: boolean
 }

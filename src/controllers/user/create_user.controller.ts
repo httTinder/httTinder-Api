@@ -6,13 +6,14 @@ import { IUserRequest } from "../../interfaces/user";
 import createUserService from "../../services/user/create_user.service";
 
 const createUserController = async (req: Request, res: Response) => {
-  const { age, email, name, password }: IUserRequest = req.body;
+  const { age, email, name, password, isAdm }: IUserRequest = req.body;
   
   await createUserService({
     age,
     email,
     name,
     password,
+    isAdm
   });
   
   return res

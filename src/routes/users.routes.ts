@@ -22,6 +22,8 @@ import { imageDeleteController } from "../controllers/user/user_profile/user_ima
 import { uuidMiddleware } from "../middlewares/user/user_profile/user_images/uuidValidator.middleware";
 import { updateUserProfileController } from "../controllers/user/user_profile/update_user_profile.controller";
 import { deleteLookingForController } from "../controllers/user/user_profile/looking_for/deleteLookingFor.controller";
+import { UpdateUserAddDataController } from "../controllers/user/user_aditional_data/UpdateUserAddData.controller";
+import { deleteUserAddDataController } from "../controllers/user/user_aditional_data/deleteUserAddData.controller";
 import deleteRelationShipController from "../controllers/user/user_profile/type_of_relationship/deleteRelationshipController";
 import updateTypeOfRelationShip from "../controllers/user/user_profile/type_of_relationship/updateTypeOfRelationShip";
 import userDeleteProfileController from "../controllers/user/user_profile/delete_user_profile.controller";
@@ -110,7 +112,14 @@ usersRoutes.patch(
   imageEditController
 );
 
-usersRoutes.patch("/additional/:id");
+usersRoutes.patch(
+  "/additional/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  UpdateUserAddDataController
+);
 
 usersRoutes.patch("/hobbies/:id");
 
@@ -147,10 +156,12 @@ usersRoutes.delete(
   deleteLookingForController
 );
 
-usersRoutes.delete("/relationship/:id?",verifyAuthMiddleware,
+usersRoutes.delete("/relationship/:id?",
+verifyAuthMiddleware,
 adminPermission,
 verifyActiveMiddleware,
-verifyIdMiddleware,deleteRelationShipController);
+verifyIdMiddleware,
+deleteRelationShipController);
 
 usersRoutes.delete(
   "/images/:id?",
@@ -162,7 +173,14 @@ usersRoutes.delete(
   imageDeleteController
 );
 
-usersRoutes.delete("/additional/:id");
+usersRoutes.delete(
+  "/additional/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  deleteUserAddDataController
+);
 
 usersRoutes.delete("/hobbies/:id");
 

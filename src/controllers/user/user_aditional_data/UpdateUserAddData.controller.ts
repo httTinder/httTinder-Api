@@ -1,8 +1,8 @@
-import { userAdditionalDataService } from "./../../../services/user/user_aditional_data/userAdditionalData.service";
+import { userAdditionalDataService } from "../../../services/user/user_aditional_data/updateUserAddData.service";
 import { Request, Response } from "express";
 import { IUserAddDataRequest } from "../../../interfaces/user/user_additionalData";
 
-export const userAdditionalDataController = async (
+export const UpdateUserAddDataController = async (
   req: Request,
   res: Response
 ) => {

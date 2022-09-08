@@ -1,3 +1,4 @@
+import { updateLookingForController } from "../controllers/user/user_profile/looking_for/updateLookingFor.controller";
 import { Router } from "express";
 import { userListController } from "../controllers/user/userList.controller";
 import { verifyAuthMiddleware } from "../middlewares/auth.middleware";
@@ -17,6 +18,8 @@ import updateUserAddressController from "../controllers/user/user_address/update
 import userDeleteAddressController from "../controllers/user/user_address/delete_user_address.controller";
 import { verifyIdMiddleware } from "../middlewares/verifyId.middleware";
 import { updateUserProfileController } from "../controllers/user/user_profile/update_user_profile.controller";
+import { deleteLookingForController } from "../controllers/user/user_profile/looking_for/deleteLookingFor.controller";
+
 
 const usersRoutes = Router();
 
@@ -77,7 +80,14 @@ usersRoutes.patch(
   updateUserProfileController
 );
 
-usersRoutes.patch("/lookingfor/:id");
+usersRoutes.patch(
+  "/lookingfor/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  updateLookingForController
+);
 
 usersRoutes.patch("/relationship/:id");
 
@@ -112,7 +122,14 @@ usersRoutes.delete(
 
 usersRoutes.delete("/profile/:id");
 
-usersRoutes.delete("/lookingfor/:id");
+usersRoutes.delete(
+  "/lookingfor/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  deleteLookingForController
+);
 
 usersRoutes.delete("/relationship/:id");
 

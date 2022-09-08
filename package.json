@@ -6,10 +6,16 @@
   "author": "fjrjdev <thedromemafia@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "start": "node dist/src/server.js",
     "dev": "ts-node-dev --ignore-watch node_modules src/server.ts",
     "build": "tsc",
     "typeorm": "typeorm-ts-node-commonjs",
     "test": "cross-env NODE_ENV=test SECRET_KEY=secret_key jest"
+  },
+  "heroku-run-build-script": true,
+  "engines": {
+    "node": ">=16.15.0",
+    "yarn": ">=1.22.18"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",

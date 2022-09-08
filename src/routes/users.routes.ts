@@ -23,6 +23,8 @@ import { uuidMiddleware } from "../middlewares/user/user_profile/user_images/uui
 import { updateUserProfileController } from "../controllers/user/user_profile/update_user_profile.controller";
 import { deleteLookingForController } from "../controllers/user/user_profile/looking_for/deleteLookingFor.controller";
 import deleteRelationShipController from "../controllers/user/user_profile/type_of_relationship/deleteRelationshipController";
+import updateTypeOfRelationShip from "../controllers/user/user_profile/type_of_relationship/updateTypeOfRelationShip";
+import userDeleteProfileController from "../controllers/user/user_profile/delete_user_profile.controller";
 
 const usersRoutes = Router();
 
@@ -92,7 +94,10 @@ usersRoutes.patch(
   updateLookingForController
 );
 
-usersRoutes.patch("/relationship/:id");
+usersRoutes.patch("/relationship/:id?" ,verifyAuthMiddleware,
+adminPermission,
+verifyActiveMiddleware,
+verifyIdMiddleware,updateTypeOfRelationShip);
 
 usersRoutes.patch(
   "/images/:id?",
@@ -124,7 +129,14 @@ usersRoutes.delete(
   userDeleteAddressController
 );
 
-usersRoutes.delete("/profile/:id");
+usersRoutes.delete(
+  "/profile/:id",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  userDeleteProfileController
+);
 
 usersRoutes.delete(
   "/lookingfor/:id?",
@@ -135,11 +147,10 @@ usersRoutes.delete(
   deleteLookingForController
 );
 
-usersRoutes.delete("/relationship/:id",verifyAuthMiddleware,
+usersRoutes.delete("/relationship/:id?",verifyAuthMiddleware,
 adminPermission,
 verifyActiveMiddleware,
 verifyIdMiddleware,deleteRelationShipController);
-
 
 usersRoutes.delete(
   "/images/:id?",

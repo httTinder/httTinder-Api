@@ -14,6 +14,10 @@ const userDeleteProfileService = async (id: string) => {
 
   const profileRepository = AppDataSource.getRepository(userProfile);
 
+  if (!userFind.profile) {
+    throw new AppError(404, "User profile not found");
+  }
+
   await profileRepository.delete({ id: userFind.profile.id });
 
   return;

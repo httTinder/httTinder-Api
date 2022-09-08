@@ -156,7 +156,7 @@ usersRoutes.delete(
 );
 
 usersRoutes.delete(
-  "/additional/:id",
+  "/additional/:id?",
   verifyAuthMiddleware,
   adminPermission,
   verifyActiveMiddleware,

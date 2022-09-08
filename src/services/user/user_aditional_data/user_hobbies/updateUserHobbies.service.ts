@@ -2,13 +2,12 @@ import AppDataSource from "../../../../data-source";
 import { user } from "../../../../entities";
 import { userAditionalData } from "../../../../entities/user_aditional_data";
 import { userHobbies } from "../../../../entities/user_aditional_data/user_hobbies";
-import { userProfile } from "../../../../entities/user_profile";
 import { AppError } from "../../../../errors/AppError";
 import { IUserHobbies } from "../../../../interfaces/user/user_aditional_data/user_hobbies";
 
 const updateUserHobbiesService = async (userData: IUserHobbies, id: string) => {
-  const { name } = userData;
-  if (name) {
+  const { name, idHobbie } = userData;
+  if (!name) {
     throw new AppError(404, "index not found");
   }
 
@@ -27,6 +26,12 @@ const updateUserHobbiesService = async (userData: IUserHobbies, id: string) => {
   }
 
   const hobbiRepository = AppDataSource.getRepository(userHobbies);
+  const findHobbie = await hobbiRepository.findOneBy({ id: idHobbie });
+
+  if (idHobbie && findHobbie) {
+    hobbiRepository.update(idHobbie, { name });
+  }
+
   hobbiRepository.create(userData);
   const hobbie = await hobbiRepository.save(userData);
   if (!data?.hobbies) {

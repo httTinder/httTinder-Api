@@ -4,7 +4,7 @@ import { userAddresses } from "../../../entities/user_address";
 import { user } from "../../../entities";
 import { AppError } from "../../../errors/AppError";
 
-const updateUserAddressService = async (
+const   updateUserAddressService = async (
   userData: IUserAdressRequest,
   id: string
 ) => {
@@ -14,10 +14,10 @@ const updateUserAddressService = async (
   }
 
   if (state.length !== 2) {
-    throw new AppError(404, "State index not equal length 2");
+    throw new AppError(404, "Review required in state field");
   }
   if (zipCode.length !== 8) {
-    throw new AppError(404, "ZipCode index not equal length 8");
+    throw new AppError(404, "Review required in zip code field");
   }
   const userRepository = AppDataSource.getRepository(user);
   const addressRepository = AppDataSource.getRepository(userAddresses);

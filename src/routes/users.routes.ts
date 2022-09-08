@@ -107,7 +107,7 @@ usersRoutes.patch(
 );
 
 usersRoutes.patch(
-  "/additional/:id",
+  "/additional/:id?",
   verifyAuthMiddleware,
   adminPermission,
   verifyActiveMiddleware,

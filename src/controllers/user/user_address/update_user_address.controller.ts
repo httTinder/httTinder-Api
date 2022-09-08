@@ -7,7 +7,7 @@ const updateUserAddressController = async (req: Request, res: Response) => {
   const userData: IUserAdressRequest = req.body;
   
   const id = req.idParams.id
-
+ 
   await updateUserAddressService(userData, id);
   return res
     .status(201)

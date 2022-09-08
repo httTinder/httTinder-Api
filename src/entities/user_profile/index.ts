@@ -48,5 +48,5 @@ export class userProfile {
 		eager: true,
 		nullable: true,
 	})
-	images: userImages[]
+	images: userImages
 }

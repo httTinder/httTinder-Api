@@ -1,12 +1,10 @@
 import AppDataSource from "../../../../data-source";
 import { user } from "../../../../entities";
 import { AppError } from "../../../../errors/AppError";
-import { IUserEditRequest } from "../../../../interfaces/user";
 import { compareSync } from "bcryptjs";
 import { userImages } from "../../../../entities/user_profile/user_images";
 import { userProfile } from "../../../../entities/user_profile";
 import { cloudinaryResponse } from "../../../../interfaces/user/user_profile/user_images";
-import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
 const imageEditService = async (
   id: string,
@@ -15,6 +13,10 @@ const imageEditService = async (
   const userRepository = AppDataSource.getRepository(user);
   const profileRepository = AppDataSource.getRepository(userProfile);
   const imagesRepository = AppDataSource.getRepository(userImages);
+
+  if (cloudinaryRespo.length === 0) {
+    throw new AppError(400, "Review required fields");
+  }
 
   const userFind = await userRepository.findOne({ where: { id } });
 

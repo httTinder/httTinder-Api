@@ -1,4 +1,3 @@
-import express from "express";
 import multer from "multer";
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";

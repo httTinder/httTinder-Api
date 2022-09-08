@@ -1,3 +1,4 @@
+import { updateLookingForController } from "../controllers/user/user_profile/looking_for/updateLookingFor.controller";
 import { Router } from "express";
 import { userListController } from "../controllers/user/userList.controller";
 import { verifyAuthMiddleware } from "../middlewares/auth.middleware";
@@ -16,6 +17,7 @@ import { imageEditController } from "../controllers/user/user_profile/user_image
 import updateUserAddressController from "../controllers/user/user_address/update_user_address.controller";
 import userDeleteAddressController from "../controllers/user/user_address/delete_user_address.controller";
 import { verifyIdMiddleware } from "../middlewares/verifyId.middleware";
+import { deleteLookingForController } from "../controllers/user/user_profile/looking_for/deleteLookingFor.controller";
 
 const usersRoutes = Router();
 
@@ -69,22 +71,36 @@ usersRoutes.patch(
 
 usersRoutes.patch("/profile/:id");
 
-usersRoutes.patch("/lookingfor/:id");
+usersRoutes.patch(
+  "/lookingfor/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  updateLookingForController
+);
 
 usersRoutes.patch("/relationship/:id");
 
-
-usersRoutes.patch("/images/:id?", verifyAuthMiddleware, adminPermission, verifyActiveMiddleware, verifyIdMiddleware, upload.array("image", Infinity), imageEditController)
+usersRoutes.patch(
+  "/images/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  upload.array("image", Infinity),
+  imageEditController
+);
 
 usersRoutes.patch("/additional/:id");
 
-usersRoutes.patch("/hobbies/:id")
+usersRoutes.patch("/hobbies/:id");
 
-usersRoutes.patch("/pets/:id")
+usersRoutes.patch("/pets/:id");
 
-usersRoutes.patch("/languages/:id")
+usersRoutes.patch("/languages/:id");
 
-usersRoutes.patch("/music/:id")
+usersRoutes.patch("/music/:id");
 
 usersRoutes.delete(
   "/address/:id?",
@@ -97,20 +113,27 @@ usersRoutes.delete(
 
 usersRoutes.delete("/profile/:id");
 
-usersRoutes.delete("/lookingfor/:id");
+usersRoutes.delete(
+  "/lookingfor/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  deleteLookingForController
+);
 
 usersRoutes.delete("/relationship/:id");
 
-usersRoutes.delete("/images")
+usersRoutes.delete("/images");
 
 usersRoutes.delete("/additional/:id");
 
-usersRoutes.delete("/hobbies/:id")
+usersRoutes.delete("/hobbies/:id");
 
-usersRoutes.delete("/pets/:id")
+usersRoutes.delete("/pets/:id");
 
-usersRoutes.delete("/languages/:id")
+usersRoutes.delete("/languages/:id");
 
-usersRoutes.delete("/music/:id")
+usersRoutes.delete("/music/:id");
 
-export default usersRoutes
+export default usersRoutes;

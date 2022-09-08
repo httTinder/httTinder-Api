@@ -6,6 +6,7 @@
   "author": "fjrjdev <thedromemafia@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "start": "node dist/src/server.js",
     "dev": "ts-node-dev --ignore-watch node_modules src/server.ts",
     "build": "tsc",
     "typeorm": "typeorm-ts-node-commonjs",

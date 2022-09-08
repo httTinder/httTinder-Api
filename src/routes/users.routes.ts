@@ -22,6 +22,7 @@ import { imageDeleteController } from "../controllers/user/user_profile/user_ima
 import { uuidMiddleware } from "../middlewares/user/user_profile/user_images/uuidValidator.middleware";
 import { updateUserProfileController } from "../controllers/user/user_profile/update_user_profile.controller";
 import { deleteLookingForController } from "../controllers/user/user_profile/looking_for/deleteLookingFor.controller";
+import updateTypeOfRelationShip from "../controllers/user/user_profile/type_of_relationship/updateTypeOfRelationShip";
 
 const usersRoutes = Router();
 
@@ -91,7 +92,10 @@ usersRoutes.patch(
   updateLookingForController
 );
 
-usersRoutes.patch("/relationship/:id");
+usersRoutes.patch("/relationship/:id" ,verifyAuthMiddleware,
+adminPermission,
+verifyActiveMiddleware,
+verifyIdMiddleware,updateTypeOfRelationShip);
 
 usersRoutes.patch(
   "/images/:id?",

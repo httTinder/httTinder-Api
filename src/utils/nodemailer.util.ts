@@ -26,7 +26,7 @@ const sendEmail = async ({ to, subject, text, html }: IEmailRequest) => {
 			console.log('email send with sucess')
 		})
 		.catch((error) => {
-			throw new AppError(403, 'An error has occurred')
+			throw new AppError(403, `An error has occurred ${error}`)
 		})
 }
 

@@ -17,7 +17,9 @@ import { imageEditController } from "../controllers/user/user_profile/user_image
 import updateUserAddressController from "../controllers/user/user_address/update_user_address.controller";
 import userDeleteAddressController from "../controllers/user/user_address/delete_user_address.controller";
 import { verifyIdMiddleware } from "../middlewares/verifyId.middleware";
+import { updateUserProfileController } from "../controllers/user/user_profile/update_user_profile.controller";
 import { deleteLookingForController } from "../controllers/user/user_profile/looking_for/deleteLookingFor.controller";
+
 
 const usersRoutes = Router();
 
@@ -69,7 +71,14 @@ usersRoutes.patch(
   updateUserAddressController
 );
 
-usersRoutes.patch("/profile/:id");
+usersRoutes.patch(
+  "/profile/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  updateUserProfileController
+);
 
 usersRoutes.patch(
   "/lookingfor/:id?",

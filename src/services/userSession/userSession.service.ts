@@ -25,7 +25,7 @@ export const userSessionService = async ({ email, password }: IUserSession) => {
 	}
 
 	if (!findUser.isActive) {
-		throw new AppError(403, 'User is not active')
+		throw new AppError(401, 'User is not active')
 	}
 
 	const token = jwt.sign(

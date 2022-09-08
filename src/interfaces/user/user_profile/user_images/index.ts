@@ -20,3 +20,7 @@ export interface cloudinaryResponse {
     original_filename: string,
     api_key: string
 }
+
+export interface imagesToDeleteBody {
+    images: string[]
+}

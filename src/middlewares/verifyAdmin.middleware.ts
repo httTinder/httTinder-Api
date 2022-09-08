@@ -9,7 +9,7 @@ export const verifyAdminMiddleware = (
   const { isAdm } = req.user;
 
   if (!isAdm) {
-    throw new AppError(403, "user is not administrator");
+    throw new AppError(403, "missing authorization permissions");
   }
 
   next();

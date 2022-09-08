@@ -8,8 +8,8 @@ export const verifyActiveMiddleware = (
 ) => {
 	const { isActive } = req.user
 
-	if (!isActive) {
-		throw new AppError(401, 'user is not Active')
+	if (isActive) {
+		throw new AppError(401, 'User is not Active')
 	}
 
 	next()

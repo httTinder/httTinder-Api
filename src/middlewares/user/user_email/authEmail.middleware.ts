@@ -2,7 +2,7 @@ import 'dotenv/config'
 import jwt from 'jsonwebtoken'
 
 import { NextFunction, Request, Response } from 'express'
-import { AppError } from '../errors/AppError'
+import { AppError } from '../../../errors/AppError'
 
 const authEmailMiddleware = async (
 	req: Request,
@@ -22,7 +22,10 @@ const authEmailMiddleware = async (
 			if (error) {
 				throw new AppError(401, 'Invalid Token')
 			}
-			req.idParams = {
+			req.user = {
+				email: decoded.email,
+				isActive: decoded.isActive,
+				isAdm: decoded.isAdm,
 				id: decoded.sub,
 			}
 

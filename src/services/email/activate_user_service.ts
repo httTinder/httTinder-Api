@@ -3,8 +3,6 @@ import { user } from '../../entities'
 import { AppError } from '../../errors/AppError'
 
 const activateUserService = async (userId: string) => {
-	//Guarda o valor do id dentro do decoded
-
 	const userRepository = AppDataSource.getRepository(user)
 
 	const findUser = await userRepository.findOneBy({ id: userId })

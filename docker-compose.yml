@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+    api:
+        container_name: htt_tinder_api
+        build: .
+        ports:
+            - 3000:3000
+        environment:
+            - DB_HOST=htt_tinder_db
+            - DB_PASSWORD=1234
+            - DB=htt_tinder_db
+            - DB_USER=mapin
+            - SECRET_KEY=7792125bbce085d0b54cd64a7065aef4
+        depends_on:
+            db:
+                condition: service_healthy
+        volumes:
+            - .:/app
+
+    db:
+        container_name: htt_tinder_db
+        image: postgres:14
+        ports:
+            - 5431:5432
+        environment:
+            - POSTGRES_USER=mapin
+            - POSTGRES_PASSWORD=1234
+            - POSTGRES_DB=htt_tinder_db
+        healthcheck:
+            test: ['CMD-SHELL', 'pg_isready -U mapin -d  htt_tinder_db']
+            interval: 10s
+            timeout: 5s
+            retries: 5
+            start_period: 5s

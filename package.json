@@ -12,6 +12,7 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "test": "cross-env NODE_ENV=test SECRET_KEY=secret_key jest"
   },
+  "heroku-run-build-script": true,
   "engines": {
     "node": ">=16.15.0",
     "yarn": ">=1.22.18"

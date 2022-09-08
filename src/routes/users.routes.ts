@@ -22,6 +22,7 @@ import { imageDeleteController } from "../controllers/user/user_profile/user_ima
 import { uuidMiddleware } from "../middlewares/user/user_profile/user_images/uuidValidator.middleware";
 import { updateUserProfileController } from "../controllers/user/user_profile/update_user_profile.controller";
 import { deleteLookingForController } from "../controllers/user/user_profile/looking_for/deleteLookingFor.controller";
+import { userAdditionalDataController } from "../controllers/user/user_aditional_data/userAdditionalData.controller";
 
 const usersRoutes = Router();
 
@@ -104,7 +105,14 @@ usersRoutes.patch(
   imageEditController
 );
 
-usersRoutes.patch("/additional/:id");
+usersRoutes.patch(
+  "/additional/:id",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  userAdditionalDataController
+);
 
 usersRoutes.patch("/hobbies/:id");
 
@@ -135,7 +143,6 @@ usersRoutes.delete(
 );
 
 usersRoutes.delete("/relationship/:id");
-
 
 usersRoutes.delete(
   "/images/:id?",

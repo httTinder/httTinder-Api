@@ -19,10 +19,12 @@ const updateUserHobbiesService = async (userData: IUserHobbies, id: string) => {
   }
 
   const dataRepository = AppDataSource.getRepository(userAditionalData);
-  const data = await dataRepository.findOneBy({ id: findUser.id });
+  const data = await dataRepository.findOneBy({
+    id: findUser.userAditionalData.id,
+  });
 
   if (!data) {
-    throw new AppError(404, "user not found");
+    throw new AppError(404, "data not found");
   }
 
   const hobbiRepository = AppDataSource.getRepository(userHobbies);
@@ -30,6 +32,7 @@ const updateUserHobbiesService = async (userData: IUserHobbies, id: string) => {
 
   if (idHobbie && findHobbie) {
     hobbiRepository.update(idHobbie, { name });
+    return;
   }
 
   hobbiRepository.create(userData);

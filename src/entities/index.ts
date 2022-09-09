@@ -35,7 +35,7 @@ export class user {
   @Column({ default: false })
   isActive?: boolean;
 
-  @Column({ default: false })
+  @Column()
   isAdm?: boolean;
 
   @CreateDateColumn()

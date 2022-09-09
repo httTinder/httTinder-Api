@@ -8,6 +8,11 @@ export const userAdditionalDataService = async (
   data: IUserAddDataRequest,
   userId: string
 ) => {
+  const { kids, kidsQnt } = data;
+
+  if (kids && !kidsQnt) {
+    throw new AppError(400, "Must have a quantity");
+  }
   const userRepository = AppDataSource.getRepository(user);
 
   const additionalDataRepository =

@@ -1,3 +1,4 @@
+import { verifySchemasMiddleware } from './../middlewares/verifySchemas.middleware';
 import { updateLookingForController } from "../controllers/user/user_profile/looking_for/updateLookingFor.controller";
 import { Router } from "express";
 import { userListController } from "../controllers/user/userList.controller";
@@ -33,6 +34,7 @@ import { verifyUuidParamsMiddleware } from "../middlewares/verifyUuidParams.midd
 import devCreateUserController from "../controllers/user/devCreate.controller";
 import updateUserHobbiesController from "../controllers/user/user_aditional_data/user_hobbies/update_user_hobbies.controller";
 import deleteUserHobbieController from "../controllers/user/user_aditional_data/user_hobbies/delete_user_hobbie.controller";
+import { userAddDataSchema } from '../schemas/userAddData/userAddData.schemas';
 
 const usersRoutes = Router();
 
@@ -132,6 +134,7 @@ usersRoutes.patch(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  verifySchemasMiddleware(userAddDataSchema),
   UpdateUserAddDataController
 );
 

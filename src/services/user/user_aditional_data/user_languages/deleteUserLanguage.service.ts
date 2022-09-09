@@ -27,7 +27,7 @@ export const deleteUserLanguageService = async (
   });
 
   if (!findData) {
-    throw new AppError(404, "data not found");
+    throw new AppError(404, "user additional data is required");
   }
 
   const findLanguage = await userLanguagueRepository.delete({

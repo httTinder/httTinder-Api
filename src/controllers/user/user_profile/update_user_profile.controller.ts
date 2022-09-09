@@ -12,5 +12,6 @@ export const updateUserProfileController = async (
   const id = req.idParams.id;
 
   await updateUserProfileService(userData, id);
+  
   return res.status(200).json({ message: "Profile changed successfully" });
 };

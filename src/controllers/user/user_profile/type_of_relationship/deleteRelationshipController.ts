@@ -1,6 +1,6 @@
 import { Request,Response } from "express";
 
-import deleterelationShipService from "../../../../services/user/user_profile/type_of_relationship/deleteTypeOfRelation";
+import deleterelationShipService from "../../../../services/user/user_profile/type_of_relationship/deleteTypeOfRelation.service";
 
 const deleteRelationShipController = async(req:Request,res:Response)=>{
 

@@ -1,10 +1,10 @@
 import AppDataSource from "../../../../data-source";
 import { user } from "../../../../entities";
 import { userAditionalData } from "../../../../entities/user_aditional_data";
-import { userHobbies } from "../../../../entities/user_aditional_data/user_hobbies";
+import { userMusicGenre } from "../../../../entities/user_aditional_data/user_music_genre";
 import { AppError } from "../../../../errors/AppError";
 
-const deleteUserHobbieService = async (id: string, uuid: string) => {
+export const deleteUserMusicService = async (id: string, uuid: string) => {
   const userRepository = AppDataSource.getRepository(user);
   const findUser = await userRepository.findOneBy({ id });
 
@@ -21,17 +21,15 @@ const deleteUserHobbieService = async (id: string, uuid: string) => {
     throw new AppError(404, "user not found");
   }
 
-  const hobbieRepository = AppDataSource.getRepository(userHobbies);
-  const findHobbie = await hobbieRepository.delete({
+  const musicRepository = AppDataSource.getRepository(userMusicGenre);
+  const findMusic = await musicRepository.delete({
     id: uuid,
     userAditionalData: findData,
   });
 
-  if (findHobbie.affected == 0) {
+  if (findMusic.affected == 0) {
     throw new AppError(404, "Hobbie not found");
   }
 
   return;
 };
-
-export default deleteUserHobbieService;

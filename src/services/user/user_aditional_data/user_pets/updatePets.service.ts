@@ -4,11 +4,17 @@ import AppDataSource from "../../../../data-source";
 import { AppError } from "../../../../errors/AppError";
 import { userAditionalData } from "../../../../entities/user_aditional_data";
 
-export const updatePetsService = async (dataSpecie: string, userId: string) => {
+export const updatePetsService = async (
+  dataSpecie: string,
+  userId: string,
+  itemId: string
+) => {
   const userRepository = AppDataSource.getRepository(user);
   const userPetRepository = AppDataSource.getRepository(userPets);
   const userAddDataRepository = AppDataSource.getRepository(userAditionalData);
-g
+
+  // colocar um id no body da requisicao do item q vamos editar da tabela
+  // e ai fazer a verificação se esse id existe, se existir ele faz o update se não eh adicioanr
 
   const findUser = await userRepository.findOne({
     where: {

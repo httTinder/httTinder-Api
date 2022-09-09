@@ -35,6 +35,7 @@ import devCreateUserController from "../controllers/user/devCreate.controller";
 import updateUserHobbiesController from "../controllers/user/user_aditional_data/user_hobbies/update_user_hobbies.controller";
 import deleteUserHobbieController from "../controllers/user/user_aditional_data/user_hobbies/delete_user_hobbie.controller";
 import { userAddDataSchema } from "../schemas/userAddData/userAddData.schemas";
+import { userEditSchema, userSchema } from "../schemas/user/user.schemas";
 
 const usersRoutes = Router();
 
@@ -69,11 +70,12 @@ usersRoutes.patch(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  verifySchemasMiddleware(userEditSchema),
   editUserMiddleWare,
   userEditController
 );
 
-usersRoutes.post("", createUserController);
+usersRoutes.post("", verifySchemasMiddleware(userSchema), createUserController);
 
 usersRoutes.patch(
   "/email/:tokenEmail",

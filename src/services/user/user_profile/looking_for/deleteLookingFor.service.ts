@@ -5,6 +5,7 @@ import { user } from "../../../../entities";
 
 export const deleteLookingForService = async (userId: string) => {
   const userRepository = AppDataSource.getRepository(user);
+  
   const lookingForRepository = AppDataSource.getRepository(lookingFor);
 
   const userFind = await userRepository.findOne({

@@ -31,6 +31,8 @@ import { activateUserMiddleware } from "../middlewares/activateUser.middleware";
 import activateUserAdminController from "../controllers/user/activateUserAdmin.controller";
 import { verifyUuidParamsMiddleware } from "../middlewares/verifyUuidParams.middleware";
 import devCreateUserController from "../controllers/user/devCreate.controller";
+import updateUserHobbiesController from "../controllers/user/user_aditional_data/user_hobbies/update_user_hobbies.controller";
+import deleteUserHobbieController from "../controllers/user/user_aditional_data/user_hobbies/delete_user_hobbie.controller";
 
 const usersRoutes = Router();
 
@@ -133,7 +135,14 @@ usersRoutes.patch(
   UpdateUserAddDataController
 );
 
-usersRoutes.patch("/hobbies/:id");
+usersRoutes.patch(
+  "/hobbies/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  updateUserHobbiesController
+);
 
 usersRoutes.patch("/pets/:id");
 
@@ -196,7 +205,14 @@ usersRoutes.delete(
   deleteUserAddDataController
 );
 
-usersRoutes.delete("/hobbies/:id");
+usersRoutes.delete(
+  "/hobbies/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  deleteUserHobbieController
+);
 
 usersRoutes.delete("/pets/:id");
 

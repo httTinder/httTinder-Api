@@ -39,6 +39,7 @@ import { userEditSchema, userSchema } from "../schemas/user/user.schemas";
 import { updateUserProfileSchema } from "../schemas/userProfile/updateUserProfile.schemas";
 import { lookingForSchema } from "../schemas/userProfile/lookingfor/updateLookingfor.schemas";
 import { relationshipSchema } from "../schemas/userProfile/lookingfor/relationship/updateRelationship.schemas";
+import { addressRequestSchema } from "../schemas/user/address/address.schemas";
 
 const usersRoutes = Router();
 
@@ -166,6 +167,7 @@ usersRoutes.delete(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  verifySchemasMiddleware(addressRequestSchema),
   userDeleteAddressController
 );
 

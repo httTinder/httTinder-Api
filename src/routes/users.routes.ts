@@ -34,6 +34,7 @@ import updateUserHobbiesController from "../controllers/user/user_aditional_data
 import deleteUserHobbieController from "../controllers/user/user_aditional_data/user_hobbies/delete_user_hobbie.controller";
 import { deleteUserPetsController } from "../controllers/user/user_aditional_data/user_pets/deleteUserPets.controller";
 import { updateUserPetsController } from "../controllers/user/user_aditional_data/user_pets/updateUserPets.controller";
+import { uuidBodyMiddleware } from "../middlewares/verifyUuid.middleware";
 
 const usersRoutes = Router();
 
@@ -142,6 +143,7 @@ usersRoutes.patch(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  uuidBodyMiddleware,
   updateUserHobbiesController
 );
 
@@ -151,6 +153,7 @@ usersRoutes.patch(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  uuidBodyMiddleware,
   updateUserPetsController
 );
 
@@ -219,6 +222,7 @@ usersRoutes.delete(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  uuidBodyMiddleware,
   deleteUserHobbieController
 );
 
@@ -228,6 +232,7 @@ usersRoutes.delete(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  uuidBodyMiddleware,
   deleteUserPetsController
 );
 

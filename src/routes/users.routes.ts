@@ -28,6 +28,7 @@ import deleteRelationShipController from "../controllers/user/user_profile/type_
 import updateTypeOfRelationShip from "../controllers/user/user_profile/type_of_relationship/updateTypeOfRelationShip";
 import userDeleteProfileController from "../controllers/user/user_profile/delete_user_profile.controller";
 import updateUserHobbiesController from "../controllers/user/user_aditional_data/user_hobbies/update_user_hobbies.controller";
+import deleteUserHobbieController from "../controllers/user/user_aditional_data/user_hobbies/delete_user_hobbie.controller";
 
 const usersRoutes = Router();
 
@@ -196,7 +197,14 @@ usersRoutes.delete(
   deleteUserAddDataController
 );
 
-usersRoutes.delete("/hobbies/:id?");
+usersRoutes.delete(
+  "/hobbies/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  deleteUserHobbieController
+);
 
 usersRoutes.delete("/pets/:id");
 

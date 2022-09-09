@@ -3,9 +3,9 @@ import deleteUserHobbieService from "../../../../services/user/user_aditional_da
 
 const deleteUserHobbieController = async (req: Request, res: Response) => {
   const id = req.idParams.id;
-  const { idHobbie } = req.body;
+  const { uuid } = req.body;
 
-  await deleteUserHobbieService(id, idHobbie);
+  await deleteUserHobbieService(id, uuid);
 
   return res.json({ message: "Hobbie Deleted With Sucess" });
 };

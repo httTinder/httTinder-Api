@@ -150,7 +150,7 @@ usersRoutes.patch(
 usersRoutes.patch("/pets/:id");
 
 usersRoutes.patch(
-  "/languages/:id",
+  "/languages/:id?",
   verifyAuthMiddleware,
   adminPermission,
   verifyActiveMiddleware,
@@ -228,7 +228,7 @@ usersRoutes.delete(
 usersRoutes.delete("/pets/:id");
 
 usersRoutes.delete(
-  "/languages/:id",
+  "/languages/:id?",
   verifyAuthMiddleware,
   adminPermission,
   verifyActiveMiddleware,

@@ -50,7 +50,7 @@ export const updateUserLanguageService = async (
     throw new AppError(404, "Language not found");
   }
 
-  if (uuid && findLanguage) {
+  if (uuid && findLanguage !== undefined) {
     userLanguagesRepository.update(uuid, {
       language: language,
     });

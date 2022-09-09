@@ -26,6 +26,8 @@ import { deleteUserAddDataController } from "../controllers/user/user_aditional_
 import deleteRelationShipController from "../controllers/user/user_profile/type_of_relationship/deleteRelationshipController";
 import updateTypeOfRelationShip from "../controllers/user/user_profile/type_of_relationship/updateTypeOfRelationShip";
 import userDeleteProfileController from "../controllers/user/user_profile/delete_user_profile.controller";
+import { updateUserPetsController } from "../controllers/user/user_aditional_data/user_pets/updateUserPets.controller";
+import { deleteUserPetsController } from "../controllers/user/user_aditional_data/user_pets/deleteUserPets.controller";
 
 const usersRoutes = Router();
 

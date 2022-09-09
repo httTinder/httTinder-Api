@@ -32,9 +32,12 @@ import { verifyUuidParamsMiddleware } from "../middlewares/verifyUuidParams.midd
 import devCreateUserController from "../controllers/user/devCreate.controller";
 import updateUserHobbiesController from "../controllers/user/user_aditional_data/user_hobbies/update_user_hobbies.controller";
 import deleteUserHobbieController from "../controllers/user/user_aditional_data/user_hobbies/delete_user_hobbie.controller";
+import { updateUserLanguageController } from "../controllers/user/user_aditional_data/user_languages/updateUserLanguage.controller";
+import { uuidBodyMiddleware } from "../middlewares/verifyUuid.middleware";
+import { deleteUserLanguageController } from "../controllers/user/user_aditional_data/user_languages/deleteUserLanguage.controller";
 import { deleteUserPetsController } from "../controllers/user/user_aditional_data/user_pets/deleteUserPets.controller";
 import { updateUserPetsController } from "../controllers/user/user_aditional_data/user_pets/updateUserPets.controller";
-import { uuidBodyMiddleware } from "../middlewares/verifyUuid.middleware";
+
 
 const usersRoutes = Router();
 
@@ -157,7 +160,15 @@ usersRoutes.patch(
   updateUserPetsController
 );
 
-usersRoutes.patch("/languages/:id");
+usersRoutes.patch(
+  "/languages/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  uuidBodyMiddleware,
+  updateUserLanguageController
+);
 
 usersRoutes.patch("/music/:id");
 
@@ -236,7 +247,15 @@ usersRoutes.delete(
   deleteUserPetsController
 );
 
-usersRoutes.delete("/languages/:id");
+usersRoutes.delete(
+  "/languages/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  uuidBodyMiddleware,
+  deleteUserLanguageController
+);
 
 usersRoutes.delete("/music/:id");
 

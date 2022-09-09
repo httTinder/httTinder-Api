@@ -1,7 +1,7 @@
 import { AppError } from "./../errors/AppError";
 import { Response, Request, NextFunction } from "express";
 
-export const uuidMiddleware = async (
+export const uuidBodyMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction

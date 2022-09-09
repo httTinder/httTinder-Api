@@ -27,6 +27,10 @@ import { deleteUserAddDataController } from "../controllers/user/user_aditional_
 import deleteRelationShipController from "../controllers/user/user_profile/type_of_relationship/deleteRelationshipController";
 import updateTypeOfRelationShip from "../controllers/user/user_profile/type_of_relationship/updateTypeOfRelationShip";
 import userDeleteProfileController from "../controllers/user/user_profile/delete_user_profile.controller";
+import { activateUserMiddleware } from "../middlewares/activateUser.middleware";
+import activateUserAdminController from "../controllers/user/activateUserAdmin.controller";
+import { verifyUuidParamsMiddleware } from "../middlewares/verifyUuidParams.middleware";
+import devCreateUserController from "../controllers/user/devCreate.controller";
 
 const usersRoutes = Router();
 
@@ -67,7 +71,11 @@ usersRoutes.patch(
 
 usersRoutes.post("", createUserController);
 
-usersRoutes.patch("/email/:tokenEmail", activateUserController);
+usersRoutes.patch(
+  "/email/:tokenEmail",
+  activateUserMiddleware,
+  activateUserController
+);
 
 usersRoutes.patch(
   "/address/:id?",
@@ -96,10 +104,14 @@ usersRoutes.patch(
   updateLookingForController
 );
 
-usersRoutes.patch("/relationship/:id?" ,verifyAuthMiddleware,
-adminPermission,
-verifyActiveMiddleware,
-verifyIdMiddleware,updateTypeOfRelationShip);
+usersRoutes.patch(
+  "/relationship/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  updateTypeOfRelationShip
+);
 
 usersRoutes.patch(
   "/images/:id?",
@@ -156,12 +168,14 @@ usersRoutes.delete(
   deleteLookingForController
 );
 
-usersRoutes.delete("/relationship/:id?",
-verifyAuthMiddleware,
-adminPermission,
-verifyActiveMiddleware,
-verifyIdMiddleware,
-deleteRelationShipController);
+usersRoutes.delete(
+  "/relationship/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  deleteRelationShipController
+);
 
 usersRoutes.delete(
   "/images/:id?",
@@ -189,5 +203,17 @@ usersRoutes.delete("/pets/:id");
 usersRoutes.delete("/languages/:id");
 
 usersRoutes.delete("/music/:id");
+
+usersRoutes.patch(
+  "/activate/:id",
+  verifyUuidParamsMiddleware,
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyAdminMiddleware,
+  activateUserAdminController
+);
+
+usersRoutes.post("/devcreate/", devCreateUserController);
 
 export default usersRoutes;

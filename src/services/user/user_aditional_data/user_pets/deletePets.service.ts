@@ -26,7 +26,7 @@ export const deletePetsService = async (userId: string, uuid: string) => {
   });
 
   if (!findData) {
-    throw new AppError(404, "data not found");
+    throw new AppError(404, "User additional data not found");
   }
 
   const findPet = await userPetRepository.delete({

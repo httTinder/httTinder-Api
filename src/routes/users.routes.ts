@@ -33,6 +33,7 @@ import { verifyUuidParamsMiddleware } from "../middlewares/verifyUuidParams.midd
 import devCreateUserController from "../controllers/user/devCreate.controller";
 import updateUserHobbiesController from "../controllers/user/user_aditional_data/user_hobbies/update_user_hobbies.controller";
 import deleteUserHobbieController from "../controllers/user/user_aditional_data/user_hobbies/delete_user_hobbie.controller";
+import { userProfileMiddleware } from "../middlewares/user/user_profile";
 
 const usersRoutes = Router();
 
@@ -94,6 +95,7 @@ usersRoutes.patch(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  userProfileMiddleware,
   updateUserProfileController
 );
 
@@ -160,7 +162,7 @@ usersRoutes.delete(
 );
 
 usersRoutes.delete(
-  "/profile/:id",
+  "/profile/:id?",
   verifyAuthMiddleware,
   adminPermission,
   verifyActiveMiddleware,

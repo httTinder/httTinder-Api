@@ -27,10 +27,10 @@ export class userProfile {
 	@Column({ nullable : true })
 	height: string
 
-	@Column({length: 28, nullable : true})
+	@Column({ nullable : true})
 	education: string
 
-	@Column({length: 46, nullable : true})
+	@Column({ nullable : true})
 	profession: string
 
 	@Column({ nullable : true })

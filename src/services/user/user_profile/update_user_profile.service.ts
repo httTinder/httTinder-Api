@@ -9,17 +9,22 @@ const updateUserProfileService = async (
   id: string
 ) => {
   const userRepository = AppDataSource.getRepository(user);
-  const profileRepositoy = AppDataSource.getRepository(userProfile);
+ 
   const findUser = await userRepository.findOneBy({ id });
 
   if (!findUser) {
     throw new AppError(404, "user not found");
   }
 
+  const profileRepositoy = AppDataSource.getRepository(userProfile); 
+
   if (!findUser.profile) {
     profileRepositoy.create(userData);
+
     userData = await profileRepositoy.save(userData);
+
     userRepository.update(findUser.id, { profile: userData });
+    
     return;
   }
 

@@ -37,6 +37,7 @@ import deleteUserHobbieController from "../controllers/user/user_aditional_data/
 import { userAddDataSchema } from "../schemas/userAddData/userAddData.schemas";
 import { userEditSchema, userSchema } from "../schemas/user/user.schemas";
 import { updateUserProfileSchema } from "../schemas/userProfile/updateUserProfile.schemas";
+import { lookingForSchema } from "../schemas/userProfile/lookingfor/updateLookingfor.schemas";
 
 const usersRoutes = Router();
 
@@ -108,6 +109,7 @@ usersRoutes.patch(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  verifySchemasMiddleware(lookingForSchema),
   updateLookingForController
 );
 

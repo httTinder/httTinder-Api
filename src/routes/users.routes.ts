@@ -148,7 +148,7 @@ usersRoutes.patch(
 );
 
 usersRoutes.patch(
-  "/pets/:id",
+  "/pets/:id?",
   verifyAuthMiddleware,
   adminPermission,
   verifyActiveMiddleware,
@@ -227,7 +227,7 @@ usersRoutes.delete(
 );
 
 usersRoutes.delete(
-  "/pets/:id",
+  "/pets/:id?",
   verifyAuthMiddleware,
   adminPermission,
   verifyActiveMiddleware,

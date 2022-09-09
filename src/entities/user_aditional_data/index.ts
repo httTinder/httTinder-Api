@@ -29,7 +29,7 @@ export class userAditionalData {
 	kids: boolean
 
 	@Column({ nullable: true })
-	kidsQnt: number
+	kidsQnt: string
 
 	@OneToMany(() => userHobbies, (hobbies) => hobbies.userAditionalData, {
 		eager: true,

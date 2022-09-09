@@ -1,24 +1,22 @@
 import { instanceToPlain } from "class-transformer";
 import { Request, Response } from "express";
-
 import { IUserRequest } from "../../interfaces/user";
+import devCreateUserService from "../../services/user/devCreate.service";
 
-import createUserService from "../../services/user/create_user.service";
-
-const createUserController = async (req: Request, res: Response) => {
+const devCreateUserController = async (req: Request, res: Response) => {
   const { age, email, name, password, isAdm }: IUserRequest = req.body;
-  
-  await createUserService({
+
+  await devCreateUserService({
     age,
     email,
     name,
     password,
-    isAdm
+    isAdm,
   });
-  
+
   return res
     .status(201)
     .json(instanceToPlain({ message: "user created successfully" }));
 };
 
-export default createUserController;
+export default devCreateUserController;

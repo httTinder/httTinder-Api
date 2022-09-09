@@ -16,7 +16,7 @@ export class userProfile {
 	readonly id: string
 
 	@Column({ nullable : true })
-	sexualOrientatio: string
+	orientation: string
 
 	@Column({ nullable : true })
 	gender: string
@@ -24,8 +24,8 @@ export class userProfile {
 	@Column({ nullable : true })
 	bio: string
 
-	@Column({ type: 'decimal', precision: 2, scale: 2, nullable : true })
-	height: number
+	@Column({ nullable : true })
+	height: string
 
 	@Column({length: 28, nullable : true})
 	education: string

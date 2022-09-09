@@ -9,8 +9,10 @@ export const userAdditionalDataService = async (
   userId: string
 ) => {
   const userRepository = AppDataSource.getRepository(user);
+
   const additionalDataRepository =
     AppDataSource.getRepository(userAditionalData);
+
   const findUser = await userRepository.findOne({
     where: {
       id: userId,

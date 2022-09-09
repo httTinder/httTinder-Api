@@ -5,6 +5,7 @@ import { AppError } from "../../../../errors/AppError";
 
 const deleterelationShipService = async (id:string)=>{
     const userRepository = AppDataSource.getRepository(user);
+
     const relationRepository = AppDataSource.getRepository(typeOfRelationship)
 
     const userFind = await userRepository.findOneBy({id})
@@ -12,7 +13,13 @@ const deleterelationShipService = async (id:string)=>{
     if(!userFind){
         throw new AppError(404, "User not found");
     }
-    
+
+    const findRelation = relationRepository.findOne({where : { id : userFind.profile.lookingFor.id}})
+
+    if(!findRelation){
+        throw new AppError(404, "Type of relationship not found");
+    }
+        
     await relationRepository.delete({id:userFind.profile.typeOfRelationship.id});
    
     return 

@@ -26,8 +26,14 @@ import { deleteUserAddDataController } from "../controllers/user/user_aditional_
 import deleteRelationShipController from "../controllers/user/user_profile/type_of_relationship/deleteRelationshipController";
 import updateTypeOfRelationShip from "../controllers/user/user_profile/type_of_relationship/updateTypeOfRelationShip";
 import userDeleteProfileController from "../controllers/user/user_profile/delete_user_profile.controller";
-import { updateUserPetsController } from "../controllers/user/user_aditional_data/user_pets/updateUserPets.controller";
+import { activateUserMiddleware } from "../middlewares/activateUser.middleware";
+import activateUserAdminController from "../controllers/user/activateUserAdmin.controller";
+import { verifyUuidParamsMiddleware } from "../middlewares/verifyUuidParams.middleware";
+import devCreateUserController from "../controllers/user/devCreate.controller";
+import updateUserHobbiesController from "../controllers/user/user_aditional_data/user_hobbies/update_user_hobbies.controller";
+import deleteUserHobbieController from "../controllers/user/user_aditional_data/user_hobbies/delete_user_hobbie.controller";
 import { deleteUserPetsController } from "../controllers/user/user_aditional_data/user_pets/deleteUserPets.controller";
+import { updateUserPetsController } from "../controllers/user/user_aditional_data/user_pets/updateUserPets.controller";
 
 const usersRoutes = Router();
 
@@ -68,7 +74,11 @@ usersRoutes.patch(
 
 usersRoutes.post("", createUserController);
 
-usersRoutes.patch("/email/:tokenEmail", activateUserController);
+usersRoutes.patch(
+  "/email/:tokenEmail",
+  activateUserMiddleware,
+  activateUserController
+);
 
 usersRoutes.patch(
   "/address/:id?",
@@ -97,10 +107,14 @@ usersRoutes.patch(
   updateLookingForController
 );
 
-usersRoutes.patch("/relationship/:id?" ,verifyAuthMiddleware,
-adminPermission,
-verifyActiveMiddleware,
-verifyIdMiddleware,updateTypeOfRelationShip);
+usersRoutes.patch(
+  "/relationship/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  updateTypeOfRelationShip
+);
 
 usersRoutes.patch(
   "/images/:id?",
@@ -122,7 +136,14 @@ usersRoutes.patch(
   UpdateUserAddDataController
 );
 
-usersRoutes.patch("/hobbies/:id");
+usersRoutes.patch(
+  "/hobbies/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  updateUserHobbiesController
+);
 
 usersRoutes.patch(
   "/pets/:id",
@@ -164,12 +185,14 @@ usersRoutes.delete(
   deleteLookingForController
 );
 
-usersRoutes.delete("/relationship/:id?",
-verifyAuthMiddleware,
-adminPermission,
-verifyActiveMiddleware,
-verifyIdMiddleware,
-deleteRelationShipController);
+usersRoutes.delete(
+  "/relationship/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  deleteRelationShipController
+);
 
 usersRoutes.delete(
   "/images/:id?",
@@ -190,7 +213,14 @@ usersRoutes.delete(
   deleteUserAddDataController
 );
 
-usersRoutes.delete("/hobbies/:id");
+usersRoutes.delete(
+  "/hobbies/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  deleteUserHobbieController
+);
 
 usersRoutes.delete(
   "/pets/:id",
@@ -204,5 +234,17 @@ usersRoutes.delete(
 usersRoutes.delete("/languages/:id");
 
 usersRoutes.delete("/music/:id");
+
+usersRoutes.patch(
+  "/activate/:id",
+  verifyUuidParamsMiddleware,
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyAdminMiddleware,
+  activateUserAdminController
+);
+
+usersRoutes.post("/devcreate/", devCreateUserController);
 
 export default usersRoutes;

@@ -4,7 +4,7 @@ import { userAditionalData } from "../../../../entities/user_aditional_data";
 import { userHobbies } from "../../../../entities/user_aditional_data/user_hobbies";
 import { AppError } from "../../../../errors/AppError";
 
-const deleteUserHobbieService = async (id: string, idHobbie: string) => {
+const deleteUserHobbieService = async (id: string, uuid: string) => {
   const userRepository = AppDataSource.getRepository(user);
   const findUser = await userRepository.findOneBy({ id });
 
@@ -23,7 +23,7 @@ const deleteUserHobbieService = async (id: string, idHobbie: string) => {
 
   const hobbieRepository = AppDataSource.getRepository(userHobbies);
   const findHobbie = await hobbieRepository.delete({
-    id: idHobbie,
+    id: uuid,
     userAditionalData: findData,
   });
 

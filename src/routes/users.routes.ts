@@ -27,6 +27,8 @@ import { deleteUserAddDataController } from "../controllers/user/user_aditional_
 import deleteRelationShipController from "../controllers/user/user_profile/type_of_relationship/deleteRelationshipController";
 import updateTypeOfRelationShip from "../controllers/user/user_profile/type_of_relationship/updateTypeOfRelationShip";
 import userDeleteProfileController from "../controllers/user/user_profile/delete_user_profile.controller";
+import updateUserHobbiesController from "../controllers/user/user_aditional_data/user_hobbies/update_user_hobbies.controller";
+import deleteUserHobbieController from "../controllers/user/user_aditional_data/user_hobbies/delete_user_hobbie.controller";
 
 const usersRoutes = Router();
 
@@ -96,10 +98,14 @@ usersRoutes.patch(
   updateLookingForController
 );
 
-usersRoutes.patch("/relationship/:id?" ,verifyAuthMiddleware,
-adminPermission,
-verifyActiveMiddleware,
-verifyIdMiddleware,updateTypeOfRelationShip);
+usersRoutes.patch(
+  "/relationship/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  updateTypeOfRelationShip
+);
 
 usersRoutes.patch(
   "/images/:id?",
@@ -121,7 +127,14 @@ usersRoutes.patch(
   UpdateUserAddDataController
 );
 
-usersRoutes.patch("/hobbies/:id");
+usersRoutes.patch(
+  "/hobbies/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  updateUserHobbiesController
+);
 
 usersRoutes.patch("/pets/:id");
 
@@ -156,12 +169,14 @@ usersRoutes.delete(
   deleteLookingForController
 );
 
-usersRoutes.delete("/relationship/:id?",
-verifyAuthMiddleware,
-adminPermission,
-verifyActiveMiddleware,
-verifyIdMiddleware,
-deleteRelationShipController);
+usersRoutes.delete(
+  "/relationship/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  deleteRelationShipController
+);
 
 usersRoutes.delete(
   "/images/:id?",
@@ -182,7 +197,14 @@ usersRoutes.delete(
   deleteUserAddDataController
 );
 
-usersRoutes.delete("/hobbies/:id");
+usersRoutes.delete(
+  "/hobbies/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  deleteUserHobbieController
+);
 
 usersRoutes.delete("/pets/:id");
 

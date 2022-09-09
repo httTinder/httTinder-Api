@@ -6,7 +6,6 @@ import { verifyAdminMiddleware } from "../middlewares/verifyAdmin.middleware";
 import { userEditController } from "../controllers/user/userEdit.controller";
 import activateUserController from "../controllers/user/active_user.controller";
 import createUserController from "../controllers/user/create_user.controller";
-import authEmailMiddleware from "../middlewares/authEmail.middleware";
 import { verifyActiveMiddleware } from "../middlewares/verifyActive.middleware";
 import { adminPermission } from "../middlewares/adminPermission.middleware";
 import userDeleteController from "../controllers/user/userDelete.controller";
@@ -36,6 +35,9 @@ import deleteUserHobbieController from "../controllers/user/user_aditional_data/
 import { updateUserLanguageController } from "../controllers/user/user_aditional_data/user_languages/updateUserLanguage.controller";
 import { uuidBodyMiddleware } from "../middlewares/verifyUuid.middleware";
 import { deleteUserLanguageController } from "../controllers/user/user_aditional_data/user_languages/deleteUserLanguage.controller";
+import { deleteUserPetsController } from "../controllers/user/user_aditional_data/user_pets/deleteUserPets.controller";
+import { updateUserPetsController } from "../controllers/user/user_aditional_data/user_pets/updateUserPets.controller";
+
 
 const usersRoutes = Router();
 
@@ -144,10 +146,19 @@ usersRoutes.patch(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  uuidBodyMiddleware,
   updateUserHobbiesController
 );
 
-usersRoutes.patch("/pets/:id");
+usersRoutes.patch(
+  "/pets/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  uuidBodyMiddleware,
+  updateUserPetsController
+);
 
 usersRoutes.patch(
   "/languages/:id?",
@@ -222,10 +233,19 @@ usersRoutes.delete(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  uuidBodyMiddleware,
   deleteUserHobbieController
 );
 
-usersRoutes.delete("/pets/:id");
+usersRoutes.delete(
+  "/pets/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  uuidBodyMiddleware,
+  deleteUserPetsController
+);
 
 usersRoutes.delete(
   "/languages/:id?",

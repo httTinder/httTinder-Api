@@ -51,7 +51,7 @@ export const updateUserMusicService = async (
     throw new AppError(404, "data not found");
   }
 
-  if (uuid && findMusic) {
+  if (uuid && findMusic !== undefined) {
     userMusicRepository.update(uuid, {
       name: music,
     });

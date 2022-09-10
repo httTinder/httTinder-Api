@@ -5,10 +5,11 @@ export const deleteUserLanguageController = async (
   req: Request,
   res: Response
 ) => {
-  const id = req.idParams.id;
-  const { uuid } = req.body;
+  const userId = req.idParams.id;
+  const authUserId = req.user.id
+  const idToDelete  = req.body.uuid;
 
-  await deleteUserLanguageService(id, uuid);
+  await deleteUserLanguageService(userId, idToDelete, authUserId);
 
   return res.json({ message: "Language deleted with sucess" });
 };

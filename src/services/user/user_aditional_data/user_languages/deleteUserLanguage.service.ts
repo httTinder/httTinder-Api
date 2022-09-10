@@ -6,33 +6,57 @@ import { AppError } from "../../../../errors/AppError";
 
 export const deleteUserLanguageService = async (
   userId: string,
-  uuid: string
-) => {
-  const userRepository = AppDataSource.getRepository(user);
+  idToDelete: string,
+  authUserId: string
+) : Promise<void> => {
+  if (idToDelete === undefined) {
+    throw new AppError(400, "Review required fields");
+  }
 
-  const userAddDataRepository = AppDataSource.getRepository(userAdditionalData);
+  const userRepository = AppDataSource.getRepository(user);
 
   const userLanguagueRepository = AppDataSource.getRepository(userLanguages);
 
-  const findUser = await userRepository.findOne({ where: { id: userId } });
+  const userAddDataRepository = AppDataSource.getRepository(userAdditionalData);
+
+  const findUser = await userRepository.findOne({
+    where: {
+      id: userId,
+    },
+  });
 
   if (!findUser) {
     throw new AppError(404, "user not found");
   }
 
-  const findData = await userAddDataRepository.findOne({
-    where: {
-      id: findUser.userAdditionalData.id,
-    },
+  const findAddData = await userAddDataRepository.findOne({
+    where: { id: findUser?.userAdditionalData?.id },
   });
 
-  if (!findData) {
-    throw new AppError(404, "user additional data is required");
+  if (!findAddData) {
+    throw new AppError(404, "additional data not found");
+  }
+
+  const findAuthUser = await userRepository.findOneBy({
+    id: authUserId,
+  });
+
+  if (!findAuthUser) {
+    throw new AppError(404, "auth user not found");
+  }
+
+  const ids: string[] = [];
+
+  findAddData.userLanguages.forEach((lang) => ids.push(lang.id));
+
+  const verify = ids.find((lang) => lang === idToDelete);
+
+  if (!verify && !findUser.isAdm) {
+    throw new AppError(403, `missing authorization permissions`);
   }
 
   const findLanguage = await userLanguagueRepository.delete({
-    id: uuid,
-    userAdditionalData: findData,
+    id: idToDelete,
   });
 
   if (findLanguage.affected == 0) {

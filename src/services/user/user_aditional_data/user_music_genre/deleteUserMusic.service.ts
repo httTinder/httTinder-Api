@@ -8,7 +8,7 @@ export const deleteUserMusicService = async (
   userId: string,
   idToDelete: string,
   authUserId: string
-) => {
+) : Promise<void> => {
 
   if (idToDelete === undefined) {
     throw new AppError(400, "Review required fields");
@@ -17,46 +17,49 @@ export const deleteUserMusicService = async (
 
   const musicRepository = AppDataSource.getRepository(userMusicGenre);
 
-  const DataRepository = AppDataSource.getRepository(userAdditionalData);
+  const userAddDataRepository = AppDataSource.getRepository(userAdditionalData);
 
-  const findUser = await userRepository.findOneBy({ id: userId });
+  const findUser = await userRepository.findOneBy({
+    id: userId,
+  });
 
   if (!findUser) {
     throw new AppError(404, "user not found");
   }
 
-  const findData = await DataRepository.findOneBy({
-    id: findUser.userAdditionalData.id,
+  const findAddData = await userAddDataRepository.findOne({
+    where: { id: findUser?.userAdditionalData?.id },
   });
 
-  if (!findData) {
-    throw new AppError(404, "user not found");
-  }
-
-  if (findUser!.userAdditionalData === null) {
+  if (!findAddData) {
     throw new AppError(404, "additional data not found");
   }
 
-  const findMusic = await musicRepository.findOneBy({
-    id: idToDelete
+  const findAuthUser = await userRepository.findOneBy({
+    id: authUserId,
   });
-
-  const findAuthUser = await userRepository.findOneBy({ id: authUserId });
 
   if (!findAuthUser) {
     throw new AppError(404, "auth user not found");
   }
 
-  if (findData?.id !== findMusic?.userAdditionalData?.id && !findAuthUser?.isAdm) {
- 
+  const ids: string[] = [];
+
+  findAddData.userMusicGenre.forEach((mus) => ids.push(mus.id));
+
+  const verify = ids.find((mus) => mus === idToDelete);
+
+  if (!verify && !findUser.isAdm) {
     throw new AppError(403, `missing authorization permissions`);
-
   }
-    
 
-  // if (findMusic.affected == 0) {
-  //   throw new AppError(404, "Music not found");
-  // }
+  const musicToDelete = await musicRepository.delete({
+    id: idToDelete,
+  });
+
+  if (musicToDelete.affected == 0) {
+    throw new AppError(404, "Music not found");
+  }
 
   return;
 };

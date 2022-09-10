@@ -22,7 +22,6 @@ const loginUser = {
   password: "@12Patinhos",
 };
 
-let getUser = {};
 let tokenLogin = "";
 describe("Testing the user routes", () => {
   let connection: DataSource;
@@ -72,7 +71,6 @@ describe("Testing the user routes", () => {
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty("createdAt");
     expect(res.body).toHaveProperty("updatedAt");
-    getUser = res.body;
   });
 
   test("Patch /user/address - Deve ser capaz de cadastrar um address", async () => {
@@ -145,6 +143,51 @@ describe("Testing the user routes", () => {
   test("Delete /user/additional - Deve ser capaz de deletar um additional", async () => {
     const res = await request(app)
       .delete("/user/additional/")
+      .set("Authorization", `Bearer ${tokenLogin}`);
+
+    expect(res.status).toBe(204);
+  });
+
+  test("Patch /user/lookingfor - Deve ser capaz de cadastrar um lookingfor", async () => {
+    const lookingfor = {
+      age: "18-25",
+      gender: "Mulher",
+    };
+    const res = await request(app)
+      .patch("/user/lookingfor")
+      .send(lookingfor)
+      .set("Authorization", `Bearer ${tokenLogin}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty("message");
+  });
+
+  test("Delete /user/lookingfor - Deve ser capaz de deletar um lookingfor", async () => {
+    const res = await request(app)
+      .delete("/user/lookingfor/")
+      .set("Authorization", `Bearer ${tokenLogin}`);
+
+    expect(res.status).toBe(204);
+  });
+
+  test("Patch /user/relationship - Deve ser capaz de cadastrar um relationship", async () => {
+    const relationship = {
+      friendship: true,
+      casual: false,
+      serious: false,
+    };
+    const res = await request(app)
+      .patch("/user/relationship")
+      .send(relationship)
+      .set("Authorization", `Bearer ${tokenLogin}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty("message");
+  });
+
+  test("Delete /user/relationship - Deve ser capaz de deletar um relationship", async () => {
+    const res = await request(app)
+      .delete("/user/relationship/")
       .set("Authorization", `Bearer ${tokenLogin}`);
 
     expect(res.status).toBe(204);

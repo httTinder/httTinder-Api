@@ -1,3 +1,4 @@
+import { profile } from "console";
 import AppDataSource from "../../../../data-source";
 import { user } from "../../../../entities";
 import { userProfile } from "../../../../entities/user_profile";
@@ -27,8 +28,8 @@ export const updateLookingForService = async (
 
   if (!findUser.profile.lookingFor) {
     lookingforRepository.create(data);
-    data = await lookingforRepository.save(data);
-    userProfileRepository.update(findUser.id, { lookingFor: data });
+    const newData = await lookingforRepository.save(data);
+    userProfileRepository.update(findUser.profile.id, { lookingFor: newData });
     return;
   }
 

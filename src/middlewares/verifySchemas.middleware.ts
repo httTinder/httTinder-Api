@@ -6,10 +6,13 @@ export const verifySchemasMiddleware =
   (schema: AnySchema) =>
   async (req: Request, res: Response, next: NextFunction) => {
     const data = req.body;
-    const validationData = await schema.validate(data);
-    if (!validationData) {
+    try {
+      const validationData = await schema.validate(data, {
+        abortEarly: false,
+        stripUnknown: true,
+      });
+      next();
+    } catch (err) {
       throw new AppError(400, "invalid Field");
     }
-    req.body = validationData;
-    next();
   };

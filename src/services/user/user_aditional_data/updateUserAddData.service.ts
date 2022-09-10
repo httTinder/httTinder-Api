@@ -1,6 +1,6 @@
 import AppDataSource from "../../../data-source";
 import { user } from "../../../entities";
-import { userAditionalData } from "../../../entities/user_aditional_data";
+import { userAdditionalData } from "../../../entities/user_aditional_data";
 import { AppError } from "../../../errors/AppError";
 import { IUserAddDataRequest } from "../../../interfaces/user/user_additionalData";
 
@@ -8,15 +8,17 @@ export const userAdditionalDataService = async (
   data: IUserAddDataRequest,
   userId: string
 ) => {
-  const { kids, kidsQnt } = data;
+  const { kids } = data;
+  let { kidsQnt } = data;
 
-  if (kids && !kidsQnt) {
-    throw new AppError(400, "Must have a quantity");
+  if (!kids) {
+    kidsQnt = null;
   }
+
   const userRepository = AppDataSource.getRepository(user);
 
   const additionalDataRepository =
-    AppDataSource.getRepository(userAditionalData);
+    AppDataSource.getRepository(userAdditionalData);
 
   const findUser = await userRepository.findOne({
     where: {
@@ -28,15 +30,21 @@ export const userAdditionalDataService = async (
     throw new AppError(404, "User not found");
   }
 
-  if (!findUser.userAditionalData) {
+  if (!findUser.userAdditionalData) {
     additionalDataRepository.create(data);
+
     data = await additionalDataRepository.save(data);
+
     userRepository.update(findUser.id, {
-      userAditionalData: data,
+      userAdditionalData: data,
     });
+
     return;
   }
 
-  additionalDataRepository.update(findUser.userAditionalData.id, { ...data });
+  additionalDataRepository.update(findUser.userAdditionalData.id, {
+    kids,
+    kidsQnt,
+  });
   return true;
 };

@@ -10,6 +10,7 @@ import { IUserRequest } from "../../interfaces/user";
 
 import "dotenv/config";
 import sendEmail from "../../utils/nodemailer.util";
+import { number } from "yup";
 
 const createUserService = async ({
   age,

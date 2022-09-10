@@ -38,7 +38,7 @@ export class userProfile {
 
 	@OneToOne(() => typeOfRelationship, { eager: true, nullable: true })
 	@JoinColumn()
-	typeOfRelationship: typeOfRelationship 
+	typeOfRelationship: typeOfRelationship
 
 	@OneToOne(() => lookingFor, { eager: true, nullable: true })
 	@JoinColumn()

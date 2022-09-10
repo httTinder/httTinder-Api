@@ -5,10 +5,10 @@ export const updateUserMusicController = async (
   req: Request,
   res: Response
 ) => {
-  const id = req.idParams.id;
-  const data = req.body;
+  const userId = req.idParams.id;
+  const musicData = req.body;
 
-  await updateUserMusicService(data, id);
+  const message = await updateUserMusicService(musicData, userId);
 
-  return res.json({ message: "Genre updated" });
+  return res.json({ message });
 };

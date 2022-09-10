@@ -82,8 +82,8 @@ usersRoutes.patch(
   "/data/:id?",
   verifyAuthMiddleware,
   adminPermission,
-  verifyActiveMiddleware,
   verifyIdMiddleware,
+  verifyActiveMiddleware,
   verifySchemasMiddleware(userEditSchema),
   editUserMiddleWare,
   userEditController
@@ -191,12 +191,12 @@ usersRoutes.patch(
 
 usersRoutes.patch(
   "/music/:id?",
+  uuidBodyMiddleware,
   verifyAuthMiddleware,
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
   verifySchemasMiddleware(musicSchema),
-  uuidBodyMiddleware,
   updateUserMusicController
 );
 
@@ -307,6 +307,6 @@ usersRoutes.patch(
   activateUserAdminController
 );
 
-usersRoutes.post("/devcreate/", devCreateUserController);
+usersRoutes.post("/devcreate/", verifySchemasMiddleware(userSchema), devCreateUserController);
 
 export default usersRoutes;

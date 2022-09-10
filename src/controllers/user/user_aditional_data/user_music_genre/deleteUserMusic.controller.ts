@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { deleteUserMusicService } from "../../../../services/user/user_aditional_data/user_music_genre/deleteUserMusicservice";
+import { deleteUserMusicService } from "../../../../services/user/user_aditional_data/user_music_genre/deleteUserMusic.service";
 
 export const deleteUserMusicController = async (
   req: Request,

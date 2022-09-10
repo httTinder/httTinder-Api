@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { AppError } from "../errors/AppError";
 
-export const adminPermission = (
+export const adminPermission = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -10,7 +10,7 @@ export const adminPermission = (
 
   const userId = req.params.id;
 
-  if (userId !== undefined && (id !== userId && !isAdm)) {
+  if (userId !== undefined && id !== userId && !isAdm) {
     throw new AppError(403, "missing authorization permissions");
   }
 

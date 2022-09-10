@@ -1,11 +1,12 @@
 import AppDataSource from "../../../../data-source";
 import { user } from "../../../../entities";
-import { userAditionalData } from "../../../../entities/user_aditional_data";
+import { userAdditionalData } from "../../../../entities/user_aditional_data";
 import { userHobbies } from "../../../../entities/user_aditional_data/user_hobbies";
 import { AppError } from "../../../../errors/AppError";
 import { IUserHobbies } from "../../../../interfaces/user/user_aditional_data/user_hobbies";
 
 const updateUserHobbiesService = async (userData: IUserHobbies, id: string) => {
+  /*
   const { name, idHobbie } = userData;
   if (!name) {
     throw new AppError(404, "index not found");
@@ -18,9 +19,9 @@ const updateUserHobbiesService = async (userData: IUserHobbies, id: string) => {
     throw new AppError(404, "user not found");
   }
 
-  const dataRepository = AppDataSource.getRepository(userAditionalData);
+  const dataRepository = AppDataSource.getRepository(userAdditionalData);
   const data = await dataRepository.findOneBy({
-    id: findUser.userAditionalData.id,
+    id: findUser.userAdditionalData.id,
   });
 
   if (!data) {
@@ -30,7 +31,7 @@ const updateUserHobbiesService = async (userData: IUserHobbies, id: string) => {
   const hobbiRepository = AppDataSource.getRepository(userHobbies);
   const findHobbie = await hobbiRepository.findOneBy({
     id: idHobbie,
-    userAditionalData: data,
+    userAdditionalData: data,
   });
 
   if (!findHobbie) {
@@ -52,7 +53,7 @@ const updateUserHobbiesService = async (userData: IUserHobbies, id: string) => {
   data.hobbies = [...data?.hobbies, hobbie];
 
   await dataRepository.save(data);
-
+*/
   return;
 };
 

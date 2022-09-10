@@ -1,6 +1,6 @@
 import AppDataSource from "../../../../data-source";
 import { user } from "../../../../entities";
-import { userAditionalData } from "../../../../entities/user_aditional_data";
+import { userAdditionalData } from "../../../../entities/user_aditional_data";
 import { userLanguages } from "../../../../entities/user_aditional_data/user_languages";
 import { AppError } from "../../../../errors/AppError";
 
@@ -10,7 +10,7 @@ export const deleteUserLanguageService = async (
 ) => {
   const userRepository = AppDataSource.getRepository(user);
 
-  const userAddDataRepository = AppDataSource.getRepository(userAditionalData);
+  const userAddDataRepository = AppDataSource.getRepository(userAdditionalData);
 
   const userLanguagueRepository = AppDataSource.getRepository(userLanguages);
 
@@ -22,7 +22,7 @@ export const deleteUserLanguageService = async (
 
   const findData = await userAddDataRepository.findOne({
     where: {
-      id: findUser.userAditionalData.id,
+      id: findUser.userAdditionalData.id,
     },
   });
 
@@ -32,7 +32,7 @@ export const deleteUserLanguageService = async (
 
   const findLanguage = await userLanguagueRepository.delete({
     id: uuid,
-    userAditionalData: findData,
+    userAdditionalData: findData,
   });
 
   if (findLanguage.affected == 0) {

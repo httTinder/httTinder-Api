@@ -39,6 +39,7 @@ import { updateUserProfileSchema } from "../schemas/userProfile/updateUserProfil
 import { lookingForSchema } from "../schemas/userProfile/lookingfor/updateLookingfor.schemas";
 import { relationshipSchema } from "../schemas/userProfile/lookingfor/relationship/updateRelationship.schemas";
 import { addressRequestSchema } from "../schemas/user/address/address.schemas";
+import { userProfileMiddleware } from "../middlewares/user/user_profile";
 import { updateUserMusicController } from "../controllers/user/user_aditional_data/user_music_genre/updateUserMusic.controller";
 import { deleteUserMusicController } from "../controllers/user/user_aditional_data/user_music_genre/deleteUserMusic.controller";
 import { updateUserLanguageController } from "../controllers/user/user_aditional_data/user_languages/updateUserLanguage.controller";
@@ -112,6 +113,7 @@ usersRoutes.patch(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  userProfileMiddleware,
   updateUserProfileController
 );
 
@@ -211,7 +213,7 @@ usersRoutes.delete(
 );
 
 usersRoutes.delete(
-  "/profile/:id",
+  "/profile/:id?",
   verifyAuthMiddleware,
   adminPermission,
   verifyActiveMiddleware,

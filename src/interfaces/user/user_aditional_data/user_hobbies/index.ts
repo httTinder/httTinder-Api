@@ -1,4 +1,4 @@
 export interface IUserHobbies {
-  idHobbie?: string
+  uuid?: string
   name: string;
 }

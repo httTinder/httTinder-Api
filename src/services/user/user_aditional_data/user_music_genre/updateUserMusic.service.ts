@@ -1,9 +1,8 @@
+import { AppError } from "../../../../errors/AppError";
 import AppDataSource from "../../../../data-source";
 import { user } from "../../../../entities";
 import { userMusicGenre } from "../../../../entities/user_aditional_data/user_music_genre";
-import { AppError } from "../../../../errors/AppError";
 import { userAdditionalData } from "../../../../entities/user_aditional_data";
-
 import { IUserMusic } from "../../../../interfaces/user/user_aditional_data/user_music";
 
 export const updateUserMusicService = async (
@@ -16,10 +15,9 @@ export const updateUserMusicService = async (
 
   const userAddDataRepository = AppDataSource.getRepository(userAdditionalData);
 
-  const { uuid } = musicData;
   const music = musicData.music;
   const idToSearch = musicData.uuid;
-  //throw new AppError(200, `${uuid}`);
+
   if (!music) {
     throw new AppError(404, "Invalid field");
   }
@@ -40,17 +38,17 @@ export const updateUserMusicService = async (
 
   const findMusic = await userMusicRepository.findOneBy({ id: idToSearch });
 
-  if (!findMusic && uuid) {
+  if (!findMusic && idToSearch) {
     throw new AppError(
       404,
-      `the ${uuid} of the music genre sent was not found`
+      `the '${idToSearch}' of musical genres sent was not found`
     );
   }
 
-  if (findMusic?.id == uuid) {
+  if (findMusic?.id == idToSearch) {
     await userMusicRepository.update(findMusic!.id, { name: music });
 
-    return `musical gender '${music}' updated`;
+    return `musical gender: '${music}' updated successfully`;
   }
 
   const findAddData = await userAddDataRepository.findOne({
@@ -64,5 +62,5 @@ export const updateUserMusicService = async (
 
   await userMusicRepository.save(newMusic);
 
-  return `musical gender was created`;
+  return "musical gender was created successfully";
 };

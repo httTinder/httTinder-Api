@@ -1,3 +1,4 @@
+import { string } from "yup";
 import AppDataSource from "../../../../data-source";
 import { user } from "../../../../entities";
 import { userAdditionalData } from "../../../../entities/user_aditional_data";
@@ -8,13 +9,16 @@ import { IUserLanguage } from "./../../../../interfaces/user/user_aditional_data
 export const updateUserLanguageService = async (
   languageData: IUserLanguage,
   userId: string
-) => {
-  /*
+) : Promise<string> => {  
   const userRepository = AppDataSource.getRepository(user);
+
   const userAddDataRepository = AppDataSource.getRepository(userAdditionalData);
+
   const userLanguagesRepository = AppDataSource.getRepository(userLanguages);
 
-  const { language, uuid } = languageData;
+  const { uuid } = languageData;
+  const language = languageData.language;
+  const idToSearch = languageData.uuid;
 
   if (!language) {
     throw new AppError(400, "invalid field");
@@ -30,48 +34,35 @@ export const updateUserLanguageService = async (
     throw new AppError(404, "User not found");
   }
 
-  const findData = await userAddDataRepository.findOne({
-    where: {
-      id: findUser.userAdditionalData.id,
-    },
+  if (findUser!.userAdditionalData === null) {
+    throw new AppError(404, "you must submit additional data first");
+  }
+
+  const findLanguages = await userLanguagesRepository.findOneBy({ id: idToSearch });
+
+  if (!findLanguages && uuid) {
+    throw new AppError(
+      404,
+      `the '${uuid}' of languages sent was not found`
+    );
+  }
+
+  if (findLanguages?.id == uuid) {
+    await userLanguagesRepository.update(findLanguages!.id, { language });
+
+    return `language '${language}' updated`;
+  }
+
+  const findAddData = await userAddDataRepository.findOne({
+    where: { id: findUser?.userAdditionalData?.id },
   });
 
-  if (!findData) {
-    throw new AppError(404, "data not found");
-  }
-
-  const findLanguage = await userLanguagesRepository.findOne({
-    where: {
-      id: uuid,
-      userAdditionalData: findData,
-    },
+  const newLanguage = userLanguagesRepository.create({
+    language,
+    userAdditionalData: findAddData!,
   });
 
-  if (!findLanguage) {
-    throw new AppError(404, "Language not found");
-  }
+  await userLanguagesRepository.save(newLanguage)
 
-  if (uuid && findLanguage !== undefined) {
-    userLanguagesRepository.update(uuid, {
-      language: language,
-    });
-    return;
-  }
-
-  userLanguagesRepository.create(languageData);
-
-  const newLanguage = await userLanguagesRepository.save(languageData);
-
-  if (!findData?.languages) {
-    userAddDataRepository.update(findUser.id, {
-      languages: [newLanguage],
-    });
-    return;
-  }
-
-  findData.languages = [...findData?.languages, newLanguage];
-
-  await userAddDataRepository.save(findData);
-*/
-  return;
+  return "language was created successfully"
 };

@@ -5,10 +5,10 @@ export const updateUserLanguageController = async (
   req: Request,
   res: Response
 ) => {
-  const id = req.idParams.id;
-  const data = req.body;
+  const userId = req.idParams.id;
+  const languageData = req.body;
 
-  await updateUserLanguageService(data, id);
+  const message = await updateUserLanguageService(languageData, userId);
 
-  return res.json({message: "Language changed successfully"})
+  return res.json({message})
 };

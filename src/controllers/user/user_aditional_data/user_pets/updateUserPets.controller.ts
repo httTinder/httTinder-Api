@@ -2,9 +2,10 @@ import { Request, Response } from "express";
 import { updatePetsService } from "../../../../services/user/user_aditional_data/user_pets/updatePets.service";
 
 export const updateUserPetsController = async (req: Request, res: Response) => {
-  const id = req.idParams.id;
-  const data = req.body;
-  await updatePetsService(data, id);
+  const userId = req.idParams.id;
+  const petData = req.body;
 
-  return res.json({ message: "Pets changed successfully" });
+  const message = await updatePetsService(petData, userId);
+
+  return res.json({ message });
 };

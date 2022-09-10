@@ -5,56 +5,65 @@ import { userHobbies } from "../../../../entities/user_aditional_data/user_hobbi
 import { AppError } from "../../../../errors/AppError";
 import { IUserHobbies } from "../../../../interfaces/user/user_aditional_data/user_hobbies";
 
-const updateUserHobbiesService = async (userData: IUserHobbies, id: string) => {
-  /*
-  const { name, idHobbie } = userData;
-  if (!name) {
-    throw new AppError(404, "index not found");
-  }
+const updateUserHobbiesService = async (
+  hobbieData: IUserHobbies,
+  userId: string
+): Promise<string> => {
 
   const userRepository = AppDataSource.getRepository(user);
-  const findUser = await userRepository.findOneBy({ id });
 
+  const userHobbieRepository = AppDataSource.getRepository(userHobbies);
+
+  const userAddDataRepository = AppDataSource.getRepository(userAdditionalData);
+
+  const name = hobbieData.name;
+  const idToSearch = hobbieData.uuid;
+
+  if (!name) {
+    throw new AppError(404, "Invalid field");
+  }
+
+  const findUser = await userRepository.findOne({
+    where: {
+      id: userId,
+    },
+  });
+  
   if (!findUser) {
-    throw new AppError(404, "user not found");
+    throw new AppError(404, "User not found");
   }
 
-  const dataRepository = AppDataSource.getRepository(userAdditionalData);
-  const data = await dataRepository.findOneBy({
-    id: findUser.userAdditionalData.id,
+  if (findUser!.userAdditionalData === null) {
+    throw new AppError(404, "you must submit additional data first");
+  }
+
+  const findHobbie = await userHobbieRepository.findOneBy({ id: idToSearch });
+
+  if (!findHobbie && idToSearch) {
+    throw new AppError(
+      404,
+      `the '${idToSearch}' of hobbies sent was not found`
+    );
+  }
+
+  if (findHobbie?.id == idToSearch) {
+    await userHobbieRepository.update(findHobbie!.id, { name });
+
+    return `hobbie: '${name}' updated successfully`;
+  }
+
+  const findAddData = await userAddDataRepository.findOne({
+    where: { id: findUser?.userAdditionalData?.id },
   });
 
-  if (!data) {
-    throw new AppError(404, "data not found");
-  }
-
-  const hobbiRepository = AppDataSource.getRepository(userHobbies);
-  const findHobbie = await hobbiRepository.findOneBy({
-    id: idHobbie,
-    userAdditionalData: data,
+  const newHobbie = userHobbieRepository.create({
+    name,
+    userAdditionalData: findAddData!,
   });
 
-  if (!findHobbie) {
-    throw new AppError(404, "Hobbie not found");
-  }
+  await userHobbieRepository.save(newHobbie);
 
-  if (idHobbie && findHobbie) {
-    hobbiRepository.update(idHobbie, { name });
-    return;
-  }
-
-  hobbiRepository.create(userData);
-  const hobbie = await hobbiRepository.save(userData);
-  if (!data?.hobbies) {
-    dataRepository.update(findUser.id, { hobbies: [hobbie] });
-    return;
-  }
-
-  data.hobbies = [...data?.hobbies, hobbie];
-
-  await dataRepository.save(data);
-*/
-  return;
+  return "musical gender was created successfully";
 };
 
 export default updateUserHobbiesService;

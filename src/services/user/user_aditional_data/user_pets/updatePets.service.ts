@@ -1,24 +1,26 @@
 import { AppError } from "./../../../../errors/AppError";
-import { userPets } from "../../../../entities/user_aditional_data/user_pets/index";
-import { user } from "../../../../entities/index";
 import AppDataSource from "../../../../data-source";
+import { user } from "../../../../entities/index";
+import { userPets } from "../../../../entities/user_aditional_data/user_pets/index";
 import { userAdditionalData } from "../../../../entities/user_aditional_data";
 import { IUserPets } from "../../../../interfaces/user/user_additionalData/pets";
 
 export const updatePetsService = async (
-  dataSpecie: IUserPets,
+  petData: IUserPets,
   userId: string
-) => {
-  /*
-  const { specie, uuid } = dataSpecie;
+): Promise<string> => {
+  const userRepository = AppDataSource.getRepository(user);
+
+  const userPetRepository = AppDataSource.getRepository(userPets);
+
+  const userAddDataRepository = AppDataSource.getRepository(userAdditionalData);
+
+  const specie = petData.specie;
+  const idToSearch = petData.uuid;
 
   if (!specie) {
-    throw new AppError(400, "Invalid field");
+    throw new AppError(404, "Invalid field");
   }
-
-  const userRepository = AppDataSource.getRepository(user);
-  const userPetRepository = AppDataSource.getRepository(userPets);
-  const userAddDataRepository = AppDataSource.getRepository(userAdditionalData);
 
   const findUser = await userRepository.findOne({
     where: {
@@ -30,37 +32,32 @@ export const updatePetsService = async (
     throw new AppError(404, "User not found");
   }
 
-  const data = await userAddDataRepository.findOne({
-    where: {
-      id: findUser.userAdditionalData.id,
-    },
+  if (findUser!.userAdditionalData === null) {
+    throw new AppError(404, "you must submit additional data first");
+  }
+
+  const findPet = await userPetRepository.findOneBy({ id: idToSearch });
+
+  if (!findPet && idToSearch) {
+    throw new AppError(404, `the '${idToSearch}' of pets sent was not found`);
+  }
+
+  if (findPet?.id == idToSearch) {
+    await userPetRepository.update(findPet!.id, { specie });
+
+    return `pet: '${specie}' updated successfully`;
+  }
+
+  const findAddData = await userAddDataRepository.findOne({
+    where: { id: findUser?.userAdditionalData?.id },
   });
 
-  if (!data) {
-    throw new AppError(404, "data not found");
-  }
-
-  const findPet = await userPetRepository.findOne({
-    where: {
-      id: uuid,
-      userAdditionalData: data,
-    },
+  const newPet = userPetRepository.create({
+    specie,
+    userAdditionalData: findAddData!,
   });
 
-  if (uuid && findPet) {
-    userPetRepository.update(uuid, { specie: specie });
-    return;
-  }
+  await userPetRepository.save(newPet);
 
-  userPetRepository.create(dataSpecie);
-  const pet = await userPetRepository.save(dataSpecie);
-
-  if (!data?.pets) {
-    userAddDataRepository.update(findUser.id, { pets: [pet] });
-    return;
-  }
-
-  data.pets = [...data?.pets, pet];
-*/
-  return;
+  return "pet was created successfully";
 };

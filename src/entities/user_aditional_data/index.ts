@@ -41,18 +41,22 @@ export class userAdditionalData {
     eager: true,
     nullable: true,
   })
-  pets: userPets;
+  pets: userPets[];
 
-  @OneToMany(() => userLanguages, (languages) => languages.userAdditionalData, {
-    eager: true,
-    nullable: true,
-  })
-  languages: userLanguages[];
+  @OneToMany(
+    () => userLanguages,
+    (userLanguages) => userLanguages.userAdditionalData,
+    {
+      eager: true,
+      nullable: true,
+    }
+  )
+  userLanguages: userLanguages[];
 
   @OneToMany(
     () => userMusicGenre,
     (userMusicGenre) => userMusicGenre.userAdditionalData,
     { eager: true, nullable: true }
   )
-  userMusicGenre: userMusicGenre[]
+  userMusicGenre: userMusicGenre[];
 }

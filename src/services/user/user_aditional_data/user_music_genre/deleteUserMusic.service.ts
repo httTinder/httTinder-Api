@@ -4,15 +4,27 @@ import { userAdditionalData } from "../../../../entities/user_aditional_data";
 import { userMusicGenre } from "../../../../entities/user_aditional_data/user_music_genre";
 import { AppError } from "../../../../errors/AppError";
 
-export const deleteUserMusicService = async (id: string, uuid: string) => {
+export const deleteUserMusicService = async (
+  userId: string,
+  idToDelete: string,
+  authUserId: string
+) => {
+
+  if (idToDelete === undefined) {
+    throw new AppError(400, "Review required fields");
+  }
   const userRepository = AppDataSource.getRepository(user);
-  const findUser = await userRepository.findOneBy({ id });
+
+  const musicRepository = AppDataSource.getRepository(userMusicGenre);
+
+  const DataRepository = AppDataSource.getRepository(userAdditionalData);
+
+  const findUser = await userRepository.findOneBy({ id: userId });
 
   if (!findUser) {
     throw new AppError(404, "user not found");
   }
 
-  const DataRepository = AppDataSource.getRepository(userAdditionalData);
   const findData = await DataRepository.findOneBy({
     id: findUser.userAdditionalData.id,
   });
@@ -21,15 +33,30 @@ export const deleteUserMusicService = async (id: string, uuid: string) => {
     throw new AppError(404, "user not found");
   }
 
-  const musicRepository = AppDataSource.getRepository(userMusicGenre);
-  const findMusic = await musicRepository.delete({
-    id: uuid,
-    userAdditionalData: findData,
+  if (findUser!.userAdditionalData === null) {
+    throw new AppError(404, "additional data not found");
+  }
+
+  const findMusic = await musicRepository.findOneBy({
+    id: idToDelete
   });
 
-  if (findMusic.affected == 0) {
-    throw new AppError(404, "Hobbie not found");
+  const findAuthUser = await userRepository.findOneBy({ id: authUserId });
+
+  if (!findAuthUser) {
+    throw new AppError(404, "auth user not found");
   }
+
+  if (findData?.id !== findMusic?.userAdditionalData?.id && !findAuthUser?.isAdm) {
+ 
+    throw new AppError(403, `missing authorization permissions`);
+
+  }
+    
+
+  // if (findMusic.affected == 0) {
+  //   throw new AppError(404, "Music not found");
+  // }
 
   return;
 };

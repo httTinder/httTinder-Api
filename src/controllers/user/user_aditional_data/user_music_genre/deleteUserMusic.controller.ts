@@ -5,10 +5,11 @@ export const deleteUserMusicController = async (
   req: Request,
   res: Response
 ) => {
-  const id = req.idParams.id;
-  const { uuid } = req.body;
+  const userId = req.idParams.id;
+  const authUserId = req.user.id
+  const idToDelete  = req.body.uuid;
 
-  await deleteUserMusicService(id, uuid);
+  await deleteUserMusicService(userId, idToDelete, authUserId);
 
-  return res.json({ message: "Genre deleted" });
+  return res.json({ message: "Music deleted" });
 };

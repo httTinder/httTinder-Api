@@ -4,5 +4,5 @@ import { IUserHobbies } from "../../../interfaces/user/user_aditional_data/user_
 
 export const hobbiesSchema: SchemaOf<IUserHobbies> = yup.object().shape({
   name: yup.string().required(),
-  idHobbie: yup.string(),
+  uuid: yup.string(),
 });

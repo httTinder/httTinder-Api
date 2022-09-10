@@ -5,7 +5,11 @@ export const uuidBodyMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+  ) => {
+    if (req.headers["content-type"] !== "application/json") {
+    throw new AppError(400, "json body is required")
+  }
+
   const regexExp =
     /^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i;
 

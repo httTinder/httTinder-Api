@@ -9,6 +9,7 @@ export class userPets {
     @Column()
     specie: string
 
-    @ManyToOne(() => userAdditionalData)
+    @ManyToOne(() => userAdditionalData,
+    (userAddData) => userAddData.pets)
     userAdditionalData:userAdditionalData
 }

@@ -3,12 +3,12 @@ import { userAdditionalData } from "../index";
 
 @Entity("user_languages")
 export class userLanguages {
-    @PrimaryGeneratedColumn("uuid")
-    readonly id: string
+  @PrimaryGeneratedColumn("uuid")
+  readonly id: string;
 
-    @Column()
-    language: string
+  @Column()
+  language: string;
 
-    @ManyToOne(() => userAdditionalData)
-    userAdditionalData:userAdditionalData
+  @ManyToOne(() => userAdditionalData, (userAddData) => userAddData.userLanguages)
+  userAdditionalData: userAdditionalData;
 }

@@ -291,11 +291,11 @@ usersRoutes.delete(
 
 usersRoutes.delete(
   "/music/:id?",
+  uuidBodyMiddleware,
   verifyAuthMiddleware,
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
-  uuidBodyMiddleware,
   deleteUserMusicController
 );
 

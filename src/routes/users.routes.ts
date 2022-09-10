@@ -51,6 +51,8 @@ import { hobbiesSchema } from "../schemas/userAddData/hobbies/hobbies.schema";
 import { languageSchema } from "../schemas/userAddData/language/language.schemas";
 import { musicSchema } from "../schemas/userAddData/music/music.schemas";
 import { petsSchema } from "../schemas/userAddData/pets/pets.schemas";
+import { updateUserProfileImageController } from "../controllers/user/user_profile/profile_image/updateProfileImage.controller";
+import { deleteUserProfileImageController } from "../controllers/user/user_profile/profile_image/deleteProfileImage.controller";
 
 const usersRoutes = Router();
 
@@ -309,6 +311,31 @@ usersRoutes.patch(
   activateUserAdminController
 );
 
-usersRoutes.post("/devcreate/", verifySchemasMiddleware(userSchema), devCreateUserController);
+usersRoutes.post(
+  "/devcreate/",
+  verifySchemasMiddleware(userSchema),
+  devCreateUserController
+);
+
+usersRoutes.patch(
+  "/avatar/:id?",
+  imageHeadersMiddleware,
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  upload.array("image", Infinity),
+  verifyIdMiddleware,
+  updateUserProfileImageController
+);
+
+usersRoutes.delete(
+  "/avatar/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  deleteUserProfileImageController
+);
 
 export default usersRoutes;

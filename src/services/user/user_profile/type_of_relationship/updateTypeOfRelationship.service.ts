@@ -59,10 +59,10 @@ const updateRelationShip = async (
     serious,
   });
 
-  await relationRepository.save(newRelation);
+  const saveData = await relationRepository.save(newRelation);
 
   await userProfileRepository.update(findUser!.profile, {
-    typeOfRelationship: newRelation,
+    typeOfRelationship: saveData,
   });
 
   return;

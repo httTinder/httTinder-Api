@@ -28,7 +28,7 @@ export const updateLookingForService = async (
   if (!findUser.profile.lookingFor) {
     lookingforRepository.create(data);
     data = await lookingforRepository.save(data);
-    userProfileRepository.update(findUser.id, { lookingFor: data });
+    userProfileRepository.update(findUser.profile.id, { lookingFor: data });
     return;
   }
 

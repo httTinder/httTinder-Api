@@ -24,3 +24,7 @@ export interface cloudinaryResponse {
 export interface imagesToDeleteBody {
     images: string[]
 }
+
+export interface avatarToDeleteBody {
+    images: string
+}

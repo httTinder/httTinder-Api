@@ -1,4 +1,3 @@
-import { string } from "yup";
 import AppDataSource from "../../../../data-source";
 import { user } from "../../../../entities";
 import { userAdditionalData } from "../../../../entities/user_aditional_data";
@@ -16,7 +15,6 @@ export const updateUserLanguageService = async (
 
   const userLanguagesRepository = AppDataSource.getRepository(userLanguages);
 
-  const { uuid } = languageData;
   const language = languageData.language;
   const idToSearch = languageData.uuid;
 
@@ -38,29 +36,41 @@ export const updateUserLanguageService = async (
     throw new AppError(404, "you must submit additional data first");
   }
 
-  const findLanguages = await userLanguagesRepository.findOneBy({ id: idToSearch });
-
-  if (!findLanguages && uuid) {
-    throw new AppError(
-      404,
-      `the '${uuid}' of languages sent was not found`
-    );
-  }
-
-  if (findLanguages?.id == uuid) {
-    await userLanguagesRepository.update(findLanguages!.id, { language });
-
-    return `language '${language}' updated`;
-  }
-
   const findAddData = await userAddDataRepository.findOne({
     where: { id: findUser?.userAdditionalData?.id },
   });
 
+  
+  if (!findAddData) {
+    throw new AppError(404, "you must submit additional data first");
+  }
+
+  const findLanguages = await userLanguagesRepository.findOneBy({ id: idToSearch });
+
+  if (!findLanguages &&  idToSearch) {
+    throw new AppError(
+      404,
+      `the '${idToSearch}' of languages sent was not found`
+    );
+  }
+
+  if (findLanguages && idToSearch) {
+    userLanguagesRepository.update(idToSearch, { language });
+
+    return `language: '${language}' updated successfully`;
+  }
+
+
   const newLanguage = userLanguagesRepository.create({
     language,
-    userAdditionalData: findAddData!,
+    userAdditionalData: findAddData,
   });
+
+  const languages = await userLanguagesRepository.save(newLanguage)
+
+  if (!findAddData?.userLanguages) {
+    userAddDataRepository.update(findUser.id, { userLanguages: [languages] });
+  }
 
   await userLanguagesRepository.save(newLanguage)
 

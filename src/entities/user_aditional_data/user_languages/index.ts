@@ -9,6 +9,9 @@ export class userLanguages {
   @Column()
   language: string;
 
-  @ManyToOne(() => userAdditionalData, (userAddData) => userAddData.userLanguages)
+  @ManyToOne(
+    () => userAdditionalData,
+    (userAddData) => userAddData.userLanguages
+  )
   userAdditionalData: userAdditionalData;
 }

@@ -9,12 +9,11 @@ const updateUserHobbiesService = async (
   hobbieData: IUserHobbies,
   userId: string
 ): Promise<string> => {
-
   const userRepository = AppDataSource.getRepository(user);
 
-  const userHobbieRepository = AppDataSource.getRepository(userHobbies);
-
   const userAddDataRepository = AppDataSource.getRepository(userAdditionalData);
+
+  const userHobbieRepository = AppDataSource.getRepository(userHobbies);
 
   const name = hobbieData.name;
   const idToSearch = hobbieData.uuid;
@@ -28,12 +27,20 @@ const updateUserHobbiesService = async (
       id: userId,
     },
   });
-  
+
   if (!findUser) {
     throw new AppError(404, "User not found");
   }
 
   if (findUser!.userAdditionalData === null) {
+    throw new AppError(404, "you must submit additional data first");
+  }
+
+  const findAddData = await userAddDataRepository.findOne({
+    where: { id: findUser?.userAdditionalData?.id },
+  });
+
+  if (!findAddData) {
     throw new AppError(404, "you must submit additional data first");
   }
 
@@ -46,24 +53,26 @@ const updateUserHobbiesService = async (
     );
   }
 
-  if (findHobbie?.id == idToSearch) {
-    await userHobbieRepository.update(findHobbie!.id, { name });
+  if (findHobbie && idToSearch) {
+    userHobbieRepository.update(idToSearch, { name });
 
     return `hobbie: '${name}' updated successfully`;
   }
 
-  const findAddData = await userAddDataRepository.findOne({
-    where: { id: findUser?.userAdditionalData?.id },
-  });
-
   const newHobbie = userHobbieRepository.create({
     name,
-    userAdditionalData: findAddData!,
+    userAdditionalData: findAddData,
   });
+
+  const hobbie = await userHobbieRepository.save(newHobbie);
+
+  if (!findAddData?.hobbies) {
+    userAddDataRepository.update(findUser.id, { hobbies: [hobbie] });
+  }
 
   await userHobbieRepository.save(newHobbie);
 
-  return "musical gender was created successfully";
+  return "hobbie was created successfully";
 };
 
 export default updateUserHobbiesService;

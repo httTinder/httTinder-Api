@@ -9,5 +9,5 @@ export const deleteUserAddDataController = async (
 
   await deleteUserAddDataService(id);
 
-  return res.json({ message: "Additional Data Deleted With Sucess" });
+  return res.status(204).send();
 };

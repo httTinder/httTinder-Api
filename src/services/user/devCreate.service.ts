@@ -6,13 +6,12 @@ import jwt from "jsonwebtoken";
 import { IUserRequest } from "../../interfaces/user";
 import "dotenv/config";
 
-
 const devCreateUserService = async ({
   age,
   email,
   name,
   password,
-  isAdm = true
+  isAdm = true,
 }: IUserRequest): Promise<user> => {
   if (!age || !email || !name || !password) {
     throw new AppError(400, "Review required fields");
@@ -37,7 +36,8 @@ const devCreateUserService = async ({
     email,
     name,
     password: hashedPassword,
-    isAdm
+    isAdm,
+    isActive: true,
   });
 
   await userRepository.save(newUser);

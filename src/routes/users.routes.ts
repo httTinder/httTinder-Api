@@ -208,7 +208,6 @@ usersRoutes.delete(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
-  verifySchemasMiddleware(addressRequestSchema),
   userDeleteAddressController
 );
 
@@ -304,11 +303,14 @@ usersRoutes.patch(
   verifyUuidParamsMiddleware,
   verifyAuthMiddleware,
   adminPermission,
-  verifyActiveMiddleware,
   verifyAdminMiddleware,
   activateUserAdminController
 );
 
-usersRoutes.post("/devcreate/", verifySchemasMiddleware(userSchema), devCreateUserController);
+usersRoutes.post(
+  "/devcreate/",
+  verifySchemasMiddleware(userSchema),
+  devCreateUserController
+);
 
 export default usersRoutes;

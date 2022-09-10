@@ -1,6 +1,6 @@
 import AppDataSource from "../../../../data-source";
 import { user } from "../../../../entities";
-import { userAdditionalData } from "../../../../entities/user_aditional_data";
+import { userAdditionalData } from "../../../../entities/user_aditional_data"; 
 import { userHobbies } from "../../../../entities/user_aditional_data/user_hobbies";
 import { AppError } from "../../../../errors/AppError";
 

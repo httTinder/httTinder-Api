@@ -12,7 +12,8 @@ const devCreateUserService = async ({
   email,
   name,
   password,
-  isAdm = true
+  isAdm = false,
+
 }: IUserRequest): Promise<user> => {
   if (!age || !email || !name || !password) {
     throw new AppError(400, "Review required fields");
@@ -37,7 +38,8 @@ const devCreateUserService = async ({
     email,
     name,
     password: hashedPassword,
-    isAdm
+    isAdm,
+    isActive : true
   });
 
   await userRepository.save(newUser);

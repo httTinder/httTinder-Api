@@ -5,25 +5,30 @@ import { IUserUpdateRelationReq } from "../../../../interfaces/user/user_profile
 import { typeOfRelationship } from "../../../../entities/user_profile/type_of_relationship";
 import { userProfile } from "../../../../entities/user_profile";
 import { IUserProfileUpdateRequest } from "../../../../interfaces/user/user_profile";
+
 const updateRelationShip = async (
   relation: IUserUpdateRelationReq,
   id: string
 ) => {
+  const userRepository = AppDataSource.getRepository(user);
+
+  const profileRepository = AppDataSource.getRepository(userProfile);
+
+  const relationRepository = AppDataSource.getRepository(typeOfRelationship);
+
   const { friendship, casual, serious } = relation;
 
   if (!friendship && !casual && !serious) {
-    throw new AppError(404, "one must be true");
+    throw new AppError(404, "review required fields / one must be true");
   }
 
   if (
-    friendship === undefined &&
-    casual === undefined &&
-    serious === undefined
+    !friendship === undefined &&
+    !casual === undefined &&
+    !serious === undefined
   ) {
-    throw new AppError(400, "Review required fields");
+    throw new AppError(400, "review required fields");
   }
-
-  const userRepository = AppDataSource.getRepository(user);
 
   const findUser = await userRepository.findOneBy({ id });
 
@@ -31,20 +36,36 @@ const updateRelationShip = async (
     throw new AppError(404, "user not found");
   }
 
-  if (findUser.profile.id == null) {
+  const findProfile = await profileRepository.findOneBy({
+    id: findUser?.profile?.id,
+  });
+
+  if (!findProfile) {
     throw new AppError(404, "create profile is required");
   }
 
-  const userProfileRepository = AppDataSource.getRepository(userProfile);
-
-  const findProfile = await userProfileRepository.findOne({
-    where: { id: findUser.profile.id },
+  const findRelation = await relationRepository.findOneBy({
+    id: findProfile?.typeOfRelationship?.id,
   });
 
-  const relationRepository = AppDataSource.getRepository(typeOfRelationship);
+  if (!findRelation) {
+    const newRelation = relationRepository.create({
+      friendship,
+      casual,
+      serious,
+    });
+
+    const saveData = await relationRepository.save(newRelation);
+
+    await profileRepository.update(findProfile?.id, {
+      typeOfRelationship: saveData,
+    });
+    
+    return;
+  }
 
   if (findProfile!.typeOfRelationship !== null) {
-    await relationRepository.update(findProfile!.lookingFor, {
+    await relationRepository.update(findProfile?.lookingFor, {
       friendship,
       casual,
       serious,
@@ -53,16 +74,8 @@ const updateRelationShip = async (
     return;
   }
 
-  const newRelation = relationRepository.create({
-    friendship,
-    casual,
-    serious,
-  });
-
-  const saveData = await relationRepository.save(newRelation);
-
-  await userProfileRepository.update(findUser!.profile, {
-    typeOfRelationship: saveData,
+  await profileRepository.update(findProfile?.id, {
+    typeOfRelationship: relation,
   });
 
   return;

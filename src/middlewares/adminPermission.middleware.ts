@@ -11,7 +11,7 @@ export const adminPermission = async (
   const userId = req.params.id;
 
   if (userId !== undefined && id !== userId && !isAdm) {
-    throw new AppError(403, "missing authorization permissions" + userId);
+    throw new AppError(403, "missing authorization permissions");
   }
 
   next();

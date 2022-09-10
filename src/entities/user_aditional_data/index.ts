@@ -34,12 +34,14 @@ export class userAdditionalData {
   @OneToMany(() => userHobbies, (hobbies) => hobbies.userAdditionalData, {
     eager: true,
     nullable: true,
+    onDelete: "SET NULL",
   })
   hobbies: userHobbies[];
 
   @OneToMany(() => userPets, (pets) => pets.userAdditionalData, {
     eager: true,
     nullable: true,
+    onDelete: "SET NULL",
   })
   pets: userPets[];
 
@@ -49,6 +51,7 @@ export class userAdditionalData {
     {
       eager: true,
       nullable: true,
+      onDelete: "SET NULL",
     }
   )
   userLanguages: userLanguages[];
@@ -56,7 +59,11 @@ export class userAdditionalData {
   @OneToMany(
     () => userMusicGenre,
     (userMusicGenre) => userMusicGenre.userAdditionalData,
-    { eager: true, nullable: true }
+    {
+      eager: true,
+      nullable: true,
+      onDelete: "SET NULL",
+    }
   )
   userMusicGenre: userMusicGenre[];
 }

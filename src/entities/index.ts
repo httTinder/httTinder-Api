@@ -32,7 +32,7 @@ export class user {
   @Min(18)
   age: number;
 
-  @Column({ default: false })
+  @Column()
   isActive?: boolean;
 
   @Column()

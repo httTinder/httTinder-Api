@@ -42,7 +42,8 @@ const createUserService = async ({
     email,
     name,
     password: hashedPassword,
-    isAdm
+    isAdm,
+    isActive : false
   });
 
   await userRepository.save(newUser);

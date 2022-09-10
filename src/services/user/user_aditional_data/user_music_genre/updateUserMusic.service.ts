@@ -1,8 +1,8 @@
-import { AppError } from "../../../../errors/AppError";
 import AppDataSource from "../../../../data-source";
 import { user } from "../../../../entities";
-import { userMusicGenre } from "../../../../entities/user_aditional_data/user_music_genre";
 import { userAdditionalData } from "../../../../entities/user_aditional_data";
+import { userMusicGenre } from "../../../../entities/user_aditional_data/user_music_genre";
+import { AppError } from "../../../../errors/AppError";
 import { IUserMusic } from "../../../../interfaces/user/user_aditional_data/user_music";
 
 export const updateUserMusicService = async (
@@ -11,9 +11,9 @@ export const updateUserMusicService = async (
 ): Promise<string> => {
   const userRepository = AppDataSource.getRepository(user);
 
-  const userMusicRepository = AppDataSource.getRepository(userMusicGenre);
-
   const userAddDataRepository = AppDataSource.getRepository(userAdditionalData);
+
+  const userMusicRepository = AppDataSource.getRepository(userMusicGenre);
 
   const music = musicData.music;
   const idToSearch = musicData.uuid;
@@ -36,6 +36,15 @@ export const updateUserMusicService = async (
     throw new AppError(404, "you must submit additional data first");
   }
 
+  const findAddData = await userAddDataRepository.findOne({
+    where: { id: findUser?.userAdditionalData?.id },
+  });
+
+  
+  if (!findAddData) {
+    throw new AppError(404, "you must submit additional data first");
+  }
+
   const findMusic = await userMusicRepository.findOneBy({ id: idToSearch });
 
   if (!findMusic && idToSearch) {
@@ -45,20 +54,22 @@ export const updateUserMusicService = async (
     );
   }
 
-  if (findMusic?.id == idToSearch) {
+  if (findMusic && idToSearch) {
     await userMusicRepository.update(findMusic!.id, { name: music });
 
     return `musical gender: '${music}' updated successfully`;
   }
 
-  const findAddData = await userAddDataRepository.findOne({
-    where: { id: findUser?.userAdditionalData?.id },
-  });
-
   const newMusic = userMusicRepository.create({
     name: music,
     userAdditionalData: findAddData!,
   });
+
+  const musics =  await userMusicRepository.save(newMusic);
+
+  if (!findAddData?.userLanguages) {
+    userAddDataRepository.update(findUser.id, { userMusicGenre: [musics] });
+  }
 
   await userMusicRepository.save(newMusic);
 

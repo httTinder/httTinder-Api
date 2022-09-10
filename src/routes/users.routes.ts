@@ -42,7 +42,7 @@ import { addressRequestSchema } from "../schemas/user/address/address.schemas";
 import { userProfileMiddleware } from "../middlewares/user/user_profile";
 import { updateUserMusicController } from "../controllers/user/user_aditional_data/user_music_genre/updateUserMusic.controller";
 import { deleteUserMusicController } from "../controllers/user/user_aditional_data/user_music_genre/deleteUserMusic.controller";
-import { updateUserLanguageController } from "../controllers/user/user_aditional_data/user_languages/updateUserLanguage.controller";
+import updateUserLanguageController from "../controllers/user/user_aditional_data/user_languages/updateUserLanguage.controller";
 import { uuidBodyMiddleware } from "../middlewares/verifyUuid.middleware";
 import { deleteUserLanguageController } from "../controllers/user/user_aditional_data/user_languages/deleteUserLanguage.controller";
 import { deleteUserPetsController } from "../controllers/user/user_aditional_data/user_pets/deleteUserPets.controller";

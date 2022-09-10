@@ -11,7 +11,7 @@ export class userMusicGenre {
 
   @ManyToOne(
     () => userAdditionalData,
-    (userAddData) => userAddData.userMusicGenre
+    (userAdditionalData) => userAdditionalData.userMusicGenre
   )
   userAdditionalData: userAdditionalData;
 }

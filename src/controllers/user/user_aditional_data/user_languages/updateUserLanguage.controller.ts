@@ -1,7 +1,8 @@
+import { instanceToPlain } from "class-transformer";
 import { Request, Response } from "express";
 import { updateUserLanguageService } from "../../../../services/user/user_aditional_data/user_languages/updateUserLanguages.service";
 
-export const updateUserLanguageController = async (
+const updateUserLanguageController = async (
   req: Request,
   res: Response
 ) => {
@@ -10,5 +11,7 @@ export const updateUserLanguageController = async (
 
   const message = await updateUserLanguageService(languageData, userId);
 
-  return res.json({message})
+  return res.status(201).json(instanceToPlain({message}))
 };
+
+export default updateUserLanguageController

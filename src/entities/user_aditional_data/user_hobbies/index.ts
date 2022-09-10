@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { userAditionalData } from "../index";
+import { userAdditionalData } from "../index";
 
 @Entity("user_hobbies")
 export class userHobbies {
@@ -9,6 +9,6 @@ export class userHobbies {
     @Column()
     name: string
 
-    @ManyToOne(() => userAditionalData)
-    userAditionalData:userAditionalData
+    @ManyToOne(() => userAdditionalData)
+    userAdditionalData:userAdditionalData
 }

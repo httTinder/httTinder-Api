@@ -1,3 +1,4 @@
+import { verifySchemasMiddleware } from "./../middlewares/verifySchemas.middleware";
 import { updateLookingForController } from "../controllers/user/user_profile/looking_for/updateLookingFor.controller";
 import { Router } from "express";
 import { userListController } from "../controllers/user/userList.controller";
@@ -32,6 +33,12 @@ import { verifyUuidParamsMiddleware } from "../middlewares/verifyUuidParams.midd
 import devCreateUserController from "../controllers/user/devCreate.controller";
 import updateUserHobbiesController from "../controllers/user/user_aditional_data/user_hobbies/update_user_hobbies.controller";
 import deleteUserHobbieController from "../controllers/user/user_aditional_data/user_hobbies/delete_user_hobbie.controller";
+import { userAddDataSchema } from "../schemas/userAddData/userAddData.schemas";
+import { userEditSchema, userSchema } from "../schemas/user/user.schemas";
+import { updateUserProfileSchema } from "../schemas/userProfile/updateUserProfile.schemas";
+import { lookingForSchema } from "../schemas/userProfile/lookingfor/updateLookingfor.schemas";
+import { relationshipSchema } from "../schemas/userProfile/lookingfor/relationship/updateRelationship.schemas";
+import { addressRequestSchema } from "../schemas/user/address/address.schemas";
 import { userProfileMiddleware } from "../middlewares/user/user_profile";
 import { updateUserMusicController } from "../controllers/user/user_aditional_data/user_music_genre/updateUserMusic.controller";
 import { deleteUserMusicController } from "../controllers/user/user_aditional_data/user_music_genre/deleteUserMusic.controller";
@@ -40,6 +47,10 @@ import { uuidBodyMiddleware } from "../middlewares/verifyUuid.middleware";
 import { deleteUserLanguageController } from "../controllers/user/user_aditional_data/user_languages/deleteUserLanguage.controller";
 import { deleteUserPetsController } from "../controllers/user/user_aditional_data/user_pets/deleteUserPets.controller";
 import { updateUserPetsController } from "../controllers/user/user_aditional_data/user_pets/updateUserPets.controller";
+import { hobbiesSchema } from "../schemas/userAddData/hobbies/hobbies.schema";
+import { languageSchema } from "../schemas/userAddData/language/language.schemas";
+import { musicSchema } from "../schemas/userAddData/music/music.schemas";
+import { petsSchema } from "../schemas/userAddData/pets/pets.schemas";
 
 const usersRoutes = Router();
 
@@ -72,13 +83,14 @@ usersRoutes.patch(
   "/data/:id?",
   verifyAuthMiddleware,
   adminPermission,
-  verifyActiveMiddleware,
   verifyIdMiddleware,
+  verifyActiveMiddleware,
+  verifySchemasMiddleware(userEditSchema),
   editUserMiddleWare,
   userEditController
 );
 
-usersRoutes.post("", createUserController);
+usersRoutes.post("", verifySchemasMiddleware(userSchema), createUserController);
 
 usersRoutes.patch(
   "/email/:tokenEmail",
@@ -111,6 +123,7 @@ usersRoutes.patch(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  verifySchemasMiddleware(lookingForSchema),
   updateLookingForController
 );
 
@@ -120,6 +133,7 @@ usersRoutes.patch(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  verifySchemasMiddleware(relationshipSchema),
   updateTypeOfRelationShip
 );
 
@@ -140,6 +154,7 @@ usersRoutes.patch(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  verifySchemasMiddleware(userAddDataSchema),
   UpdateUserAddDataController
 );
 
@@ -149,6 +164,7 @@ usersRoutes.patch(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  verifySchemasMiddleware(hobbiesSchema),
   uuidBodyMiddleware,
   updateUserHobbiesController
 );
@@ -159,6 +175,7 @@ usersRoutes.patch(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  verifySchemasMiddleware(petsSchema),
   uuidBodyMiddleware,
   updateUserPetsController
 );
@@ -169,16 +186,19 @@ usersRoutes.patch(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  verifySchemasMiddleware(languageSchema),
   uuidBodyMiddleware,
   updateUserLanguageController
 );
 
 usersRoutes.patch(
   "/music/:id?",
+  uuidBodyMiddleware,
   verifyAuthMiddleware,
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  verifySchemasMiddleware(musicSchema),
   updateUserMusicController
 );
 
@@ -188,6 +208,7 @@ usersRoutes.delete(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  verifySchemasMiddleware(addressRequestSchema),
   userDeleteAddressController
 );
 
@@ -197,6 +218,7 @@ usersRoutes.delete(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  verifySchemasMiddleware(updateUserProfileSchema),
   userDeleteProfileController
 );
 
@@ -273,6 +295,7 @@ usersRoutes.delete(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  uuidBodyMiddleware,
   deleteUserMusicController
 );
 
@@ -286,6 +309,6 @@ usersRoutes.patch(
   activateUserAdminController
 );
 
-usersRoutes.post("/devcreate/", devCreateUserController);
+usersRoutes.post("/devcreate/", verifySchemasMiddleware(userSchema), devCreateUserController);
 
 export default usersRoutes;

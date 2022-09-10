@@ -12,7 +12,7 @@ const activateUserService = async (id: string) => {
     throw new AppError(404, "User not found");
   }
 
-  if (findUser.isActive === true) {
+  if (findUser.isActive) {
     throw new AppError(400, "User already active");
   }
 

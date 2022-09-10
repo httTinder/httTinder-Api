@@ -1,21 +1,25 @@
 import AppDataSource from "../../../../data-source";
 import { user } from "../../../../entities";
-import { userAditionalData } from "../../../../entities/user_aditional_data";
 import { userMusicGenre } from "../../../../entities/user_aditional_data/user_music_genre";
 import { AppError } from "../../../../errors/AppError";
+import { userAdditionalData } from "../../../../entities/user_aditional_data";
 
 import { IUserMusic } from "../../../../interfaces/user/user_aditional_data/user_music";
 
 export const updateUserMusicService = async (
   musicData: IUserMusic,
   userId: string
-) => {
+): Promise<string> => {
   const userRepository = AppDataSource.getRepository(user);
+
   const userMusicRepository = AppDataSource.getRepository(userMusicGenre);
-  const userAddDataRepository = AppDataSource.getRepository(userAditionalData);
 
-  const { music, uuid } = musicData;
+  const userAddDataRepository = AppDataSource.getRepository(userAdditionalData);
 
+  const { uuid } = musicData;
+  const music = musicData.music;
+  const idToSearch = musicData.uuid;
+  //throw new AppError(200, `${uuid}`);
   if (!music) {
     throw new AppError(404, "Invalid field");
   }
@@ -30,47 +34,35 @@ export const updateUserMusicService = async (
     throw new AppError(404, "User not found");
   }
 
-  const findData = await userAddDataRepository.findOne({
-    where: {
-      id: findUser.userAditionalData.id,
-    },
+  if (findUser!.userAdditionalData === null) {
+    throw new AppError(404, "you must submit additional data first");
+  }
+
+  const findMusic = await userMusicRepository.findOneBy({ id: idToSearch });
+
+  if (!findMusic && uuid) {
+    throw new AppError(
+      404,
+      `the ${uuid} of the music genre sent was not found`
+    );
+  }
+
+  if (findMusic?.id == uuid) {
+    await userMusicRepository.update(findMusic!.id, { name: music });
+
+    return `musical gender '${music}' updated`;
+  }
+
+  const findAddData = await userAddDataRepository.findOne({
+    where: { id: findUser?.userAdditionalData?.id },
   });
 
-  if (!findData) {
-    throw new AppError(404, "data not found");
-  }
-
-  const findMusic = await userMusicRepository.findOne({
-    where: {
-      id: uuid,
-      userAditionalData: findData,
-    },
-  });
-
-  if (!findMusic) {
-    throw new AppError(404, "data not found");
-  }
-
-  if (uuid && findMusic !== undefined) {
-    userMusicRepository.update(uuid, {
-      name: music,
-    });
-    return;
-  }
-
-  const newMusic = await userMusicRepository.save({
+  const newMusic = userMusicRepository.create({
     name: music,
-    userAditionalData: findData,
+    userAdditionalData: findAddData!,
   });
 
-  if (!findData?.musicGenre) {
-    userAddDataRepository.update(findUser.id, {
-      musicGenre: [newMusic],
-    });
-    return;
-  }
+  await userMusicRepository.save(newMusic);
 
-  await userAddDataRepository.save(findData);
-  
-  return;
+  return `musical gender was created`;
 };

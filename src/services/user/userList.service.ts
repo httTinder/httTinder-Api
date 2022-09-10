@@ -21,7 +21,7 @@ const userListService = async (id: string) => {
       updatedAt: userFind.updatedAt,
       address: userFind.address,
       profile: userFind.profile,
-      userAditionalData: userFind.userAditionalData
+      userAdditionalData: userFind.userAdditionalData
     }
   }
 

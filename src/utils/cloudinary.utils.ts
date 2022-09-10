@@ -1,11 +1,12 @@
 import multer from "multer";
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
+import 'dotenv/config'
 
 const CLOUDINARY_URL = cloudinary.config({
-  cloud_name: "dtgkjo5sy",
-  api_key: "233472814953427",
-  api_secret: "bGtUEh03unKMhW3sb78rGaEJHxU",
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_KEY,
+  api_secret: process.env.CLOUD_SECRET,
 });
 
 export const upload = multer({

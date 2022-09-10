@@ -10,7 +10,7 @@ import {
 } from "typeorm";
 import { Min } from "class-validator";
 import { userAddresses } from "./user_address";
-import { userAditionalData } from "./user_aditional_data";
+import { userAdditionalData } from "./user_aditional_data";
 import { userProfile } from "./user_profile/index";
 
 @Entity("user")
@@ -60,11 +60,11 @@ export class user {
   @JoinColumn()
   profile: userProfile;
 
-  @OneToOne(() => userAditionalData, {
+  @OneToOne(() => userAdditionalData, {
     eager: true,
     nullable: true,
     onDelete: "SET NULL",
   })
   @JoinColumn()
-  userAditionalData: userAditionalData;
+  userAdditionalData: userAdditionalData;
 }

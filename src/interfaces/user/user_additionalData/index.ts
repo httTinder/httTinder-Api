@@ -3,5 +3,5 @@ export interface IUserAddDataRequest {
   drinker?: boolean;
   smoker?: boolean;
   kids?: boolean;
-  kidsQnt?: string;
+  kidsQnt?: any;
 }

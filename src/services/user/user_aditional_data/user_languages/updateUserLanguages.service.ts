@@ -1,6 +1,6 @@
 import AppDataSource from "../../../../data-source";
 import { user } from "../../../../entities";
-import { userAditionalData } from "../../../../entities/user_aditional_data";
+import { userAdditionalData } from "../../../../entities/user_aditional_data";
 import { userLanguages } from "../../../../entities/user_aditional_data/user_languages";
 import { AppError } from "./../../../../errors/AppError";
 import { IUserLanguage } from "./../../../../interfaces/user/user_aditional_data/user_languages/index";
@@ -9,8 +9,9 @@ export const updateUserLanguageService = async (
   languageData: IUserLanguage,
   userId: string
 ) => {
+  /*
   const userRepository = AppDataSource.getRepository(user);
-  const userAddDataRepository = AppDataSource.getRepository(userAditionalData);
+  const userAddDataRepository = AppDataSource.getRepository(userAdditionalData);
   const userLanguagesRepository = AppDataSource.getRepository(userLanguages);
 
   const { language, uuid } = languageData;
@@ -31,7 +32,7 @@ export const updateUserLanguageService = async (
 
   const findData = await userAddDataRepository.findOne({
     where: {
-      id: findUser.userAditionalData.id,
+      id: findUser.userAdditionalData.id,
     },
   });
 
@@ -42,7 +43,7 @@ export const updateUserLanguageService = async (
   const findLanguage = await userLanguagesRepository.findOne({
     where: {
       id: uuid,
-      userAditionalData: findData,
+      userAdditionalData: findData,
     },
   });
 
@@ -71,6 +72,6 @@ export const updateUserLanguageService = async (
   findData.languages = [...findData?.languages, newLanguage];
 
   await userAddDataRepository.save(findData);
-
+*/
   return;
 };

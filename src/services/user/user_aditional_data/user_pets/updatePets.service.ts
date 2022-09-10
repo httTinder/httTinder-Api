@@ -2,13 +2,14 @@ import { AppError } from "./../../../../errors/AppError";
 import { userPets } from "../../../../entities/user_aditional_data/user_pets/index";
 import { user } from "../../../../entities/index";
 import AppDataSource from "../../../../data-source";
-import { userAditionalData } from "../../../../entities/user_aditional_data";
+import { userAdditionalData } from "../../../../entities/user_aditional_data";
 import { IUserPets } from "../../../../interfaces/user/user_additionalData/pets";
 
 export const updatePetsService = async (
   dataSpecie: IUserPets,
   userId: string
 ) => {
+  /*
   const { specie, uuid } = dataSpecie;
 
   if (!specie) {
@@ -17,7 +18,7 @@ export const updatePetsService = async (
 
   const userRepository = AppDataSource.getRepository(user);
   const userPetRepository = AppDataSource.getRepository(userPets);
-  const userAddDataRepository = AppDataSource.getRepository(userAditionalData);
+  const userAddDataRepository = AppDataSource.getRepository(userAdditionalData);
 
   const findUser = await userRepository.findOne({
     where: {
@@ -31,7 +32,7 @@ export const updatePetsService = async (
 
   const data = await userAddDataRepository.findOne({
     where: {
-      id: findUser.userAditionalData.id,
+      id: findUser.userAdditionalData.id,
     },
   });
 
@@ -42,7 +43,7 @@ export const updatePetsService = async (
   const findPet = await userPetRepository.findOne({
     where: {
       id: uuid,
-      userAditionalData: data,
+      userAdditionalData: data,
     },
   });
 
@@ -60,6 +61,6 @@ export const updatePetsService = async (
   }
 
   data.pets = [...data?.pets, pet];
-
+*/
   return;
 };

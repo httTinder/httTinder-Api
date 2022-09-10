@@ -11,7 +11,7 @@ export const uuidBodyMiddleware = async (
 
   const { uuid } = req.body;
 
-  if (!regexExp.test(uuid)) {
+  if (!regexExp.test(uuid) && uuid !== undefined) {
     throw new AppError(422, "Invalid uuid");
   }
 

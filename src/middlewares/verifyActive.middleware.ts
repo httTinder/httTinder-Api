@@ -1,11 +1,12 @@
-import { NextFunction, Request, Response } from 'express'
 import { AppError } from '../errors/AppError'
+import { NextFunction, Request, Response } from 'express'
 
-export const verifyActiveMiddleware = (
+export const verifyActiveMiddleware = async (
 	req: Request,
 	res: Response,
 	next: NextFunction
 ) => {
+	
 	const { isActive } = req.user
 
 	if (!isActive) {

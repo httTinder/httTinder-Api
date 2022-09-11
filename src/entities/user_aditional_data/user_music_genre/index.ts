@@ -1,14 +1,17 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { userAditionalData } from "../index";
+import { userAdditionalData } from "../index";
 
 @Entity("user_music_genre")
 export class userMusicGenre {
-    @PrimaryGeneratedColumn("uuid")
-    readonly id: string
+  @PrimaryGeneratedColumn("uuid")
+  readonly id: string;
 
-    @Column()
-    name: string
+  @Column()
+  name: string;
 
-    @ManyToOne(() => userAditionalData)
-    userAditionalData:userAditionalData
+  @ManyToOne(
+    () => userAdditionalData,
+    (userAdditionalData) => userAdditionalData.userMusicGenre
+  )
+  userAdditionalData: userAdditionalData;
 }

@@ -10,6 +10,7 @@ import { IUserRequest } from "../../interfaces/user";
 
 import "dotenv/config";
 import sendEmail from "../../utils/nodemailer.util";
+import { number } from "yup";
 
 const createUserService = async ({
   age,
@@ -41,7 +42,8 @@ const createUserService = async ({
     email,
     name,
     password: hashedPassword,
-    isAdm
+    isAdm,
+    isActive : false
   });
 
   await userRepository.save(newUser);

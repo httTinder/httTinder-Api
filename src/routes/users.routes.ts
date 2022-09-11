@@ -1,3 +1,4 @@
+import { verifySchemasMiddleware } from "./../middlewares/verifySchemas.middleware";
 import { updateLookingForController } from "../controllers/user/user_profile/looking_for/updateLookingFor.controller";
 import { Router } from "express";
 import { userListController } from "../controllers/user/userList.controller";
@@ -6,7 +7,6 @@ import { verifyAdminMiddleware } from "../middlewares/verifyAdmin.middleware";
 import { userEditController } from "../controllers/user/userEdit.controller";
 import activateUserController from "../controllers/user/active_user.controller";
 import createUserController from "../controllers/user/create_user.controller";
-import authEmailMiddleware from "../middlewares/authEmail.middleware";
 import { verifyActiveMiddleware } from "../middlewares/verifyActive.middleware";
 import { adminPermission } from "../middlewares/adminPermission.middleware";
 import userDeleteController from "../controllers/user/userDelete.controller";
@@ -22,6 +22,36 @@ import { imageDeleteController } from "../controllers/user/user_profile/user_ima
 import { uuidMiddleware } from "../middlewares/user/user_profile/user_images/uuidValidator.middleware";
 import { updateUserProfileController } from "../controllers/user/user_profile/update_user_profile.controller";
 import { deleteLookingForController } from "../controllers/user/user_profile/looking_for/deleteLookingFor.controller";
+import { UpdateUserAddDataController } from "../controllers/user/user_aditional_data/UpdateUserAddData.controller";
+import { deleteUserAddDataController } from "../controllers/user/user_aditional_data/deleteUserAddData.controller";
+import deleteRelationShipController from "../controllers/user/user_profile/type_of_relationship/deleteRelationshipController";
+import updateTypeOfRelationShip from "../controllers/user/user_profile/type_of_relationship/updateTypeOfRelationShip";
+import userDeleteProfileController from "../controllers/user/user_profile/delete_user_profile.controller";
+import { activateUserMiddleware } from "../middlewares/activateUser.middleware";
+import activateUserAdminController from "../controllers/user/activateUserAdmin.controller";
+import { verifyUuidParamsMiddleware } from "../middlewares/verifyUuidParams.middleware";
+import devCreateUserController from "../controllers/user/devCreate.controller";
+import updateUserHobbiesController from "../controllers/user/user_aditional_data/user_hobbies/update_user_hobbies.controller";
+import deleteUserHobbieController from "../controllers/user/user_aditional_data/user_hobbies/delete_user_hobbie.controller";
+import { userAddDataSchema } from "../schemas/userAddData/userAddData.schemas";
+import { userEditSchema, userSchema } from "../schemas/user/user.schemas";
+import { updateUserProfileSchema } from "../schemas/userProfile/updateUserProfile.schemas";
+import { relationshipSchema } from "../schemas/userProfile/lookingfor/relationship/updateRelationship.schemas";
+import { addressRequestSchema } from "../schemas/user/address/address.schemas";
+import { userProfileMiddleware } from "../middlewares/user/user_profile";
+import { updateUserMusicController } from "../controllers/user/user_aditional_data/user_music_genre/updateUserMusic.controller";
+import { deleteUserMusicController } from "../controllers/user/user_aditional_data/user_music_genre/deleteUserMusic.controller";
+import updateUserLanguageController from "../controllers/user/user_aditional_data/user_languages/updateUserLanguage.controller";
+import { uuidBodyMiddleware } from "../middlewares/verifyUuid.middleware";
+import { deleteUserLanguageController } from "../controllers/user/user_aditional_data/user_languages/deleteUserLanguage.controller";
+import { deleteUserPetsController } from "../controllers/user/user_aditional_data/user_pets/deleteUserPets.controller";
+import { updateUserPetsController } from "../controllers/user/user_aditional_data/user_pets/updateUserPets.controller";
+import { hobbiesSchema } from "../schemas/userAddData/hobbies/hobbies.schema";
+import { languageSchema } from "../schemas/userAddData/language/language.schemas";
+import { musicSchema } from "../schemas/userAddData/music/music.schemas";
+import { petsSchema } from "../schemas/userAddData/pets/pets.schemas";
+import { updateUserProfileImageController } from "../controllers/user/user_profile/profile_image/updateProfileImage.controller";
+import { deleteUserProfileImageController } from "../controllers/user/user_profile/profile_image/deleteProfileImage.controller";
 
 const usersRoutes = Router();
 
@@ -54,15 +84,20 @@ usersRoutes.patch(
   "/data/:id?",
   verifyAuthMiddleware,
   adminPermission,
-  verifyActiveMiddleware,
   verifyIdMiddleware,
+  verifyActiveMiddleware,
+  verifySchemasMiddleware(userEditSchema),
   editUserMiddleWare,
   userEditController
 );
 
-usersRoutes.post("", createUserController);
+usersRoutes.post("", verifySchemasMiddleware(userSchema), createUserController);
 
-usersRoutes.patch("/email/:tokenEmail", activateUserController);
+usersRoutes.patch(
+  "/email/:tokenEmail",
+  activateUserMiddleware,
+  activateUserController
+);
 
 usersRoutes.patch(
   "/address/:id?",
@@ -79,6 +114,7 @@ usersRoutes.patch(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  userProfileMiddleware,
   updateUserProfileController
 );
 
@@ -91,7 +127,15 @@ usersRoutes.patch(
   updateLookingForController
 );
 
-usersRoutes.patch("/relationship/:id");
+usersRoutes.patch(
+  "/relationship/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  verifySchemasMiddleware(relationshipSchema),
+  updateTypeOfRelationShip
+);
 
 usersRoutes.patch(
   "/images/:id?",
@@ -104,15 +148,59 @@ usersRoutes.patch(
   imageEditController
 );
 
-usersRoutes.patch("/additional/:id");
+usersRoutes.patch(
+  "/additional/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  verifySchemasMiddleware(userAddDataSchema),
+  UpdateUserAddDataController
+);
 
-usersRoutes.patch("/hobbies/:id");
+usersRoutes.patch(
+  "/hobbies/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  verifySchemasMiddleware(hobbiesSchema),
+  uuidBodyMiddleware,
+  updateUserHobbiesController
+);
 
-usersRoutes.patch("/pets/:id");
+usersRoutes.patch(
+  "/pets/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  verifySchemasMiddleware(petsSchema),
+  uuidBodyMiddleware,
+  updateUserPetsController
+);
 
-usersRoutes.patch("/languages/:id");
+usersRoutes.patch(
+  "/languages/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  verifySchemasMiddleware(languageSchema),
+  uuidBodyMiddleware,
+  updateUserLanguageController
+);
 
-usersRoutes.patch("/music/:id");
+usersRoutes.patch(
+  "/music/:id?",
+  uuidBodyMiddleware,
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  verifySchemasMiddleware(musicSchema),
+  updateUserMusicController
+);
 
 usersRoutes.delete(
   "/address/:id?",
@@ -120,10 +208,19 @@ usersRoutes.delete(
   adminPermission,
   verifyActiveMiddleware,
   verifyIdMiddleware,
+  verifySchemasMiddleware(addressRequestSchema),
   userDeleteAddressController
 );
 
-usersRoutes.delete("/profile/:id");
+usersRoutes.delete(
+  "/profile/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  verifySchemasMiddleware(updateUserProfileSchema),
+  userDeleteProfileController
+);
 
 usersRoutes.delete(
   "/lookingfor/:id?",
@@ -134,8 +231,14 @@ usersRoutes.delete(
   deleteLookingForController
 );
 
-usersRoutes.delete("/relationship/:id");
-
+usersRoutes.delete(
+  "/relationship/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  deleteRelationShipController
+);
 
 usersRoutes.delete(
   "/images/:id?",
@@ -147,14 +250,90 @@ usersRoutes.delete(
   imageDeleteController
 );
 
-usersRoutes.delete("/additional/:id");
+usersRoutes.delete(
+  "/additional/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  deleteUserAddDataController
+);
 
-usersRoutes.delete("/hobbies/:id");
+usersRoutes.delete(
+  "/hobbies/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  uuidBodyMiddleware,
+  deleteUserHobbieController
+);
 
-usersRoutes.delete("/pets/:id");
+usersRoutes.delete(
+  "/pets/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  uuidBodyMiddleware,
+  deleteUserPetsController
+);
 
-usersRoutes.delete("/languages/:id");
+usersRoutes.delete(
+  "/languages/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  uuidBodyMiddleware,
+  deleteUserLanguageController
+);
 
-usersRoutes.delete("/music/:id");
+usersRoutes.delete(
+  "/music/:id?",
+  uuidBodyMiddleware,
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  deleteUserMusicController
+);
+
+usersRoutes.patch(
+  "/activate/:id",
+  verifyUuidParamsMiddleware,
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyAdminMiddleware,
+  activateUserAdminController
+);
+
+usersRoutes.post(
+  "/devcreate/",
+  verifySchemasMiddleware(userSchema),
+  devCreateUserController
+);
+
+usersRoutes.patch(
+  "/avatar/:id?",
+  imageHeadersMiddleware,
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  upload.array("image", Infinity),
+  verifyIdMiddleware,
+  updateUserProfileImageController
+);
+
+usersRoutes.delete(
+  "/avatar/:id?",
+  verifyAuthMiddleware,
+  adminPermission,
+  verifyActiveMiddleware,
+  verifyIdMiddleware,
+  deleteUserProfileImageController
+);
 
 export default usersRoutes;

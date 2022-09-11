@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { Max, Min } from "class-validator";
 
-@Entity("user_addresses")
+@Entity("addresses")
 export class userAddresses {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;

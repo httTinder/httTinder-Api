@@ -12,12 +12,8 @@ const userDeleteAddressService = async (id: string) => {
     throw new AppError(404, "User not found");
   }
 
-  if (!userFind.address) {
-    throw new AppError(404, "User address not found");
-  }
-
   const addressRepository = AppDataSource.getRepository(userAddresses);
-
+  
   await addressRepository.delete({ id: userFind.address.id });
 
   return;

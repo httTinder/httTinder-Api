@@ -213,7 +213,7 @@ If the id is not passed through params, the one provided by the token will be us
 
 ```JSON
    {
-    "message": "Profile changed successfully"
+    "message": "Profile deleted with sucess!"
     }
 ```
 

@@ -89,11 +89,9 @@ yarn typeorm migration:run -d src/data-source.ts
 - **Start application**
 
 ```
-
 npm run dev
 
 yarn dev
-
 ```
 
 ## Installing with docker
@@ -118,7 +116,7 @@ docker-compose up
 https://htttinder.herokuapp.com
 ```
 
-### **POST /user 201**
+### POST /user
 
 Route responsible for creating new user
 
@@ -141,6 +139,90 @@ Route responsible for creating new user
         "age" : "33"
     }
 ```
+
+---
+
+### PATCH /user/profile/:id
+
+Route responsible for creating user profile or update any field on the user profile
+
+- #### Required fields
+
+  | Field        | Type   | Description            |
+  | ------------ | ------ | ---------------------- |
+  | orientation  | string | User's Name            |
+  | gender       | string | User's Gender          |
+  | bio          | string | User's Short biography |
+  | height       | string | User's Height          |
+  | education    | string | User's Education       |
+  | profession   | string | User's Profession      |
+  | profileImage | string | User's Photo           |
+
+  <br>
+
+### < This route requires authentication>
+
+If the id is not passed through params, the one provided by the token will be used.
+
+<br>
+
+- #### Example:
+
+```JSON
+   {
+    "orientation" : "hétero",
+    "gender" : "Homem",
+    "bio" : "sou bem legal",
+    "height": 1.85,
+    "education" : "Formado",
+    "profession" : "Dev",
+    "profileImage" : "12530000"
+    }
+```
+
+### Expected Response:
+
+```JSON
+   {
+    "message": "Profile changed successfully"
+    }
+```
+
+### Errors:
+
+- 400 : errors relating to the data reported in the field, check whether the data respects the maximum size or has been informed.
+- 401 : error may refer to the validity of the token, the user, or whether the user was not adm.
+- 403 : error regarding lack of authorisation.
+- 404 : error user was not found
+
+---
+
+### DELETE /user/profile/:id
+
+Route responsible for delete the profile
+
+- #### No body required
+
+### < This route requires authentication>
+
+If the id is not passed through params, the one provided by the token will be used.
+
+<br>
+
+### Expected Response:
+
+```JSON
+   {
+    "message": "Profile changed successfully"
+    }
+```
+
+### Errors:
+
+- 400 : errors relating to the data reported in the field, check whether the data respects the maximum size or has been informed.
+- 401 : error may refer to the validity of the token, the user, or whether the user was not adm.
+- 403 : error regarding lack of authorisation.
+- 404 : error user was not found
 
 _For more examples, please refer to the [Documentation](https://htttinder.github.io/docs/)_
 

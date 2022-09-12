@@ -6,7 +6,7 @@ const userDeleteProfileController = async (req: Request, res: Response) => {
 
   await userDeleteProfileService(id);
 
-  return res.status(204).json({ message: "Address deleted with sucess!" });
+  return res.status(204).json({ message: "Profile deleted with sucess!" });
 };
 
 export default userDeleteProfileController;

@@ -8,5 +8,5 @@ export const deleteUserPetsController = async (req: Request, res: Response) => {
 
   await deletePetsService(userId, idToDelete, authUserId);
 
-  return res.json({ message: "Pet Field Deleted" });
+  return res.json({ message: "Pet field deleted" });
 };

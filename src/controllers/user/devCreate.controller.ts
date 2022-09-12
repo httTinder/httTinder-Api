@@ -16,7 +16,7 @@ const devCreateUserController = async (req: Request, res: Response) => {
 
   return res
     .status(201)
-    .json(instanceToPlain({ message: "user created successfully" }));
+    .json(instanceToPlain({ message: "User created successfully" }));
 };
 
 export default devCreateUserController;

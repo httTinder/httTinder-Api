@@ -10,6 +10,6 @@ export const deleteLookingForController = async (
   await deleteLookingForService(id);
 
   return res.status(204).json({
-    message: "looking for delete successfully",
+    message: "Looking for delete successfully",
   });
 };

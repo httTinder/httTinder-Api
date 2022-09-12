@@ -33,5 +33,5 @@ export const updateUserProfileImageController = async (
 
   const message = await updateUserProfileImageService(userId, cloudinaryRespo);
   
-  return res.status(201).json({ message : "profile image update successfully" });
+  return res.status(201).json({ message : "Profile image update successfully" });
 };

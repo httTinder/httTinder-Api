@@ -73,5 +73,5 @@ export const updateUserMusicService = async (
 
   await userMusicRepository.save(newMusic);
 
-  return "musical gender was created successfully";
+  return "Musical gender was created successfully";
 };

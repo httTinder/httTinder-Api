@@ -54,7 +54,7 @@ export const updatePetsService = async (
   if (findPet && idToSearch) {
     await userPetRepository.update(idToSearch, { specie });
 
-    return `pet: '${specie}' updated successfully`;
+    return `Pet: '${specie}' updated successfully`;
   }
 
   const newPet = userPetRepository.create({

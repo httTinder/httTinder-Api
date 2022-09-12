@@ -22,6 +22,8 @@ const loginUser = {
   password: "@12Patinhos",
 };
 
+let getUser = {};
+
 let tokenLogin = "";
 describe("Testing the user routes", () => {
   let connection: DataSource;
@@ -71,6 +73,7 @@ describe("Testing the user routes", () => {
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty("createdAt");
     expect(res.body).toHaveProperty("updatedAt");
+    getUser = res.body;
   });
 
   test("Patch /user/address - Deve ser capaz de cadastrar um address", async () => {
@@ -148,13 +151,49 @@ describe("Testing the user routes", () => {
     expect(res.status).toBe(204);
   });
 
+  test("Patch /user/relationship - Deve ser capaz de cadastrar um relationship", async () => {
+    const profile = {
+      orientation: "hetero",
+      gender: "Masculino",
+      bio: "Gosto de coisas",
+      education: "Faculdade",
+      profession: "Estudante",
+    };
+    const resAdd = await request(app)
+      .patch("/user/profile/")
+      .send(profile)
+      .set("Authorization", `Bearer ${tokenLogin}`);
+
+    const relationship = {
+      friendship: true,
+      casual: false,
+      serious: false,
+    };
+    const res = await request(app)
+      .patch("/user/relationship/")
+      .send(relationship)
+      .set("Authorization", `Bearer ${tokenLogin}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty("message");
+  });
+
+  test("Delete /user/relationship - Deve ser capaz de deletar um relationship", async () => {
+    const res = await request(app)
+      .delete("/user/relationship/")
+      .set("Authorization", `Bearer ${tokenLogin}`);
+
+    expect(res.status).toBe(204);
+  });
+
   test("Patch /user/lookingfor - Deve ser capaz de cadastrar um lookingfor", async () => {
     const lookingfor = {
       age: "18-25",
       gender: "Mulher",
+      location: "algo aqui",
     };
     const res = await request(app)
-      .patch("/user/lookingfor")
+      .patch("/user/lookingfor/")
       .send(lookingfor)
       .set("Authorization", `Bearer ${tokenLogin}`);
 
@@ -170,26 +209,147 @@ describe("Testing the user routes", () => {
     expect(res.status).toBe(204);
   });
 
-  test("Patch /user/relationship - Deve ser capaz de cadastrar um relationship", async () => {
-    const relationship = {
-      friendship: true,
-      casual: false,
-      serious: false,
+  test("Patch /user/hobbies - Deve ser capaz de cadastrar um hobbies", async () => {
+    const additional = {
+      zodiac: "peixess",
+      drinker: true,
+      smoker: true,
+      kids: true,
+      kidsQnt: 3,
     };
+    const resAdd = await request(app)
+      .patch("/user/additional/")
+      .send(additional)
+      .set("Authorization", `Bearer ${tokenLogin}`);
+
+    const hobbies = {
+      name: "alô bo trabalhar",
+    };
+
     const res = await request(app)
-      .patch("/user/relationship")
-      .send(relationship)
+      .patch("/user/hobbies/")
+      .send(hobbies)
+      .set("Authorization", `Bearer ${tokenLogin}`);
+
+    expect(res.status).toBe(201);
+    expect(res.body).toHaveProperty("message");
+  });
+
+  test("Delete /user/hobbies - Deve ser capaz de deletar um hobbies", async () => {
+    const resUser = await request(app)
+      .get("/user/data")
+      .set("Authorization", `Bearer ${tokenLogin}`);
+
+    const id = resUser.body.userAdditionalData.hobbies[0].id;
+
+    const uuid = {
+      uuid: id,
+    };
+
+    const res = await request(app)
+      .delete("/user/hobbies/")
+      .send(uuid)
+      .set("Authorization", `Bearer ${tokenLogin}`);
+
+    expect(res.status).toBe(200);
+  });
+
+  test("Patch /user/music - Deve ser capaz de cadastrar um music", async () => {
+    const music = {
+      music: "alô bo trabalhar",
+    };
+
+    const res = await request(app)
+      .patch("/user/music/")
+      .send(music)
       .set("Authorization", `Bearer ${tokenLogin}`);
 
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty("message");
   });
 
-  test("Delete /user/relationship - Deve ser capaz de deletar um relationship", async () => {
-    const res = await request(app)
-      .delete("/user/relationship/")
+  test("Delete /user/music - Deve ser capaz de deletar um music", async () => {
+    const resUser = await request(app)
+      .get("/user/data")
       .set("Authorization", `Bearer ${tokenLogin}`);
 
-    expect(res.status).toBe(204);
+    const id = resUser.body.userAdditionalData.userMusicGenre[0].id;
+
+    const uuid = {
+      uuid: id,
+    };
+
+    const res = await request(app)
+      .delete("/user/music/")
+      .send(uuid)
+      .set("Authorization", `Bearer ${tokenLogin}`);
+
+    expect(res.status).toBe(200);
+  });
+
+  test("Patch /user/pets - Deve ser capaz de cadastrar um pets", async () => {
+    const pets = {
+      specie: "alô bo trabalhar",
+    };
+
+    const res = await request(app)
+      .patch("/user/pets/")
+      .send(pets)
+      .set("Authorization", `Bearer ${tokenLogin}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty("message");
+  });
+
+  test("Delete /user/pets - Deve ser capaz de deletar um pets", async () => {
+    const resUser = await request(app)
+      .get("/user/data")
+      .set("Authorization", `Bearer ${tokenLogin}`);
+
+    const id = resUser.body.userAdditionalData.pets[0].id;
+
+    const uuid = {
+      uuid: id,
+    };
+
+    const res = await request(app)
+      .delete("/user/pets/")
+      .send(uuid)
+      .set("Authorization", `Bearer ${tokenLogin}`);
+
+    expect(res.status).toBe(200);
+  });
+
+  test("Patch /user/languages - Deve ser capaz de cadastrar um languages", async () => {
+    const languages = {
+      language: "alô bo trabalhar",
+    };
+
+    const res = await request(app)
+      .patch("/user/languages/")
+      .send(languages)
+      .set("Authorization", `Bearer ${tokenLogin}`);
+
+    expect(res.status).toBe(201);
+    expect(res.body).toHaveProperty("message");
+  });
+
+  test("Delete /user/languages - Deve ser capaz de deletar um languages", async () => {
+    const resUser = await request(app)
+      .get("/user/data")
+      .set("Authorization", `Bearer ${tokenLogin}`);
+
+    const id = resUser.body.userAdditionalData.userLanguages[0].id;
+
+    const uuid = {
+      uuid: id,
+    };
+
+    const res = await request(app)
+      .delete("/user/languages/")
+      .send(uuid)
+      .set("Authorization", `Bearer ${tokenLogin}`);
+
+    expect(res.status).toBe(200);
   });
 });

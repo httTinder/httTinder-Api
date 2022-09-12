@@ -36,13 +36,13 @@ In its basic use the user needs to fill the profile information, being able to a
 
 <br>
 
-# Getting Started
+# Sumary
+
+## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-<br>
-
-## Prerequisites
+### Prerequisites
 
 - [Nodejs](https://nodejs.org/en/)
 - [Git](https://git-scm.com/downloads)
@@ -96,11 +96,55 @@ yarn dev
 
 ```
 
+## Installing with docker
+
+- **Build application**
+
+```
+docker-compose up --build
+```
+
+- **Start application**
+
+```
+docker-compose up
+```
+
 ## Usage
 
----
+### **Base URL**
+
+```
+https://htttinder.herokuapp.com
+```
+
+### **POST /user 201**
+
+Route responsible for creating new user
+
+- #### Required fields
+
+  | Field    | Type   | Description     |
+  | -------- | ------ | --------------- |
+  | name     | string | User's Name     |
+  | email    | string | User's Email    |
+  | password | string | User's Passowrd |
+  | age      | string | user's Age      |
+
+- #### Example:
+
+```JSON
+    {
+        "email" :"fabio50019@gmail.com",
+        "name" : "fabio jose casanova",
+        "password" : "2209",
+        "age" : "33"
+    }
+```
 
 _For more examples, please refer to the [Documentation](https://htttinder.github.io/docs/)_
+
+---
 
 <!-- ## Collaborators
 

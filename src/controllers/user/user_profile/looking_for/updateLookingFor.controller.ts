@@ -10,5 +10,5 @@ export const updateLookingForController = async (
 
   await updateLookingForService(data, id);
 
-  return res.json({ message: "lookingFor changed successfully" });
+  return res.json({ message: "LookingFor changed successfully" });
 };

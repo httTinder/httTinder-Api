@@ -56,7 +56,7 @@ const updateUserHobbiesService = async (
   if (findHobbie && idToSearch) {
     userHobbieRepository.update(idToSearch, { name });
 
-    return `hobbie: '${name}' updated successfully`;
+    return `Hobbie: '${name}' updated successfully`;
   }
 
   const newHobbie = userHobbieRepository.create({
@@ -72,7 +72,7 @@ const updateUserHobbiesService = async (
 
   await userHobbieRepository.save(newHobbie);
 
-  return "hobbie was created successfully";
+  return "Hobbie was created successfully";
 };
 
 export default updateUserHobbiesService;

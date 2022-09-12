@@ -74,5 +74,5 @@ export const updateUserLanguageService = async (
 
   await userLanguagesRepository.save(newLanguage)
 
-  return "language was created successfully"
+  return "Language was created successfully"
 };

@@ -8,7 +8,7 @@ const deleteUserHobbieController = async (req: Request, res: Response) => {
 
   await deleteUserHobbieService(userId, idToDelete, authUserId);
 
-  return res.json({ message: "Hobbie Deleted With Sucess" });
+  return res.json({ message: "Hobbie deleted with sucess" });
 };
 
 export default deleteUserHobbieController;

@@ -27,5 +27,5 @@ export const imageEditController = async (req: Request, res: Response) => {
 
   await imageEditService(id, cloudinaryRespo);
 
-  return res.status(200).json({ message: "user changed successfully" });
+  return res.status(200).json({ message: "User changed successfully" });
 };

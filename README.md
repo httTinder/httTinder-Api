@@ -1,29 +1,57 @@
-# httTinder-Api
+# Project Overview
 
- 1. Uma boa descrição
+Nosso projeto
 
-As pessoas precisam saber em poucas palavras sobre o que se trata e para qual finalidade é direcionada sua API.
-2. Padronização de nomenclaturas
+# Getting Started
 
-A padronização de nomenclaturas facilitará a navegação e absorção do conteúdo da sua documentação
-3. Boa divisão das funcionalidades
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-Dividir muito bem as informações é essêncial, para que assim o consumo da documentação seja facil.
+## Prerequisites
 
-Criar seções e subceções ajuda o usuário a não se perder e também a encontrar com maior facilidade o que procura.
-4. Abrangir 100% das possibilidades
+- [Nodejs](https://nodejs.org/en/)
+- [Git](https://git-scm.com/downloads)
+- [PostgresSQL:14](https://www.postgresql.org/download/)
 
-Não adianta ter uma documentação bem escrita, com uma boa divisão, se ela não abrangir 100% das possibilidades de sucessos e erros da sua api.
-5. Ser claro e direto
+### Recommended
 
-Não faça textos longos e maçantes. Sabemos muito bem o quanto nosso tempo é precioso, consumir a documentação é extretamente importante, porém isso deve ser um suporte e não um impedimento.
-6. Documentar erros é muito importante
+- [Visual Studio Code](https://code.visualstudio.com/Download) - IDE
 
-Nunca esqueça, Erros são tão importantes quantos sucessos!
+## Installing
 
-Jamais deixe de criar boas mensagens de erro para sua API. E ainda mais, não esqueça de documentar tudo!
-7. Padronizar status e mensagens/corpo dos retornos
+Clone repository
 
-Escolha um padrão para os retornos das suas rotas. Tanto de sucessos quanto de erros.
+```
+git clone git@github.com:httTinder/httTinder-Api.git
+```
 
-Podemos por exemplo escolher que nossa api sempre retornará um objeto com a propriedade data. A qual conterá os dados do retorno. Por exemplo:
+Copy the environment variables
+
+```
+cp .env.example .env
+```
+
+Install dependencies
+
+```
+npm install
+
+yarn
+```
+
+Run the Migrations
+
+```
+npm run typeorm migration:run -d src/data-source.ts
+
+yarn typeorm migration:run -d src/data-source.ts
+```
+
+Start application
+
+```
+
+npm run dev
+
+yarn dev
+
+```

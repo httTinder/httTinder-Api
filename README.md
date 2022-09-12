@@ -67,7 +67,7 @@ git clone git@github.com:httTinder/httTinder-Api.git
 - **Copy the environment variables**
 
 ```
- cp .env.example .env
+ cp .env.exemple .env
 ```
 
 - **Install dependencies**

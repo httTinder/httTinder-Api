@@ -21,6 +21,8 @@
     <li><a href="#usage">Usage Examples</a></li>
   </ol>
 
+<br>
+
 ---
 
 # Project Overview
@@ -37,11 +39,7 @@ In its basic use the user needs to fill the profile information, being able to a
 
 <br>
 
-<br>
-
 ---
-
-<br>
 
 ## Built With
 

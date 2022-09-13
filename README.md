@@ -1,3 +1,30 @@
+# Table of Contents
+
+  <ol>
+  <li> <a href="https://htttinder.github.io/docs/">Documentation</a></li>
+    <li>
+      <a href="#project-overview">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+    <a href="#sumary"></a>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#recommended">Recommended</a></li>
+      </ul>
+    </li>
+     <li><a href="#installing"> Installing</a></li>
+   <li> <a href="#installing-with-docker"> Installing with docker<a></li>
+    <li><a href="#usage">Usage Examples</a></li>
+  </ol>
+
+<br>
+
+---
+
 # Project Overview
 
 ## Kenzie Love is an application designed to connect people through their common interests.
@@ -12,11 +39,7 @@ In its basic use the user needs to fill the profile information, being able to a
 
 <br>
 
-<br>
-
 ---
-
-<br>
 
 ## Built With
 
@@ -227,6 +250,8 @@ If the id is not passed through params, the one provided by the token will be us
 _For more examples, please refer to the [Documentation](https://htttinder.github.io/docs/)_
 
 ---
+
+<a href="#table-of-contents">back to top</a>
 
 <!-- ## Collaborators
 
